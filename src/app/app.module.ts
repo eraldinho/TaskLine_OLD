@@ -12,10 +12,19 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 export const firebaseConfig = environment.firebaseConfig;
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+// Angular Material
+import {MatToolbarModule} from '@angular/material';
+
+// Customs components
+import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewTaskFormComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +32,9 @@ export const firebaseConfig = environment.firebaseConfig;
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    BrowserAnimationsModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
