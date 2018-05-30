@@ -14,6 +14,10 @@ export const firebaseConfig = environment.firebaseConfig;
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+// forms
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 // Angular Material
 import {MatToolbarModule} from '@angular/material';
 
@@ -34,6 +38,8 @@ import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule
   ],
   providers: [],
