@@ -20,6 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // Angular Material
 import {MatToolbarModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
 
 // Customs components
 import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
@@ -40,7 +41,8 @@ import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
