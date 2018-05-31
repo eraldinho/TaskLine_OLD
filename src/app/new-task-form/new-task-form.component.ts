@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-new-task-form',
@@ -8,6 +8,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class NewTaskFormComponent implements OnInit {
   p1Form: FormGroup;
+  taskNameCtrl: FormControl;
+  taskCreationDateCtrl: FormControl;
+  taskDueDateCtrl: FormControl;
+  taskOperatorCtrl: FormControl;
+  taskTypeCtrl: FormControl;
+  taskPecCtrl: FormControl;
+  taskAddHalfDayCtrl: FormControl;
+  taskAddOneDayCtrl: FormControl;
+  taskAddTwoDayCtrl: FormControl;
+  taskAddOneWeekCtrl: FormControl;
 
   constructor(fb: FormBuilder) {
     this.p1Form = fb.group({

@@ -24,12 +24,16 @@ import {MatButtonModule} from '@angular/material/button';
 
 // Customs components
 import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
+import { TaskListPipe } from './task-list.pipe';
+import { TaskListComponent } from './task-list/task-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NewTaskFormComponent
+    NewTaskFormComponent,
+    TaskListPipe,
+    TaskListComponent
   ],
   imports: [
     BrowserModule,
