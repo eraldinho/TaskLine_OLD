@@ -16,6 +16,7 @@
 *.launch
 .settings/
 *.sublime-workspace
+.vscode
 
 # IDE - VSCode
 .vscode/*
@@ -38,3 +39,6 @@ testem.log
 .DS_Store
 Thumbs.db
 /src/environments/
+
+#Firebase
+/functions
