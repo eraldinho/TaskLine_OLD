@@ -24,7 +24,7 @@ import {MatButtonModule} from '@angular/material/button';
 
 // Customs components
 import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
-import { TaskListPipe } from './task-list.pipe';
+import { TaskListPipe } from './task-list-pipe/task-list.pipe';
 import { TaskListComponent } from './task-list/task-list.component';
 
 
