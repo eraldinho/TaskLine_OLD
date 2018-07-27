@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 })
 export class NewTaskFormComponent implements OnInit {
   p1Form: FormGroup;
+  taskGroup: FormGroup;
   taskNameCtrl: FormControl;
   taskCreationDateCtrl: FormControl;
   taskDueDateCtrl: FormControl;
@@ -20,9 +21,14 @@ export class NewTaskFormComponent implements OnInit {
   taskAddOneWeekCtrl: FormControl;
 
   constructor(fb: FormBuilder) {
+    this.taskNameCtrl = fb.control('');
+    this.taskDueDateCtrl= fb.control('')
+    this.taskGroup = fb.group({
+        taskname: this.taskNameCtrl,
+        taskduedate: this.taskDueDateCtrl
+    })
     this.p1Form = fb.group({
-      taskName: fb.control(''),
-      addSix: fb.control('')
+      task:this.taskGroup
     });
    }
 
