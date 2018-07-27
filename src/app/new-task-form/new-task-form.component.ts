@@ -21,11 +21,11 @@ export class NewTaskFormComponent implements OnInit {
   taskAddOneWeekCtrl: FormControl;
 
   constructor(fb: FormBuilder) {
-    this.taskNameCtrl = fb.control('');
+    this.taskNameCtrl = fb.control('tamere');
     this.taskDueDateCtrl= fb.control('')
     this.taskGroup = fb.group({
-        taskname: this.taskNameCtrl,
-        taskduedate: this.taskDueDateCtrl
+        taskName: this.taskNameCtrl,
+        taskDueDate: this.taskDueDateCtrl
     })
     this.p1Form = fb.group({
       task:this.taskGroup
