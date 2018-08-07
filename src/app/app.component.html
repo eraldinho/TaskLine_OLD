@@ -6,5 +6,6 @@
     <button mat-menu-item (click)=setView(3)>S.A.V.</button>
   </mat-toolbar>
   <app-new-task-form *ngIf="view == 1"></app-new-task-form>
+  <app-task-list *ngIf="view == 1"></app-task-list>
 <router-outlet></router-outlet>
 </div>

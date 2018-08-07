@@ -23,19 +23,24 @@ export class NewTaskFormComponent implements OnInit {
 
   constructor(fb: FormBuilder, private scrudService: ScrudService) {
     this.taskNameCtrl = fb.control('');
-    this.taskDueDateCtrl= fb.control('');
-    this.taskGroup = fb.group({
-        taskName: this.taskNameCtrl,
-        taskDueDate: this.taskDueDateCtrl
+    this.nomClientCtrl = fb.control('');
+    this.client = fb.group({
+      nomClient: this.nomClientCtrl,
+      numClient: this.numClientCtrl,
+      telClient: this.telClientCtrl,
+      mailClient: this.mailClientCtrl,
     });
-    this.p1Form = fb.group({
-      task:this.taskGroup
+    this.newTaskForm = fb.group({
+        taskName: this.taskNameCtrl,
     });
    }
 
+  reset() {
+    this.taskNameCtrl.setValue('');
+  }
+
   register() {
-    console.log(this.p1Form.value);
-    this.scrudService.AddDoc2Collection('tasks',{nom: 'tache_test2'})
+    console.log(this.newTaskForm.value);
   }
 
   ngOnInit() {

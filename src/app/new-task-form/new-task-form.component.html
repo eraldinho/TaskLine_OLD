@@ -1,12 +1,10 @@
 <h2>Sign up</h2>
-<form (ngSubmit)="register()" [formGroup]="p1Form">
-  <div [formGroup]="taskGroup">
-      <div>
-        <label>Tache</label><input formControlName="taskName">
-      </div>
-      <div>
-        <label>Echéance</label><input formControlName="taskDueDate">
-      </div>
+<form (ngSubmit)="register()" [formGroup]="newTaskForm">
+  <div>
+    <label>Tache</label><input formControlName="taskName">
+  </div>
+  <div>
+    <label>Délai</label><input formControlName="addSix">
   </div>
   <button type="submit">Register</button>
 </form>
