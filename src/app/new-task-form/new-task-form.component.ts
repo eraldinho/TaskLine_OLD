@@ -36,18 +36,17 @@ export class NewTaskFormComponent implements OnInit {
 
   register() {
     console.log(this.p1Form.value);
-    this.scrudService.AddDoc2Collection('tasks', {nom: 'tache_test2'});
   }
 
-  AddMontage() {
+  AddTask(type: string, delai: number) {
     const today = Date.now();
     const SixDaysLater = today + 518400000;
-    const data = {nom: this.taskNameCtrl.value, echeance: SixDaysLater};
+    const data = {Type : type, Nom: type + ' ' + this.taskNameCtrl.value, Echeance: today + delai};
     this.scrudService.AddDoc2Collection('tasks', data)
     .then((result) => {
       let action: string;
       result === 1 ?  (this.taskNameCtrl.setValue('') , action = 'Succès') : action = 'Echec';
-      this.snackBar.open('Ajout Montage', action, {
+      this.snackBar.open('Ajout ' +  type, action, {
         duration: 3000,
       });
     });

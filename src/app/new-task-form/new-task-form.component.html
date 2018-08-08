@@ -2,9 +2,9 @@
   <div [formGroup]="taskGroup">
       <div>
         <label>Désignation: </label><input formControlName="taskName">
-        <button mat-button (click)="AddMontage()">Montage</button>
-        <button mat-button>Avoir</button>
-        <button mat-button>Expédition</button>
+        <button mat-button (click)="AddTask('montage', 518400000)" type="button">Montage</button>
+        <button mat-button (click)="AddTask('avoir', 172800000)">Avoir</button>
+        <button mat-button (click)="AddTask('expedition', 518400000)">Expédition</button>
         <button mat-button>Ajouter une tache</button>
       </div>
   </div>
