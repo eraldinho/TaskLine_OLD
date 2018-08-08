@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import {  }
+import { ScrudService } from '../services/scrud/scrud.service';
 
 @Component({
   selector: 'app-task-list',
@@ -8,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private scrudService: ScrudService) { }
+
+  myTasks;
 
   ngOnInit() {
+    this.myTasks = this.scrudService.RetrieveCollection('tasks');
   }
 
 }

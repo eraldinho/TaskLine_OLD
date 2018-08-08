@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-//import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -14,9 +14,21 @@ export class ScrudService {
 
   constructor(private afs: AngularFirestore) { }
 
-  AddDoc2Collection(collectionName: string, data) {
+  RetrieveCollection(collectionName: string): Observable<any> {
+    return this.afs.collection(collectionName).valueChanges();
+  }
+
+  AddDoc2Collection(collectionName: string, data): Promise<number> {
     const collection = this.afs.collection(collectionName);
-    collection.add(data)
-    .then(() => console.log('success') ) .catch(err => console.log(err) )
+    return new Promise<number>(function (resolve, reject) {
+      collection.add(data)
+      .then(() => {
+        console.log('success');
+        resolve(1);
+      } ) .catch(err => {
+        console.log(err);
+        reject(0);
+      });
+    });
   }
 }

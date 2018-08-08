@@ -21,6 +21,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 // Angular Material
 import {MatToolbarModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 // Customs components
 import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
@@ -46,7 +51,12 @@ import { TaskListComponent } from './task-list/task-list.component';
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,10 +1,11 @@
-<h2>Sign up</h2>
-<form (ngSubmit)="register()" [formGroup]="newTaskForm">
-  <div>
-    <label>Tache</label><input formControlName="taskName">
+<form (ngSubmit)="register()" [formGroup]="p1Form">
+  <div [formGroup]="taskGroup">
+      <div>
+        <label>Désignation: </label><input formControlName="taskName">
+        <button mat-button (click)="AddMontage()">Montage</button>
+        <button mat-button>Avoir</button>
+        <button mat-button>Expédition</button>
+        <button mat-button>Ajouter une tache</button>
+      </div>
   </div>
-  <div>
-    <label>Délai</label><input formControlName="addSix">
-  </div>
-  <button type="submit">Register</button>
 </form>

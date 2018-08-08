@@ -1,9 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <mat-toolbar>
-    <button mat-menu-item (click)=setView(1)>Taches</button>
-    <button mat-menu-item (click)=setView(2)>Commandes Fournisseur</button>
-    <button mat-menu-item (click)=setView(3)>S.A.V.</button>
+    <button mat-button (click)=setView(1)>Taches</button>
+    <button mat-button (click)=setView(2)>Commandes Fournisseur</button>
+    <button mat-button (click)=setView(3)>S.A.V.</button>
   </mat-toolbar>
   <app-new-task-form *ngIf="view == 1"></app-new-task-form>
   <app-task-list *ngIf="view == 1"></app-task-list>
