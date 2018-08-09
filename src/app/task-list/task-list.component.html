@@ -1,8 +1,10 @@
 <div  style="min-height: 200px"><mat-card *ngFor="let task of myTasks | async | taskList">
     <mat-chip-list *ngIf=!task.isNotItem>
-        <mat-chip>{{ task.Type }}</mat-chip>
+        <mat-chip [ngClass]="{'montage':task.Type == 'montage','avoir':task.Type == 'avoir','expedition':task.Type == 'expedition'}">
+            <a>{{ task.Type }}</a>
+        </mat-chip>
         <mat-chip>{{ task.Nom }}</mat-chip>
-        <mat-chip color="primary" selected>{{ task.Echeance|date:'dd/MM/yyyy'}}</mat-chip>
+        <mat-chip>{{ task.Echeance|date:'dd/MM/yyyy'}}</mat-chip>
     </mat-chip-list>
     <div *ngIf="task.isNotItem">{{ task.Echeance|date:'dd/MM/yyyy'}}</div>
 </mat-card></div>

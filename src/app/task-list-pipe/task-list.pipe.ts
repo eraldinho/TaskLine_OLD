@@ -12,9 +12,9 @@ export class TaskListPipe implements PipeTransform {
     console.log('today:  ' + today);
     let previousTime: number;
     let nextTime: number;
-    if (items && items.length > 0) {
-      console.log(items);
-      myitems = items.sort(this.comparator); // on classe du plus ancien au plus recent
+    if (items && items.length > 0) {// si il y a des données à traiter
+      myitems = items.sort(this.comparator); // on classe du plus recent au plus ancien
+      console.log(myitems);
       previousTime = this.setMidnight(myitems[0].Echeance); // 1er intercalaire à la date la plus ancienne et on fixe l'heure à minuit
       let myitem: Item = new Item;
       myitem.Echeance = previousTime;
@@ -30,11 +30,11 @@ export class TaskListPipe implements PipeTransform {
       myitemsComplete.push(myitem);
       nextTime = previousTime + 86400000; // intercalaire suivant = intercalaire + 24h
       for (let i = 0; i < myitems.length; i++) {
-        if (myitems[i].Echeance > nextTime) {
+        if (myitems[i].Echeance > nextTime) {// si l'echeance est supérieure à la date du prochain jour intercalaire
           myitem = new Item;
           myitem.Echeance = nextTime;
           myitem.title = new Date(nextTime).toDateString();
-          myitem.isNotItem = true;
+          myitem.isNotItem = true; // on créé un nouvel intercalaire à la date du lendemain
           if (nextTime < today) {
             myitem.beHurry = true;
           } else if (nextTime === today) {
@@ -62,7 +62,7 @@ export class TaskListPipe implements PipeTransform {
         }
         myitemsComplete.push(myitems[i]);
         if (i === myitems.length - 1) {
-          return (myitemsComplete);
+            return (myitemsComplete);
         }
       }
       return myitems;
