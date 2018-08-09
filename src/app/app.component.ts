@@ -11,5 +11,6 @@ export class AppComponent {
 
   setView(myView: number) {
     this.view = myView;
+    console.log('view ' + this.view);
   }
 }

@@ -1,11 +1,10 @@
 <form (ngSubmit)="register()" [formGroup]="p1Form">
   <div [formGroup]="taskGroup">
-      <div>
-        <label>Désignation: </label><input formControlName="taskName">
-        <button mat-button (click)="AddTask('montage', 518400000)" type="button">Montage</button>
-        <button mat-button (click)="AddTask('avoir', 172800000)">Avoir</button>
-        <button mat-button (click)="AddTask('expedition', 518400000)">Expédition</button>
-        <button mat-button>Ajouter une tache</button>
-      </div>
+      <div><input formControlName="taskName"></div>
+      <div><button mat-button (click)="AddTask('montage', 518400000)" type="button">Montage</button></div>
+      <div><button mat-button (click)="AddTask('avoir', 172800000)">Avoir</button></div>
+      <div><button mat-button (click)="AddTask('expedition', 518400000)">Expédition</button></div>
+      <mat-divider></mat-divider>
+      <div style="padding: 10px"><button mat-raised-button color="warn">Ajouter une tache</button></div>
   </div>
 </form>
