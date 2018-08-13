@@ -30,11 +30,16 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 // Customs components
 import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
 import { TaskListPipe } from './task-list-pipe/task-list.pipe';
 import { TaskListComponent } from './task-list/task-list.component';
+import { NewTaskFormDialogComponent } from './new-task-form/new-task-form-dialog/new-task-form-dialog.component';
 
 
 @NgModule({
@@ -42,7 +47,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     AppComponent,
     NewTaskFormComponent,
     TaskListPipe,
-    TaskListComponent
+    TaskListComponent,
+    NewTaskFormDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,8 +70,13 @@ import { TaskListComponent } from './task-list/task-list.component';
     MatSidenavModule,
     MatDividerModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
+  entryComponents: [NewTaskFormDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

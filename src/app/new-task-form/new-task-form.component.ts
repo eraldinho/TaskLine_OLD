@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ScrudService } from '../services/scrud/scrud.service';
 import {MatSnackBar} from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { NewTaskFormDialogComponent } from './new-task-form-dialog/new-task-form-dialog.component';
 
 @Component({
   selector: 'app-new-task-form',
@@ -9,6 +11,7 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./new-task-form.component.scss']
 })
 export class NewTaskFormComponent implements OnInit {
+  NewTaskDialogRef: MatDialogRef<NewTaskFormDialogComponent>;
   p1Form: FormGroup;
   taskGroup: FormGroup;
   taskNameCtrl: FormControl;
@@ -22,7 +25,7 @@ export class NewTaskFormComponent implements OnInit {
   taskAddTwoDayCtrl: FormControl;
   taskAddOneWeekCtrl: FormControl;
 
-  constructor(fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar) {
+  constructor(fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar, private dialog: MatDialog) {
     this.taskNameCtrl = fb.control('');
     this.taskDueDateCtrl = fb.control('');
     this.taskGroup = fb.group({
@@ -50,6 +53,10 @@ export class NewTaskFormComponent implements OnInit {
         duration: 3000,
       });
     });
+  }
+
+  OpenNewTaskDialog() {
+    this.NewTaskDialogRef = this.dialog.open(NewTaskFormDialogComponent);
   }
 
   ngOnInit() {

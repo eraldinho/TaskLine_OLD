@@ -18,6 +18,10 @@ export class ScrudService {
     return this.afs.collection(collectionName).valueChanges();
   }
 
+  RetrieveDocument(documentName: string): Observable<any> {
+    return this.afs.doc(documentName).valueChanges();
+  }
+
   AddDoc2Collection(collectionName: string, data): Promise<number> {
     const collection = this.afs.collection(collectionName);
     return new Promise<number>(function (resolve, reject) {
