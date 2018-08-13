@@ -56,7 +56,7 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   OpenNewTaskDialog() {
-    this.NewTaskDialogRef = this.dialog.open(NewTaskFormDialogComponent);
+    this.NewTaskDialogRef = this.dialog.open(NewTaskFormDialogComponent, {width: '1000px'});
   }
 
   ngOnInit() {
