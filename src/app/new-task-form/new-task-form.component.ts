@@ -19,11 +19,6 @@ export class NewTaskFormComponent implements OnInit {
   taskDueDateCtrl: FormControl;
   taskOperatorCtrl: FormControl;
   taskTypeCtrl: FormControl;
-  taskPecCtrl: FormControl;
-  taskAddHalfDayCtrl: FormControl;
-  taskAddOneDayCtrl: FormControl;
-  taskAddTwoDayCtrl: FormControl;
-  taskAddOneWeekCtrl: FormControl;
 
   constructor(fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar, private dialog: MatDialog) {
     this.taskNameCtrl = fb.control('');
