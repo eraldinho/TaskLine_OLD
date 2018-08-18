@@ -11,58 +11,65 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <input formControlName="taskDueDate" matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" readonly>
+            <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()" readonly>
         </mat-form-field>
         <mat-datepicker #picker></mat-datepicker>
       </div>
       <mat-dialog-content>
         <mat-accordion>
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="clientGroup">
+          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Client
               </mat-panel-title>
-              <mat-panel-description>
-                informations relatives au client
-              </mat-panel-description>
             </mat-expansion-panel-header>
           
             <mat-form-field>
-              <input matInput placeholder="First name">
+              <input formControlName="clientName" matInput placeholder="Nom">
             </mat-form-field>
-          
             <mat-form-field>
-              <input matInput type="number" min="1" placeholder="Age">
+              <input formControlName="clientFirstName" matInput placeholder="Prénom">
             </mat-form-field>
-          
+            <mat-form-field>
+              <input formControlName="clientNumber" matInput placeholder="Numéro Client">
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="clientMail" matInput placeholder="Mail">
+            </mat-form-field>
+            <mat-form-field>
+              <input formControlName="clientPhone" matInput placeholder="Téléphone">
+            </mat-form-field>
           </mat-expansion-panel>
           
-          <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Destination
+                Matériel
               </mat-panel-title>
-              <mat-panel-description>
-                Type the country name
-                <mat-icon>map</mat-icon>
-              </mat-panel-description>
             </mat-expansion-panel-header>
           
             <mat-form-field>
-              <input matInput placeholder="Country">
+              <input formControlName="deviceType" matInput placeholder="Type">
             </mat-form-field>
-          
+            <mat-form-field>
+              <input formControlName="deviceBrand" matInput placeholder="Marque">
+            </mat-form-field>
+            <section class="example-section">
+              <mat-checkbox class="example-margin" formControlName="deviceStart">Le PC démarre</mat-checkbox>
+              <mat-checkbox class="example-margin" formControlName="deviceReset">Formatage possible</mat-checkbox>
+            </section>
+            <div>
+                <mat-form-field style="width:100%">
+                  <textarea formControlName="deviceDescription" matInput placeholder="Description"></textarea>
+                </mat-form-field>
+              </div>
           </mat-expansion-panel>
           
-          <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Day of the trip
+                Panne
               </mat-panel-title>
-              <mat-panel-description>
-                Inform the date you wish to travel
-                <mat-icon>date_range</mat-icon>
-              </mat-panel-description>
             </mat-expansion-panel-header>
           
             <mat-form-field>
@@ -73,6 +80,11 @@
           </mat-expansion-panel>
           
         </mat-accordion>
+        <div>
+          <mat-form-field style="width:100%">
+            <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
+          </mat-form-field>
+        </div>
       </mat-dialog-content>
       <mat-dialog-actions>
         <button mat-button>Ajouter</button>

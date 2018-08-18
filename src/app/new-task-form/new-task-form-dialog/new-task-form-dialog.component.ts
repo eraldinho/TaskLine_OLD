@@ -12,6 +12,7 @@ export class NewTaskFormDialogComponent implements OnInit {
   taskTypes;
   Types;
   ATDForm: FormGroup;
+  commentCtrl: FormControl;
   // tache
   taskGroup: FormGroup;
   taskNameCtrl: FormControl;
@@ -22,11 +23,17 @@ export class NewTaskFormDialogComponent implements OnInit {
   // client
   clientGroup: FormGroup;
   clientNameCtrl: FormControl;
+  clientFirstNameCtrl: FormControl;
   clientNumberCtrl: FormControl;
   clientMailCtrl: FormControl;
   clientPhoneCtrl: FormControl;
   // materiel
   deviceGroup: FormGroup;
+  deviceTypeCtrl: FormControl;
+  deviceBrandCtrl: FormControl;
+  deviceStartCtrl: FormControl;
+  deviceResetCtrl: FormControl;
+  devicedescriptionCtrl: FormControl;
 
 
   constructor(fb: FormBuilder,private scrudService: ScrudService) {
@@ -39,13 +46,23 @@ export class NewTaskFormDialogComponent implements OnInit {
     });
     this.clientGroup = fb.group({
       clientName: this.clientNameCtrl,
+      clientFirstName: this.clientFirstNameCtrl,
       clientNumber: this.clientNumberCtrl,
       clientMail: this.clientMailCtrl,
       clientPhone: this.clientPhoneCtrl
-  });
+    });
+    this.deviceGroup = fb.group({
+      deviceType: this.deviceTypeCtrl,
+      deviceBrand: this.deviceBrandCtrl,
+      deviceStart: this.deviceStartCtrl,
+      deviceReset: this.deviceResetCtrl,
+      deviceDescription: this.devicedescriptionCtrl
+    });
     this.ATDForm = fb.group({
       task: this.taskGroup,
-      client: this.clientGroup
+      client: this.clientGroup,
+      device: this.deviceGroup,
+      comment: this.commentCtrl
     });
   }
 

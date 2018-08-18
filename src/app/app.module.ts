@@ -34,6 +34,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 // Customs components
 import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
@@ -74,7 +75,8 @@ import { NewTaskFormDialogComponent } from './new-task-form/new-task-form-dialog
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   entryComponents: [NewTaskFormDialogComponent],
   providers: [],
