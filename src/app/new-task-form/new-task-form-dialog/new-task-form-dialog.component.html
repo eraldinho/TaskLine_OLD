@@ -62,20 +62,37 @@
                 <mat-form-field style="width:100%">
                   <textarea formControlName="deviceDescription" matInput placeholder="Description"></textarea>
                 </mat-form-field>
-              </div>
+            </div>
           </mat-expansion-panel>
           
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel  [formGroup]="panneGroup" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Panne
               </mat-panel-title>
             </mat-expansion-panel-header>
           
-            <mat-form-field>
-              <input matInput placeholder="Date" >
-            </mat-form-field>
-            <mat-datepicker #picker></mat-datepicker>
+            <div>
+              <mat-form-field style="width:100%">
+                <textarea formControlName="panneDescription" matInput placeholder="Description de la panne"></textarea>
+              </mat-form-field>
+          </div>
+          
+          </mat-expansion-panel>
+
+          <mat-expansion-panel  formArrayName="prestations" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Prestations
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          
+            <section class="example-section">
+                <mat-form-field style="width:100%">
+                    <input matInput placeholder="ajouter une prestation">
+                </mat-form-field>
+                <mat-icon>add_circle_outlined</mat-icon>
+              </section>
           
           </mat-expansion-panel>
           
