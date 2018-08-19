@@ -110,15 +110,23 @@ export class NewTaskFormDialogComponent implements OnInit {
     });
   }
 
-  addPrestation(monnom,monprix,moncode) {
+  addPrestation() {
     // add Prestation to the list
+    const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
+    console.log(value);
     const control = <FormArray>this.ATDForm.controls['prestations'];
-    control.push(this.initPrestation(monnom,monprix,moncode));
+    control.push(this.initPrestation(value[0],value[1],value[2]));
+    this.ATDForm.get('prestationAdd').setValue('');
   }
+
+  removePrestation(i: number) {
+    // remove address from the list
+    const control = <FormArray>this.ATDForm.controls['prestations'];
+    control.removeAt(i);
+}
 
   private _filter(value) {
     const filterValue = value.toLowerCase();
-    console.log('valeur : '+value);
     return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
   }
 
