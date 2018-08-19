@@ -80,7 +80,7 @@
           
           </mat-expansion-panel>
 
-          <mat-expansion-panel  formArrayName="prestations" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Prestations
@@ -89,10 +89,18 @@
           
             <section class="example-section">
                 <mat-form-field style="width:100%">
-                    <input matInput placeholder="ajouter une prestation">
+                    <input matInput formControlName="prestationAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom">
+                        {{presta.nom}}
+                      </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
                 <mat-icon>add_circle_outlined</mat-icon>
-              </section>
+            </section>
+            <div  formArrayName="prestations">
+              
+            </div>
           
           </mat-expansion-panel>
           
