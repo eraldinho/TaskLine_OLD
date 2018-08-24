@@ -95,9 +95,7 @@ export class NewTaskFormDialogComponent implements OnInit {
     this.Prestations = this.scrudService.RetrieveCollection('prestations');
     this.Prestations.subscribe(val => this.myPrestations = val);
     this.filteredOptions = this.ATDForm.get('prestationAdd').valueChanges.pipe(
-      startWith<string | Prestation>(''),
-      map(value => typeof value === 'string' ? value : value.nom),
-      map(nom => nom ? this._filter(nom) : this.myPrestations)
+      map(nom => this._filter(nom))
     );
   }
 
@@ -112,12 +110,15 @@ export class NewTaskFormDialogComponent implements OnInit {
 
   addPrestation() {
     // add Prestation to the list
-    const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
-    console.log(value);
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    control.push(this.initPrestation(value[0],value[1],value[2]));
-    this.ATDForm.get('prestationAdd').setValue('');
-  }
+    if (this.ATDForm.get('prestationAdd').value) {
+      const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
+      if (value.length == 3) {
+        const control = <FormArray>this.ATDForm.controls['prestations'];
+        control.push(this.initPrestation(value[0],value[1],value[2]));
+        this.ATDForm.get('prestationAdd').setValue('');
+      }
+    }
+  } 
 
   removePrestation(i: number) {
     // remove address from the list
@@ -127,7 +128,9 @@ export class NewTaskFormDialogComponent implements OnInit {
 
   private _filter(value) {
     const filterValue = value.toLowerCase();
-    return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+    if (filterValue != '') {
+      return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+    }
   }
 
 }
