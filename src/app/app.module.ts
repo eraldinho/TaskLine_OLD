@@ -38,10 +38,16 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 // Customs components
-import { NewTaskFormComponent } from './new-task-form/new-task-form.component';
+import { NewTaskFormComponent } from './tasks/new-task-form/new-task-form.component';
 import { TaskListPipe } from './task-list-pipe/task-list.pipe';
-import { TaskListComponent } from './task-list/task-list.component';
-import { NewTaskFormDialogComponent } from './new-task-form/new-task-form-dialog/new-task-form-dialog.component';
+import { TaskListComponent } from './tasks/task-list/task-list.component';
+import { LoginComponent } from './login/login.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { AtelierComponent } from './atelier/atelier.component';
+import { CommandesComponent } from './commandes/commandes.component';
+import { SavComponent } from './sav/sav.component';
+import { QuickTaskFormComponent } from './tasks/quick-task-form/quick-task-form.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -50,7 +56,13 @@ import { NewTaskFormDialogComponent } from './new-task-form/new-task-form-dialog
     NewTaskFormComponent,
     TaskListPipe,
     TaskListComponent,
-    NewTaskFormDialogComponent
+    LoginComponent,
+    TasksComponent,
+    AtelierComponent,
+    CommandesComponent,
+    SavComponent,
+    QuickTaskFormComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +92,7 @@ import { NewTaskFormDialogComponent } from './new-task-form/new-task-form-dialog
     MatCheckboxModule,
     MatAutocompleteModule
   ],
-  entryComponents: [NewTaskFormDialogComponent],
+  entryComponents: [],
   providers: [],
   bootstrap: [AppComponent]
 })

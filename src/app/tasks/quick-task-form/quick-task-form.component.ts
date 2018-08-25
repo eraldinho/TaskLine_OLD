@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { ScrudService } from '../services/scrud/scrud.service';
+import { ScrudService } from '../../services/scrud/scrud.service';
 import {MatSnackBar} from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { NewTaskFormDialogComponent } from './new-task-form-dialog/new-task-form-dialog.component';
 
 @Component({
-  selector: 'app-new-task-form',
-  templateUrl: './new-task-form.component.html',
-  styleUrls: ['./new-task-form.component.scss']
+  selector: 'app-quick-task-form',
+  templateUrl: './quick-task-form.component.html',
+  styleUrls: ['./quick-task-form.component.scss']
 })
-export class NewTaskFormComponent implements OnInit {
-  NewTaskDialogRef: MatDialogRef<NewTaskFormDialogComponent>;
+export class QuickTaskFormComponent implements OnInit {
   p1Form: FormGroup;
   taskGroup: FormGroup;
   taskNameCtrl: FormControl;
@@ -51,7 +49,7 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   OpenNewTaskDialog() {
-    this.NewTaskDialogRef = this.dialog.open(NewTaskFormDialogComponent, {width:window.innerWidth+'px'});
+    //this.NewTaskDialogRef = this.dialog.open(NewTaskFormDialogComponent, {width:window.innerWidth+'px'});
   }
 
   ngOnInit() {

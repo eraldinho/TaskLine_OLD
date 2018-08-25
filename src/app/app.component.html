@@ -1,16 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <mat-toolbar>
-    <button mat-button (click)=setView(1)>Taches</button>
-    <button mat-button (click)=setView(2)>Commandes Fournisseur</button>
-    <button mat-button (click)=setView(3)>S.A.V.</button>
-  </mat-toolbar>
+<router-outlet name="toolbar"></router-outlet>
   <mat-sidenav-container>
     <mat-sidenav mode="side" opened fullscreen>
-      <app-new-task-form *ngIf="view == 1"></app-new-task-form></mat-sidenav>
+      <router-outlet name="sidenav"></router-outlet>
+    </mat-sidenav>
     <mat-sidenav-content>
-      <app-task-list *ngIf="view == 1"></app-task-list>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
-<router-outlet></router-outlet>
 </div>

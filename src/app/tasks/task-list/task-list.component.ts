@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ScrudService } from '../services/scrud/scrud.service';
+import { ScrudService } from '../../services/scrud/scrud.service';
 
 @Component({
   selector: 'app-task-list',

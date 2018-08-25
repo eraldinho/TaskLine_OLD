@@ -11,11 +11,11 @@ export interface Prestation {
 }
 
 @Component({
-  selector: 'app-new-task-form-dialog',
-  templateUrl: './new-task-form-dialog.component.html',
-  styleUrls: ['./new-task-form-dialog.component.scss']
+  selector: 'app-new-task-form',
+  templateUrl: './new-task-form.component.html',
+  styleUrls: ['./new-task-form.component.scss']
 })
-export class NewTaskFormDialogComponent implements OnInit {
+export class NewTaskFormComponent implements OnInit {
 
   filteredOptions: Observable<Prestation[]>;
   taskTypes;
