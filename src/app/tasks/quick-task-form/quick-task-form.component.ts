@@ -49,7 +49,7 @@ export class QuickTaskFormComponent implements OnInit {
   }
 
   OpenNewTaskDialog() {
-    //this.NewTaskDialogRef = this.dialog.open(NewTaskFormDialogComponent, {width:window.innerWidth+'px'});
+    // this.NewTaskDialogRef = this.dialog.open(NewTaskFormDialogComponent, {width:window.innerWidth+'px'});
   }
 
   ngOnInit() {

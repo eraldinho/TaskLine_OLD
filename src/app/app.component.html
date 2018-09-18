@@ -2,10 +2,10 @@
 <div style="text-align:center">
 <router-outlet name="toolbar"></router-outlet>
   <mat-sidenav-container>
-    <mat-sidenav mode="side" opened fullscreen>
+    <mat-sidenav mode="side" opened role="navigation">
       <router-outlet name="sidenav"></router-outlet>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content role="main">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
