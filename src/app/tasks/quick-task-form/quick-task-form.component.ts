@@ -37,7 +37,7 @@ export class QuickTaskFormComponent implements OnInit {
   AddTask(type: string, delai: number) {
     const today = Date.now();
     const SixDaysLater = today + 518400000;
-    const data = {Type : type, Nom: type + ' ' + this.taskNameCtrl.value, Echeance: today + delai};
+    const data = {task: {taskType : type, taskName: type + ' ' + this.taskNameCtrl.value, taskDueDate: today + delai}};
     this.scrudService.AddDoc2Collection('tasks', data)
     .then((result) => {
       let action: string;

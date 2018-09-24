@@ -3,7 +3,6 @@ export class Item {
     title: string;
     body: string;
     active = true;
-    Echeance: number;
     isNotItem = false;
     beCool = false;
     beQuick = false;
@@ -12,4 +11,5 @@ export class Item {
     montage = false;
     relC = false;
     compta = false;
+    task: {taskName, taskType, taskCreationDate, taskDueDate, taskOperator};
   }

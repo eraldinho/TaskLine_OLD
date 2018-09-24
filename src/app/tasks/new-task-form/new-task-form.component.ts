@@ -52,7 +52,7 @@ export class NewTaskFormComponent implements OnInit {
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
 
-  constructor(private fb: FormBuilder,private scrudService: ScrudService) {
+  constructor(private fb: FormBuilder, private scrudService: ScrudService) {
     this.taskGroup = fb.group({
         taskName: this.taskNameCtrl,
         taskType: this.taskTypeCtrl,
@@ -99,7 +99,7 @@ export class NewTaskFormComponent implements OnInit {
     );
   }
 
-  initPrestation(monnom,monprix,moncode) {
+  initPrestation(monnom, monprix, moncode) {
     // initialize our Prestation
     return this.fb.group({
         nom: [monnom],
@@ -112,13 +112,13 @@ export class NewTaskFormComponent implements OnInit {
     // add Prestation to the list
     if (this.ATDForm.get('prestationAdd').value) {
       const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
-      if (value.length == 3) {
+      if (value.length === 3) {
         const control = <FormArray>this.ATDForm.controls['prestations'];
-        control.push(this.initPrestation(value[0],value[1],value[2]));
+        control.push(this.initPrestation(value[0], value[1], value[2]));
         this.ATDForm.get('prestationAdd').setValue('');
       }
     }
-  } 
+  }
 
   removePrestation(i: number) {
     // remove address from the list
@@ -128,9 +128,16 @@ export class NewTaskFormComponent implements OnInit {
 
   private _filter(value) {
     const filterValue = value.toLowerCase();
-    if (filterValue != '') {
+    if (filterValue !== '') {
       return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
     }
+  }
+
+  register() {
+    this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
+    console.log(this.ATDForm.value);
+    // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
+    this.scrudService.AddDoc2Collection('atelier', this.ATDForm.value);
   }
 
 }
