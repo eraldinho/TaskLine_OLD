@@ -15,9 +15,11 @@ export class TaskListPipe implements PipeTransform {
     if (items && items.length > 0) {// si il y a des données à traiter
       myitems = items.sort(this.comparator); // on classe du plus recent au plus ancien
       console.log(myitems);
-      previousTime = this.setMidnight(myitems[0].Echeance); // 1er intercalaire à la date la plus ancienne et on fixe l'heure à minuit
+      // 1er intercalaire à la date la plus ancienne et on fixe l'heure à minuit
+      previousTime = this.setMidnight(myitems[0].task.taskDueDate);
       let myitem: Item = new Item;
-      myitem.Echeance = previousTime;
+      console.log(JSON.stringify(myitem));
+      myitem.task.taskDueDate = previousTime;
       myitem.title = new Date(previousTime).toDateString();
       myitem.isNotItem = true;
       if (previousTime < today) {
@@ -30,9 +32,10 @@ export class TaskListPipe implements PipeTransform {
       myitemsComplete.push(myitem);
       nextTime = previousTime + 86400000; // intercalaire suivant = intercalaire + 24h
       for (let i = 0; i < myitems.length; i++) {
-        if (myitems[i].Echeance > nextTime) {// si l'echeance est supérieure à la date du prochain jour intercalaire
+        console.log(myitemsComplete);
+        if (myitems[i].task.taskDueDate > nextTime) {// si l'echeance est supérieure à la date du prochain jour intercalaire
           myitem = new Item;
-          myitem.Echeance = nextTime;
+          myitem.task.taskDueDate = nextTime;
           myitem.title = new Date(nextTime).toDateString();
           myitem.isNotItem = true; // on créé un nouvel intercalaire à la date du lendemain
           if (nextTime < today) {
@@ -44,9 +47,9 @@ export class TaskListPipe implements PipeTransform {
           }
           myitemsComplete.push(myitem);
           nextTime = nextTime + 86400000;
-          while (myitems[i].Echeance > nextTime) {
+          while (myitems[i].task.taskDueDate > nextTime) {
             myitem = new Item;
-            myitem.Echeance = nextTime;
+            myitem.task.taskDueDate = nextTime;
             myitem.title = new Date(nextTime).toDateString();
             myitem.isNotItem = true;
             if (nextTime < today) {
@@ -69,7 +72,7 @@ export class TaskListPipe implements PipeTransform {
     }
   }
   comparator(a, b) {
-    return parseInt(a.Echeance, 10) - parseInt(b.Echeance, 10);
+    return parseInt(a.task.taskDueDate, 10) - parseInt(b.task.taskDueDate, 10);
   }
   setMidnight(mytime: number): number {
     const mydate = new Date (mytime);

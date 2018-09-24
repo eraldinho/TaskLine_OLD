@@ -137,7 +137,7 @@ export class NewTaskFormComponent implements OnInit {
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
-    this.scrudService.AddDoc2Collection('atelier', this.ATDForm.value);
+    this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value);
   }
 
 }

@@ -11,5 +11,9 @@ export class Item {
     montage = false;
     relC = false;
     compta = false;
-    task: {taskName, taskType, taskCreationDate, taskDueDate, taskOperator};
+    task: {};
+
+    constructor() {
+      this.task =  {taskName: '', taskType: '', taskCreationDate: 0, taskDueDate: 0, taskOperator: ''};
+    }
   }
