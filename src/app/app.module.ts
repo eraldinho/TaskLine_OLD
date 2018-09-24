@@ -36,6 +36,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTabsModule} from '@angular/material/tabs';
 
 // Customs components
 import { NewTaskFormComponent } from './tasks/new-task-form/new-task-form.component';
@@ -48,6 +49,7 @@ import { CommandesComponent } from './commandes/commandes.component';
 import { SavComponent } from './sav/sav.component';
 import { QuickTaskFormComponent } from './tasks/quick-task-form/quick-task-form.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { TaskTabOneComponent } from './tasks/task-tab-one/task-tab-one.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     CommandesComponent,
     SavComponent,
     QuickTaskFormComponent,
-    NavbarComponent
+    NavbarComponent,
+    TaskTabOneComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +93,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTabsModule
   ],
   entryComponents: [],
   providers: [],
