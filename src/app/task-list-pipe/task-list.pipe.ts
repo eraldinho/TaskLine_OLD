@@ -9,26 +9,19 @@ export class TaskListPipe implements PipeTransform {
     let myitems: Array<any>;
     const myitemsComplete: Array<any> = [];
     const today = this.setMidnight(new Date().getTime());
-    console.log('today:  ' + today);
     let previousTime: number;
     let nextTime: number;
     if (items && items.length > 0) {// si il y a des données à traiter
-      myitems = items.sort(this.comparator); // on classe du plus recent au plus ancien
+      myitems = items.sort(this.comparator); // on classe du plus récent au plus ancien
       console.log(myitems);
-      // 1er intercalaire à la date la plus ancienne et on fixe l'heure à minuit
+      // 1er intercalaire à la date de la tache avec l'echeance la plus proche et on fixe l'heure à minuit
       previousTime = this.setMidnight(myitems[0].task.taskDueDate);
       let myitem: Item = new Item;
-      console.log(JSON.stringify(myitem));
       myitem.task.taskDueDate = previousTime;
       myitem.title = new Date(previousTime).toDateString();
       myitem.isNotItem = true;
-      if (previousTime < today) {
-        myitem.beHurry = true;
-      } else if (previousTime === today) {
-        myitem.beQuick = true;
-      } else if (previousTime > today) {
-        myitem.beCool = true;
-      }
+      myitem.delay = (today - previousTime) / 24 / 60 / 60 / 1000;
+      console.log('delay' + myitem.delay);
       myitemsComplete.push(myitem);
       nextTime = previousTime + 86400000; // intercalaire suivant = intercalaire + 24h
       for (let i = 0; i < myitems.length; i++) {
@@ -38,13 +31,7 @@ export class TaskListPipe implements PipeTransform {
           myitem.task.taskDueDate = nextTime;
           myitem.title = new Date(nextTime).toDateString();
           myitem.isNotItem = true; // on créé un nouvel intercalaire à la date du lendemain
-          if (nextTime < today) {
-            myitem.beHurry = true;
-          } else if (nextTime === today) {
-            myitem.beQuick = true;
-          } else if (nextTime > today) {
-            myitem.beCool = true;
-          }
+          myitem.delay = (today - previousTime) / 24 / 60 / 60 / 1000;
           myitemsComplete.push(myitem);
           nextTime = nextTime + 86400000;
           while (myitems[i].task.taskDueDate > nextTime) {
@@ -52,13 +39,7 @@ export class TaskListPipe implements PipeTransform {
             myitem.task.taskDueDate = nextTime;
             myitem.title = new Date(nextTime).toDateString();
             myitem.isNotItem = true;
-            if (nextTime < today) {
-              myitem.beHurry = true;
-            } else if (nextTime === today) {
-              myitem.beQuick = true;
-            } else if (nextTime > today) {
-              myitem.beCool = true;
-            }
+            myitem.delay = (today - previousTime) / 24 / 60 / 60 / 1000;
             myitemsComplete.push(myitem);
             nextTime = nextTime + 86400000;
           }
@@ -75,6 +56,7 @@ export class TaskListPipe implements PipeTransform {
     return parseInt(a.task.taskDueDate, 10) - parseInt(b.task.taskDueDate, 10);
   }
   setMidnight(mytime: number): number {
+    console.log('middnight' + mytime);
     const mydate = new Date (mytime);
     mydate.setHours(0);
     mydate.setMinutes(0);

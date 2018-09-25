@@ -1,16 +1,17 @@
 export class Item {
-    $key: string;
+    // $key: string;
     title: string;
-    body: string;
-    active = true;
+    // body: string;
+    // active = true;
     isNotItem = false;
-    beCool = false;
-    beQuick = false;
-    beHurry = false;
-    sav = false;
-    montage = false;
-    relC = false;
-    compta = false;
+    // beCool = false;
+    // beQuick = false;
+    // beHurry = false;
+    // sav = false;
+    // montage = false;
+    // relC = false;
+    // compta = false;
+    delay: number;
     task: {};
 
     constructor() {
