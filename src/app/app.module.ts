@@ -51,6 +51,7 @@ import { SavComponent } from './sav/sav.component';
 import { QuickTaskFormComponent } from './tasks/quick-task-form/quick-task-form.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TaskTabOneComponent } from './tasks/task-tab-one/task-tab-one.component';
+import { EditTaskFormComponent } from './tasks/edit-task-form/edit-task-form.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { TaskTabOneComponent } from './tasks/task-tab-one/task-tab-one.component
     SavComponent,
     QuickTaskFormComponent,
     NavbarComponent,
-    TaskTabOneComponent
+    TaskTabOneComponent,
+    EditTaskFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,129 @@
+<form (ngSubmit)="register()" [formGroup]="ATDForm">
+  <div [formGroup]="taskGroup">
+      <mat-form-field>
+        <input formControlName="taskName" matInput placeholder="Nom de la tâche">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="taskType" placeholder="Type de tâche">
+          <mat-option *ngFor="let Type of Types" [value]="Type">
+            {{Type}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+          <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()" readonly>
+      </mat-form-field>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+    <mat-dialog-content>
+      <mat-accordion>
+        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Client
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        
+          <mat-form-field>
+            <input formControlName="clientName" matInput placeholder="Nom">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="clientFirstName" matInput placeholder="Prénom">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="clientNumber" matInput placeholder="Numéro Client">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="clientMail" matInput placeholder="Mail">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="clientPhone" matInput placeholder="Téléphone">
+          </mat-form-field>
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Matériel
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        
+          <mat-form-field>
+            <input formControlName="deviceType" matInput placeholder="Type">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="deviceBrand" matInput placeholder="Marque">
+          </mat-form-field>
+          <section class="example-section">
+            <mat-checkbox class="example-margin" formControlName="deviceStart">Le PC démarre</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName="deviceReset">Formatage possible</mat-checkbox>
+          </section>
+          <div>
+              <mat-form-field style="width:100%">
+                <textarea formControlName="deviceDescription" matInput placeholder="Description"></textarea>
+              </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel  [formGroup]="panneGroup" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Panne
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        
+          <div>
+            <mat-form-field style="width:100%">
+              <textarea formControlName="panneDescription" matInput placeholder="Description de la panne"></textarea>
+            </mat-form-field>
+        </div>
+        
+        </mat-expansion-panel>
+
+        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Prestations
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        
+          <section class="example-section">
+              <mat-form-field style="width:100%">
+                  <input matInput formControlName="prestationAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
+                      {{presta.nom}}
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+              <mat-icon (click)="addPrestation('nom','prix','code')">add_circle_outlined</mat-icon>
+          </section>
+          <div  formArrayName="prestations">
+            <div *ngFor="let presta of ATDForm.controls.prestations.controls; let i=index">
+              <div [formGroupName]="i">
+                  <section class="example-section">
+                      <mat-form-field style="width:100%">
+                          <input matInput formControlName="nom">
+                      </mat-form-field>
+                      <mat-form-field style="width:100%">
+                          <input matInput formControlName="prix">
+                      </mat-form-field>
+                      <mat-icon (click)="removePrestation(i)">delete</mat-icon>
+                  </section>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        
+      </mat-accordion>
+      <div>
+        <mat-form-field style="width:100%">
+          <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button>Ajouter</button>
+      <button mat-button>Annuler</button>
+    </mat-dialog-actions>
+</form>

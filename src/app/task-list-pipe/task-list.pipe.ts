@@ -17,7 +17,7 @@ export class TaskListPipe implements PipeTransform {
       // 1er intercalaire à la date de la tache avec l'echeance la plus proche et on fixe l'heure à minuit
       previousTime = this.setMidnight(myitems[0].task.taskDueDate);
       let myitem: Item = new Item;
-      myitem.task.taskDueDate = previousTime;
+      myitem.taskDueDate = previousTime;
       myitem.title = new Date(previousTime).toDateString();
       myitem.isNotItem = true;
       myitem.delay = (-today + previousTime) / 24 / 60 / 60 / 1000;
@@ -28,7 +28,7 @@ export class TaskListPipe implements PipeTransform {
         console.log(myitemsComplete);
         if (myitems[i].task.taskDueDate > nextTime) {// si l'echeance est supérieure à la date du prochain jour intercalaire
           myitem = new Item;
-          myitem.task.taskDueDate = nextTime;
+          myitem.taskDueDate = nextTime;
           myitem.title = new Date(nextTime).toDateString();
           myitem.isNotItem = true; // on créé un nouvel intercalaire à la date du lendemain
           myitem.delay = (-today + nextTime) / 24 / 60 / 60 / 1000;
@@ -36,7 +36,7 @@ export class TaskListPipe implements PipeTransform {
           nextTime = nextTime + 86400000;
           while (myitems[i].task.taskDueDate > nextTime) {
             myitem = new Item;
-            myitem.task.taskDueDate = nextTime;
+            myitem.taskDueDate = nextTime;
             myitem.title = new Date(nextTime).toDateString();
             myitem.isNotItem = true;
             myitem.delay = (-today + nextTime) / 24 / 60 / 60 / 1000;
