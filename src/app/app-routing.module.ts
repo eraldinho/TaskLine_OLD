@@ -3,16 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { TasksComponent } from './tasks/tasks.component';
 import { AtelierComponent } from './atelier/atelier.component';
 import { SavComponent } from './sav/sav.component';
-import { LoginComponent } from './login/login.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import {AuthGuard} from './auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/tasks(toolbar:navbar)', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'tasks', component: TasksComponent},
-  { path: 'atelier', component: AtelierComponent },
-  { path: 'sav', component: SavComponent },
-  {path: 'navbar', component: NavbarComponent, outlet: 'toolbar'}
+  { path: '', redirectTo: '/tasks(toolbar:navbar)', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'login', component: UserLoginComponent },
+  { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard]},
+  { path: 'atelier', component: AtelierComponent, canActivate: [AuthGuard] },
+  { path: 'sav', component: SavComponent, canActivate: [AuthGuard] },
+  {path: 'navbar', component: NavbarComponent, outlet: 'toolbar', canActivate: [AuthGuard]}
 ];
 
 @NgModule({

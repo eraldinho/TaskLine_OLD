@@ -52,6 +52,8 @@ import { QuickTaskFormComponent } from './tasks/quick-task-form/quick-task-form.
 import { NavbarComponent } from './navbar/navbar.component';
 import { TaskTabOneComponent } from './tasks/task-tab-one/task-tab-one.component';
 import { EditTaskFormComponent } from './tasks/edit-task-form/edit-task-form.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserFormComponent } from './user-login/user-form/user-form.component';
 
 
 @NgModule({
@@ -68,7 +70,9 @@ import { EditTaskFormComponent } from './tasks/edit-task-form/edit-task-form.com
     QuickTaskFormComponent,
     NavbarComponent,
     TaskTabOneComponent,
-    EditTaskFormComponent
+    EditTaskFormComponent,
+    UserLoginComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
