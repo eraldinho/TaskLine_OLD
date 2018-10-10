@@ -15,8 +15,6 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
-    // this.tasks = this.myTasks.subscribe();
-    // console.log(this.tasks);
   }
 
 }
