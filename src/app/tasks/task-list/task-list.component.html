@@ -1,4 +1,4 @@
-<div  style="min-height: 200px"><mat-card *ngFor="let task of TasksSnap | async | taskList">
+<div  style="min-height: 200px"><mat-card *ngFor="let task of Tasks | async | taskList">
     <mat-chip-list *ngIf=!task.isNotItem>
         <mat-chip *ngIf="task.task.taskType == 'atelier'"><mat-icon>build</mat-icon></mat-chip>
         <mat-chip *ngIf="task.task.taskType == 'compta'"><mat-icon>euro_symbol</mat-icon></mat-chip>
@@ -9,6 +9,7 @@
         <mat-chip>
             <a>{{ task.task.taskName }}</a>
         </mat-chip>
+        <mat-chip>{{ task.id}}</mat-chip>
         <mat-chip>{{ task.task.taskDueDate|date:'dd/MM/yyyy'}}</mat-chip>
         <mat-chip style="background-color: #c98732"><mat-icon>access_time</mat-icon></mat-chip>
         <mat-chip><mat-icon>edit</mat-icon></mat-chip>

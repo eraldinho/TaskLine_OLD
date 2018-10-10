@@ -10,10 +10,13 @@ export class TaskListComponent implements OnInit {
 
   constructor(private scrudService: ScrudService) { }
 
-  myTasks;
+  Tasks;
+  tasks;
 
   ngOnInit() {
-    this.myTasks = this.scrudService.RetrieveCollectionWithID('tasks');
+    this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
+    // this.tasks = this.myTasks.subscribe();
+    // console.log(this.tasks);
   }
 
 }
