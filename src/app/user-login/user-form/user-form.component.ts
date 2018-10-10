@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -33,7 +34,7 @@ export class UserFormComponent implements OnInit {
     },
   };
 
-  constructor(private fb: FormBuilder, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.buildForm();
@@ -48,7 +49,8 @@ export class UserFormComponent implements OnInit {
   }
 
   login() {
-    this.auth.emailLogin(this.userForm.value['email'], this.userForm.value['password']);
+    this.auth.emailLogin(this.userForm.value['email'], this.userForm.value['password'])
+    .then( () => this.router.navigate(['/']));
   }
 
   resetPassword() {
@@ -63,7 +65,7 @@ export class UserFormComponent implements OnInit {
         Validators.email,
       ]],
       'password': ['', [
-        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9@]+)$'),
         Validators.minLength(6),
         Validators.maxLength(25),
       ]],

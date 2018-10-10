@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { firebase } from '@firebase/app';
 import { auth } from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {
@@ -11,7 +10,7 @@ import {
 import { NotifyService } from '../notify/notify.service';
 
 import { Observable, of } from 'rxjs';
-import { switchMap, startWith, tap, filter } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 interface User {
   uid: string;
@@ -20,7 +19,9 @@ interface User {
   displayName?: string;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   user: Observable<User | null>;
 
@@ -123,7 +124,8 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['/']);
+      console.log('signout');
+      this.router.navigate(['/login']);
     });
   }
 

@@ -43,7 +43,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { NewTaskFormComponent } from './tasks/new-task-form/new-task-form.component';
 import { TaskListPipe } from './task-list-pipe/task-list.pipe';
 import { TaskListComponent } from './tasks/task-list/task-list.component';
-import { LoginComponent } from './login/login.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { AtelierComponent } from './atelier/atelier.component';
 import { CommandesComponent } from './commandes/commandes.component';
@@ -62,7 +61,6 @@ import { UserFormComponent } from './user-login/user-form/user-form.component';
     NewTaskFormComponent,
     TaskListPipe,
     TaskListComponent,
-    LoginComponent,
     TasksComponent,
     AtelierComponent,
     CommandesComponent,
