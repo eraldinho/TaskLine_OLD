@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -16,6 +17,17 @@ export class ScrudService {
 
   RetrieveCollection(collectionName: string): Observable<any> {
     return this.afs.collection(collectionName).valueChanges();
+  }
+
+  RetrieveCollectionWithID (collectionName: string): Observable<any> {
+    return this.afs.collection(collectionName).snapshotChanges().pipe(
+      map(arr => {
+      return arr.map(snap => {
+        const data = snap.payload.doc.data();
+        const id = snap.payload.doc.id;
+        return { id, ...data };
+      });
+    }));
   }
 
   RetrieveDocument(documentName: string): Observable<any> {

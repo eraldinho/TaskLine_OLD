@@ -13,7 +13,7 @@ export class TaskListComponent implements OnInit {
   myTasks;
 
   ngOnInit() {
-    this.myTasks = this.scrudService.RetrieveCollection('tasks');
+    this.myTasks = this.scrudService.RetrieveCollectionWithID('tasks');
   }
 
 }
