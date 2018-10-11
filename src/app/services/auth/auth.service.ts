@@ -44,6 +44,10 @@ export class AuthService {
     );
   }
 
+  getUserID (): string {
+    return this.afAuth.auth.currentUser.uid;
+  }
+
   ////// OAuth Methods /////
 
   googleLogin() {
