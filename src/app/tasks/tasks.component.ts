@@ -10,7 +10,7 @@ import { TasksService } from '../services/tasks/tasks.service';
 export class TasksComponent implements OnInit {
   currentUser;
   tabs = [];
-  tabSelectedIndex = 0;
+  tabSelectedIndex;
 
   constructor(private afAuth: AngularFireAuth, private tasksService: TasksService) {
     tasksService.tasksEdited$.subscribe(

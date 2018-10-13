@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex] = tabSelectedIndex>
+<mat-tab-group [(selectedIndex)] = tabSelectedIndex>
   <mat-tab label="Liste des tâches"><app-task-tab-one></app-task-tab-one></mat-tab>
   <mat-tab label="Créer une tâche"><app-new-task-form></app-new-task-form></mat-tab>
   <mat-tab *ngFor = "let tab of tabs[currentUser]">
