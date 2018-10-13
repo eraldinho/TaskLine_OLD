@@ -1,5 +1,17 @@
-<mat-tab-group>
+<mat-tab-group [selectedIndex] = tabSelectedIndex>
   <mat-tab label="Liste des tâches"><app-task-tab-one></app-task-tab-one></mat-tab>
   <mat-tab label="Créer une tâche"><app-new-task-form></app-new-task-form></mat-tab>
-  <mat-tab *ngFor = "let tab of tabs[currentUser]" label="{{ tab[1] }}"><app-edit-task-form></app-edit-task-form></mat-tab>
+  <mat-tab *ngFor = "let tab of tabs[currentUser]">
+    <ng-template mat-tab-label>
+      <mat-icon *ngIf="tab[2] == 'atelier'" class="left-tab-icon">build</mat-icon>
+      <mat-icon *ngIf="tab[2] == 'compta'" class="left-tab-icon">euro_symbol</mat-icon>
+      <mat-icon *ngIf="tab[2] == 'montage'" class="left-tab-icon">computer</mat-icon>
+      <mat-icon *ngIf="tab[2] == 'expedition'" class="left-tab-icon">local_shipping</mat-icon>
+      <mat-icon *ngIf="tab[2] == 'client'" class="left-tab-icon">face</mat-icon>
+      <mat-icon *ngIf="tab[2] == 'boutique'" class="left-tab-icon">store</mat-icon>
+      {{ tab[1] }}
+      <mat-icon class="example-tab-icon" (click)=closeTab(tab[1]) class="right-tab-icon">close</mat-icon>
+    </ng-template>
+    <app-edit-task-form></app-edit-task-form>
+  </mat-tab>
 </mat-tab-group>
