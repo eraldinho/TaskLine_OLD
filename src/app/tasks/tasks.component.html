@@ -12,6 +12,6 @@
       {{ tab[1] }}
       <mat-icon class="example-tab-icon" (click)=closeTab(tab[1]) class="right-tab-icon">close</mat-icon>
     </ng-template>
-    <app-edit-task-form></app-edit-task-form>
+    <app-edit-task-form [taskID] = tab[0]></app-edit-task-form>
   </mat-tab>
 </mat-tab-group>

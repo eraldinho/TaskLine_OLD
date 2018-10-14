@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
@@ -17,6 +17,7 @@ export interface Prestation {
 })
 export class EditTaskFormComponent implements OnInit {
 
+  @Input() taskID: string;
   filteredOptions: Observable<Prestation[]>;
   taskTypes;
   Types;
@@ -92,7 +93,7 @@ export class EditTaskFormComponent implements OnInit {
 
   ngOnInit() {
     this.ATDForm.disable();
-    this.mytask = this.scrudService.RetrieveDocument('tasks/30EcbLYSsvH0TaPCCarv');
+    this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
     this.mytask.subscribe(val => this.ATDForm.setValue(val));
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
     this.taskTypes.subscribe(val => this.Types = val.types);
