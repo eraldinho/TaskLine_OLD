@@ -1,8 +1,8 @@
-<form (ngSubmit)="register()" [formGroup]="p1Form">
+<form (ngSubmit)="register()" [formGroup]="ATDForm">
     <div [formGroup]="taskGroup">
-        <div><input formControlName="taskName"></div>
+        <div [formGroup]="taskGroup"><div><input formControlName="taskName"></div></div>
         <div><button mat-button (click)="AddTask('montage', 518400000)" type="button">Montage</button></div>
-        <div><button mat-button (click)="AddTask('avoir', 172800000)">Avoir</button></div>
+        <div><button mat-button (click)="AddTask('compta', 172800000, 'protection marge ')">Avoir</button></div>
         <div><button mat-button (click)="AddTask('expedition', 518400000)">Expédition</button></div>
         <mat-divider></mat-divider>
     </div>

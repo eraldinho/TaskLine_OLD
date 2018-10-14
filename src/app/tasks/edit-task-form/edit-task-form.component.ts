@@ -94,7 +94,10 @@ export class EditTaskFormComponent implements OnInit {
   ngOnInit() {
     this.ATDForm.disable();
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
-    this.mytask.subscribe(val => this.ATDForm.setValue(val));
+    this.mytask.subscribe(val => {
+      console.log(val);
+      this.ATDForm.setValue(val);
+    });
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
     this.taskTypes.subscribe(val => this.Types = val.types);
     this.Prestations = this.scrudService.RetrieveCollection('prestations');

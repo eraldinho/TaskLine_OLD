@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material';
 
 export interface Prestation {
   nom: string;
@@ -52,7 +53,7 @@ export class NewTaskFormComponent implements OnInit {
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
 
-  constructor(private fb: FormBuilder, private scrudService: ScrudService) {
+  constructor(private fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar) {
     this.taskGroup = fb.group({
         taskName: this.taskNameCtrl,
         taskType: this.taskTypeCtrl,
@@ -137,8 +138,14 @@ export class NewTaskFormComponent implements OnInit {
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
-    this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value);
-    this.ATDForm.reset();
+    this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
+    .then((result) => {
+      let action: string;
+      result === 1 ?  (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
+      this.snackBar.open('Ajout Tâche', action, {
+        duration: 3000,
+      });
+    });
   }
 
 }
