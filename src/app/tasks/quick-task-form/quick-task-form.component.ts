@@ -82,18 +82,20 @@ export class QuickTaskFormComponent implements OnInit {
   }
 
   AddTask(type: string, delai: number, complementNom: string= '') {
-    const today = Date.now();
-    this.ATDForm.value.task.taskName = complementNom + this.ATDForm.value.task.taskName;
-    this.ATDForm.value.task.taskType = type;
-    this.ATDForm.value.task.taskDueDate = today + delai;
-    this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
-    .then((result) => {
-      let action: string;
-      result === 1 ?  (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
-      this.snackBar.open('Ajout ' +  type, action, {
-        duration: 3000,
+    if (this.ATDForm.value.task.taskName) {
+      const today = Date.now();
+      this.ATDForm.value.task.taskName = complementNom + this.ATDForm.value.task.taskName;
+      this.ATDForm.value.task.taskType = type;
+      this.ATDForm.value.task.taskDueDate = today + delai;
+      this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
+      .then((result) => {
+        let action: string;
+        result === 1 ?  (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
+        this.snackBar.open('Ajout ' +  type, action, {
+          duration: 3000,
+        });
       });
-    });
+    }
   }
 
   OpenNewTaskDialog() {

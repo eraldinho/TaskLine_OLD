@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { isNull } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.afAuth.authState;
     this.afAuth.authState.subscribe(userData => {
-      this.currentUser = userData.email;
+      if (userData !== null) {
+        this.currentUser = userData.email;
+      }
     });
   }
 

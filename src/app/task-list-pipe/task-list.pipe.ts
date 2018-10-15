@@ -23,7 +23,7 @@ export class TaskListPipe implements PipeTransform {
       myitemsComplete.push(myitem);
       nextTime = previousTime + 86400000; // intercalaire suivant = intercalaire + 24h
       for (let i = 0; i < myitems.length; i++) {
-        if (myitems[i].task.taskDueDate > nextTime) {// si l'echeance est supérieure à la date du prochain jour intercalaire
+        if (myitems[i].task.taskDueDate >= nextTime) {// si l'echeance est supérieure à la date du prochain jour intercalaire
           myitem = new Item;
           myitem.taskDueDate = nextTime;
           myitem.title = new Date(nextTime).toDateString();
@@ -31,7 +31,7 @@ export class TaskListPipe implements PipeTransform {
           myitem.delay = (-today + nextTime) / 24 / 60 / 60 / 1000;
           myitemsComplete.push(myitem);
           nextTime = nextTime + 86400000;
-          while (myitems[i].task.taskDueDate > nextTime) {
+          while (myitems[i].task.taskDueDate >= nextTime) {
             myitem = new Item;
             myitem.taskDueDate = nextTime;
             myitem.title = new Date(nextTime).toDateString();

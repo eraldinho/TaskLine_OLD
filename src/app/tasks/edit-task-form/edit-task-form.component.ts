@@ -95,6 +95,11 @@ export class EditTaskFormComponent implements OnInit {
     this.ATDForm.disable();
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
     this.mytask.subscribe(val => {
+      if (val.prestations.length > 0) {
+        for (let i = 0; i < val.prestations.length; i++ ) {
+          this.addEmptyPrestation();
+        }
+      }
       console.log(val);
       this.ATDForm.setValue(val);
     });
@@ -116,16 +121,12 @@ export class EditTaskFormComponent implements OnInit {
     });
   }
 
-  addPrestation() {
-    // add Prestation to the list
-    if (this.ATDForm.get('prestationAdd').value) {
-      const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
-      if (value.length === 3) {
-        const control = <FormArray>this.ATDForm.controls['prestations'];
-        control.push(this.initPrestation(value[0], value[1], value[2]));
-        this.ATDForm.get('prestationAdd').setValue('');
-      }
-    }
+  addEmptyPrestation() {
+    // add  empty Prestation to the list
+    const control = <FormArray>this.ATDForm.controls['prestations'];
+    control.push(this.initPrestation('', '', ''));
+    this.ATDForm.get('prestationAdd').setValue('');
+    this.ATDForm.disable();
   }
 
   removePrestation(i: number) {

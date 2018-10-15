@@ -32,7 +32,9 @@ export class TasksComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.afAuth.authState;
     this.afAuth.authState.subscribe(userData => {
-      this.currentUser = userData.email;
+      if (userData !== null) {
+        this.currentUser = userData.email;
+      }
     });
   }
 
