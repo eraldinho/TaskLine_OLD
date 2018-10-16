@@ -116,6 +116,7 @@ export class NewTaskFormComponent implements OnInit {
       if (value.length === 3) {
         const control = <FormArray>this.ATDForm.controls['prestations'];
         control.push(this.initPrestation(value[0], value[1], value[2]));
+        this.ATDForm.controls['prestations'].disable();
         this.ATDForm.get('prestationAdd').setValue('');
       }
     }

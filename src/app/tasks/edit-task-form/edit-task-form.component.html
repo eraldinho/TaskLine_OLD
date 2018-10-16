@@ -11,17 +11,24 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-          <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
+          <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()" readonly>
       </mat-form-field>
       <mat-datepicker #picker></mat-datepicker>
+      <mat-icon *ngIf=taskGroup.disabled (click)=taskGroup.enable()>lock_open</mat-icon>
+      <mat-icon *ngIf=!taskGroup.disabled (click)=taskGroup.disable()>lock</mat-icon>
     </div>
     <mat-dialog-content>
-      <mat-accordion>
+      <mat-accordion class="taskFormAccordion">
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Client
             </mat-panel-title>
+            <mat-panel-description>
+              Coordonnées du client
+              <mat-icon *ngIf=clientGroup.disabled (click)=clientGroup.enable()>lock_open</mat-icon>
+              <mat-icon *ngIf=!clientGroup.disabled (click)=clientGroup.disable()>lock</mat-icon>
+            </mat-panel-description>
           </mat-expansion-panel-header>
         
           <mat-form-field>
@@ -46,6 +53,11 @@
             <mat-panel-title>
               Matériel
             </mat-panel-title>
+            <mat-panel-description>
+              Description du matériel
+              <mat-icon *ngIf=deviceGroup.disabled (click)=deviceGroup.enable()>lock_open</mat-icon>
+              <mat-icon *ngIf=!deviceGroup.disabled (click)=deviceGroup.disable()>lock</mat-icon>
+            </mat-panel-description>
           </mat-expansion-panel-header>
         
           <mat-form-field>
@@ -70,6 +82,11 @@
             <mat-panel-title>
               Panne
             </mat-panel-title>
+            <mat-panel-description>
+              Description de la panne
+              <mat-icon *ngIf=panneGroup.disabled (click)=panneGroup.enable()>lock_open</mat-icon>
+              <mat-icon *ngIf=!panneGroup.disabled (click)=panneGroup.disable()>lock</mat-icon>
+            </mat-panel-description>
           </mat-expansion-panel-header>
         
           <div>
@@ -85,6 +102,11 @@
             <mat-panel-title>
               Prestations
             </mat-panel-title>
+            <mat-panel-description>
+              Liste des prestations à effectuer
+              <mat-icon *ngIf=ATDForm.controls.prestationAdd.disabled (click)=ATDForm.controls.prestationAdd.enable()>lock_open</mat-icon>
+              <mat-icon *ngIf=!ATDForm.controls.prestationAdd.disabled (click)=ATDForm.controls.prestationAdd.disable()>lock</mat-icon>
+            </mat-panel-description>
           </mat-expansion-panel-header>
         
           <section class="example-section">

@@ -1,2 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.taskFormAccordion .mat-expansion-panel-header-title, 
+.taskFormAccordion .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.taskFormAccordion .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: right;
+}

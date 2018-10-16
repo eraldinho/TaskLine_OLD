@@ -24,6 +24,8 @@ export class EditTaskFormComponent implements OnInit {
   mytask;
   Prestations;
   myPrestations;
+  // switch for disabling formgroups
+  DisabletaskGroup = 1;
   ATDForm: FormGroup;
   commentCtrl: FormControl;
   // tache
@@ -126,13 +128,30 @@ export class EditTaskFormComponent implements OnInit {
     const control = <FormArray>this.ATDForm.controls['prestations'];
     control.push(this.initPrestation('', '', ''));
     this.ATDForm.get('prestationAdd').setValue('');
-    this.ATDForm.disable();
+    this.ATDForm.controls['prestations'].disable();
+  }
+
+  addPrestation() {
+    // add Prestation to the list if addPrestations control is enabled
+    if (this.ATDForm.controls.prestationAdd.enabled) {
+      if (this.ATDForm.get('prestationAdd').value) {
+        const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
+        if (value.length === 3) {
+          const control = <FormArray>this.ATDForm.controls['prestations'];
+          control.push(this.initPrestation(value[0], value[1], value[2]));
+          this.ATDForm.controls['prestations'].disable();
+          this.ATDForm.get('prestationAdd').setValue('');
+        }
+      }
+    }
   }
 
   removePrestation(i: number) {
-    // remove address from the list
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    control.removeAt(i);
+    // remove address from the list if addPrestations control is enabled
+    if (this.ATDForm.controls.prestationAdd.enabled) {
+      const control = <FormArray>this.ATDForm.controls['prestations'];
+      control.removeAt(i);
+    }
 }
 
   private _filter(value) {
