@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material';
 
 export interface Prestation {
   nom: string;
@@ -56,7 +57,7 @@ export class EditTaskFormComponent implements OnInit {
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
 
-  constructor(private fb: FormBuilder, private scrudService: ScrudService) {
+  constructor(private fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar) {
     this.taskGroup = fb.group({
         taskName: this.taskNameCtrl,
         taskType: this.taskTypeCtrl,
@@ -94,15 +95,21 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    const control = <FormArray>this.ATDForm.controls['prestations'];
+    this.cleanPrestation();
     this.ATDForm.disable();
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
     this.mytask.subscribe(val => {
-      if (val.prestations.length > 0) {
-        for (let i = 0; i < val.prestations.length; i++ ) {
-          this.addEmptyPrestation();
+      if (val.prestations) {
+        console.log('prestations' + '***' + val.prestations.length + '@@@' + control.length);
+        if (val.prestations.length > 0 && val.prestations.length > control.length) {
+          for (let i = 0; i < val.prestations.length; i++ ) {
+            console.log(i);
+            this.addEmptyPrestation();
+          }
         }
       }
-      console.log(val);
+      console.log('edit  ' + JSON.stringify(val));
       this.ATDForm.setValue(val);
     });
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
@@ -152,21 +159,61 @@ export class EditTaskFormComponent implements OnInit {
       const control = <FormArray>this.ATDForm.controls['prestations'];
       control.removeAt(i);
     }
-}
+  }
+
+  cleanPrestation() {
+    // remove address from the list
+    const control = <FormArray>this.ATDForm.controls['prestations'];
+    for (let i = 0; i < control.length; i++) {
+      control.removeAt(i);
+    }
+  }
+
+  enablePrestation() {
+    // remove address from the list
+    const control = <FormArray>this.ATDForm.controls['prestations'];
+    for (let i = 0; i < control.length; i++) {
+      const prestation = control.get([i]);
+      prestation.enable();
+    }
+  }
+
+  disablePrestation() {
+    // remove address from the list
+    const control = <FormArray>this.ATDForm.controls['prestations'];
+    for (let i = 0; i < control.length; i++) {
+      const prestation = control.get([i]);
+      prestation.disable();
+    }
+  }
 
   private _filter(value) {
-    const filterValue = value.toLowerCase();
-    if (filterValue !== '') {
-      return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+    if (value) {
+      const filterValue = value.toLowerCase();
+      if (filterValue !== '') {
+        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+      }
+    } else {
+      return;
     }
   }
 
   register() {
+    this.ATDForm.enable();
+    this.ATDForm.controls['prestations'].enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
-    this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value);
-    this.ATDForm.reset();
+    this.scrudService.UpdateDocument('tasks', this.taskID, this.ATDForm.value)
+    .then((result) => {
+      let action: string;
+      result === 1 ?  (action = 'Succès') : action = 'Echec';
+      this.snackBar.open('Modification Tâche', action, {
+        duration: 3000,
+      });
+    });
+    this.ATDForm.disable();
+    this.ATDForm.controls['prestations'].disable();
   }
 
 }

@@ -19,7 +19,7 @@ export class TaskListPipe implements PipeTransform {
       myitem.taskDueDate = previousTime;
       myitem.title = new Date(previousTime).toDateString();
       myitem.isNotItem = true;
-      myitem.delay = (-today + previousTime) / 24 / 60 / 60 / 1000;
+      myitem.delay = Math.round((-today + previousTime) / 24 / 60 / 60 / 1000);
       myitemsComplete.push(myitem);
       nextTime = previousTime + 86400000; // intercalaire suivant = intercalaire + 24h
       for (let i = 0; i < myitems.length; i++) {
@@ -28,7 +28,7 @@ export class TaskListPipe implements PipeTransform {
           myitem.taskDueDate = nextTime;
           myitem.title = new Date(nextTime).toDateString();
           myitem.isNotItem = true; // on créé un nouvel intercalaire à la date du lendemain
-          myitem.delay = (-today + nextTime) / 24 / 60 / 60 / 1000;
+          myitem.delay =  Math.round((-today + nextTime) / 24 / 60 / 60 / 1000);
           myitemsComplete.push(myitem);
           nextTime = nextTime + 86400000;
           while (myitems[i].task.taskDueDate >= nextTime) {
@@ -36,7 +36,7 @@ export class TaskListPipe implements PipeTransform {
             myitem.taskDueDate = nextTime;
             myitem.title = new Date(nextTime).toDateString();
             myitem.isNotItem = true;
-            myitem.delay = (-today + nextTime) / 24 / 60 / 60 / 1000;
+            myitem.delay =  Math.round((-today + nextTime) / 24 / 60 / 60 / 1000);
             myitemsComplete.push(myitem);
             nextTime = nextTime + 86400000;
           }

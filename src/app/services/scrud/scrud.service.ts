@@ -47,4 +47,18 @@ export class ScrudService {
       });
     });
   }
+
+  UpdateDocument(collectionName: string, documentName: string, data): Promise<number> {
+    const doc = this.afs.doc(collectionName + '/' + documentName);
+    return new Promise<number>(function (resolve, reject) {
+      doc.set(data)
+      .then(() => {
+        console.log('success');
+        resolve(1);
+      } ) .catch(err => {
+        console.log(err);
+        reject(0);
+      });
+    });
+  }
 }

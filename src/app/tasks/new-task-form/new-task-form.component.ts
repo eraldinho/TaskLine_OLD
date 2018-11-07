@@ -116,7 +116,6 @@ export class NewTaskFormComponent implements OnInit {
       if (value.length === 3) {
         const control = <FormArray>this.ATDForm.controls['prestations'];
         control.push(this.initPrestation(value[0], value[1], value[2]));
-        this.ATDForm.controls['prestations'].disable();
         this.ATDForm.get('prestationAdd').setValue('');
       }
     }
@@ -126,16 +125,30 @@ export class NewTaskFormComponent implements OnInit {
     // remove address from the list
     const control = <FormArray>this.ATDForm.controls['prestations'];
     control.removeAt(i);
-}
+  }
+
+  cleanPrestation() {
+    // remove address from the list
+    const control = <FormArray>this.ATDForm.controls['prestations'];
+    for (let i = 0; i < control.length; i++) {
+      control.removeAt(i);
+    }
+  }
 
   private _filter(value) {
-    const filterValue = value.toLowerCase();
-    if (filterValue !== '') {
-      return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+    if (value) {
+      const filterValue = value.toLowerCase();
+      if (filterValue !== '') {
+        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+      }
+    } else {
+      return;
     }
   }
 
   register() {
+    this.ATDForm.enable();
+    this.ATDForm.controls['prestations'].enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
@@ -147,6 +160,11 @@ export class NewTaskFormComponent implements OnInit {
         duration: 3000,
       });
     });
+  }
+
+  cancel() {
+    this.ATDForm.reset();
+    this.cleanPrestation();
   }
 
 }
