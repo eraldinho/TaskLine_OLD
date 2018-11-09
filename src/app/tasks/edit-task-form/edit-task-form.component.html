@@ -1,16 +1,16 @@
 <form (ngSubmit)="register()" [formGroup]="ATDForm">
   <div [formGroup]="taskGroup">
-      <mat-form-field>
+      <mat-form-field class="input-margin">
         <input formControlName="taskName" matInput placeholder="Nom de la tâche">
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="input-margin">
         <mat-select formControlName="taskType" placeholder="Type de tâche">
           <mat-option *ngFor="let Type of Types" [value]="Type">
             {{Type}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="input-margin">
           <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()" readonly>
       </mat-form-field>
       <mat-datepicker #picker></mat-datepicker>
@@ -31,19 +31,19 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
         
-          <mat-form-field>
+          <mat-form-field class="input-margin">
             <input formControlName="clientName" matInput placeholder="Nom">
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="input-margin">
             <input formControlName="clientFirstName" matInput placeholder="Prénom">
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="input-margin">
             <input formControlName="clientNumber" matInput placeholder="Numéro Client">
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="input-margin">
             <input formControlName="clientMail" matInput placeholder="Mail">
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="input-margin">
             <input formControlName="clientPhone" matInput placeholder="Téléphone">
           </mat-form-field>
         </mat-expansion-panel>
@@ -60,14 +60,16 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
         
-          <mat-form-field>
+          <mat-form-field class="input-margin">
             <input formControlName="deviceType" matInput placeholder="Type">
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="input-margin">
             <input formControlName="deviceBrand" matInput placeholder="Marque">
           </mat-form-field>
           <section class="example-section">
             <mat-checkbox class="example-margin" formControlName="deviceStart">Le PC démarre</mat-checkbox>
+            <mat-checkbox class="input-margin" formControlName="deviceDisplay">Affichage Ok</mat-checkbox>
+            <mat-checkbox class="input-margin" formControlName="deviceOsStart">L'OS démarre</mat-checkbox>
             <mat-checkbox class="example-margin" formControlName="deviceReset">Formatage possible</mat-checkbox>
           </section>
           <div>

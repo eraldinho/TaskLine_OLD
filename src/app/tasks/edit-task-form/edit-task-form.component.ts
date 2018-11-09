@@ -4,6 +4,8 @@ import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
+import { stringify } from '@angular/core/src/util';
+import { TasksService } from '../../services/tasks/tasks.service';
 
 export interface Prestation {
   nom: string;
@@ -25,6 +27,7 @@ export class EditTaskFormComponent implements OnInit {
   mytask;
   Prestations;
   myPrestations;
+  taskName;
   // switch for disabling formgroups
   DisabletaskGroup = 1;
   ATDForm: FormGroup;
@@ -48,6 +51,8 @@ export class EditTaskFormComponent implements OnInit {
   deviceTypeCtrl: FormControl;
   deviceBrandCtrl: FormControl;
   deviceStartCtrl: FormControl;
+  deviceDisplayCtrl: FormControl;
+  deviceOsStartCtrl: FormControl;
   deviceResetCtrl: FormControl;
   deviceDescriptionCtrl: FormControl;
   // Panne
@@ -57,7 +62,8 @@ export class EditTaskFormComponent implements OnInit {
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
 
-  constructor(private fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar,
+    private tasksService: TasksService) {
     this.taskGroup = fb.group({
         taskName: this.taskNameCtrl,
         taskType: this.taskTypeCtrl,
@@ -76,6 +82,8 @@ export class EditTaskFormComponent implements OnInit {
       deviceType: this.deviceTypeCtrl,
       deviceBrand: this.deviceBrandCtrl,
       deviceStart: this.deviceStartCtrl,
+      deviceDisplay: this.deviceDisplayCtrl,
+      deviceOsStart: this.deviceOsStartCtrl,
       deviceReset: this.deviceResetCtrl,
       deviceDescription: this.deviceDescriptionCtrl
     });
@@ -111,6 +119,10 @@ export class EditTaskFormComponent implements OnInit {
       }
       console.log('edit  ' + JSON.stringify(val));
       this.ATDForm.setValue(val);
+      const mydate = new Date(this.ATDForm.get('task').get('taskDueDate').value);
+      this.ATDForm.get('task').get('taskDueDate').setValue(mydate);
+      this.taskName = this.ATDForm.get('task').get('taskName').value;
+
     });
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
     this.taskTypes.subscribe(val => this.Types = val.types);
@@ -200,6 +212,7 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   register() {
+    this.ATDForm.get('prestationAdd').setValue('');
     this.ATDForm.enable();
     this.ATDForm.controls['prestations'].enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
@@ -215,6 +228,10 @@ export class EditTaskFormComponent implements OnInit {
     });
     this.ATDForm.disable();
     this.ATDForm.controls['prestations'].disable();
+    console.log('taskNames: ' + this.taskName + ', ' + this.ATDForm.get('task').get('taskName').value);
+    if (this.taskName !== this.ATDForm.get('task').get('taskName').value) {
+      this.tasksService.changeTaskName([this.taskName, this.taskName = this.ATDForm.get('task').get('taskName').value]);
+    }
   }
 
 }

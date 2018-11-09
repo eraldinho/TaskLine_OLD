@@ -44,6 +44,8 @@ export class NewTaskFormComponent implements OnInit {
   deviceTypeCtrl: FormControl;
   deviceBrandCtrl: FormControl;
   deviceStartCtrl: FormControl;
+  deviceDisplayCtrl: FormControl;
+  deviceOsStartCtrl: FormControl;
   deviceResetCtrl: FormControl;
   deviceDescriptionCtrl: FormControl;
   // Panne
@@ -72,6 +74,8 @@ export class NewTaskFormComponent implements OnInit {
       deviceType: this.deviceTypeCtrl,
       deviceBrand: this.deviceBrandCtrl,
       deviceStart: this.deviceStartCtrl,
+      deviceDisplay: this.deviceDisplayCtrl,
+      deviceOsStart: this.deviceOsStartCtrl,
       deviceReset: this.deviceResetCtrl,
       deviceDescription: this.deviceDescriptionCtrl
     });

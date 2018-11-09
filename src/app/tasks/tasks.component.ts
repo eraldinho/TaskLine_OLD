@@ -14,19 +14,27 @@ export class TasksComponent implements OnInit {
 
   constructor(private afAuth: AngularFireAuth, private tasksService: TasksService) {
     tasksService.tasksEdited$.subscribe(
+      // task = [taskId, taskName, taskType]
       task => {
         if (!this.tabs[this.currentUser]) { // si le tableau de taches ouvertes (onglet) n'existe pas pour cet utilisateur
           this.tabs[this.currentUser] = []; // on le crée
         }
         let indexTab = this.findTaskinTabs(task[1]);
         if (indexTab.length < 1) {// si l'onglet n'est pas deja ouvert
-          this.tabs[this.currentUser].push(task); // puis on y ajoute la tache sélectionnée (clic sur btn édit dans liste de tache)
+          this.tabs[this.currentUser].push(task); // ajoute la tache sélectionnée (clic sur btn édit dans liste de tache)
           indexTab = this.findTaskinTabs(task[1]);
-          this.tabSelectedIndex = indexTab[0] + 2;
+          this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'obglet de la tache nouvellement créée
         } else {
-          this.tabSelectedIndex = indexTab[0] + 2;
+          this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'obglet de la tache nouvellement créée
         }
     });
+
+    tasksService.taskNameChanged$.subscribe(
+      taskNames => {
+        this.changeTaskName(taskNames);
+
+      }
+    );
    }
 
   ngOnInit() {
@@ -49,6 +57,7 @@ export class TasksComponent implements OnInit {
     }
   }
 
+  // look for task name in task tab (list of tabs of edited task for this user in UI) and return index if founded
   findTaskinTabs (taskName): number[] {
     const indexTab = [];
     for (let i = 0; i < this.tabs[this.currentUser].length ; i++) {
@@ -57,6 +66,12 @@ export class TasksComponent implements OnInit {
       }
     }
     return indexTab;
+  }
+
+  changeTaskName(taskNames: string[]) {
+    console.log('changeTaskName');
+    const i = this.findTaskinTabs(taskNames[0])[0];
+    this.tabs[this.currentUser][i][1] = taskNames[1];
   }
 
 }
