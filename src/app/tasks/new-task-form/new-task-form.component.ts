@@ -139,7 +139,8 @@ export class NewTaskFormComponent implements OnInit {
     if (value) {
       const filterValue = value.toLowerCase();
       if (filterValue !== '') {
-        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue)
+        || option.code_CEBO.toLowerCase().includes(filterValue));
       }
     } else {
       return;
@@ -147,6 +148,7 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   register() {
+    this.ATDForm.get('prestationAdd').setValue('');
     this.ATDForm.enable();
     this.ATDForm.controls['prestations'].enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);

@@ -92,7 +92,7 @@
                     <input matInput formControlName="prestationAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
                     <mat-autocomplete #auto="matAutocomplete">
                       <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
-                        {{presta.nom}}
+                        ({{presta.code_CEBO}}) {{presta.nom}}
                       </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>

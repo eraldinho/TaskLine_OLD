@@ -191,7 +191,8 @@ export class EditTaskFormComponent implements OnInit {
     if (value) {
       const filterValue = value.toLowerCase();
       if (filterValue !== '') {
-        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue));
+        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue)
+        || option.code_CEBO.toLowerCase().includes(filterValue));
       }
     } else {
       return;
