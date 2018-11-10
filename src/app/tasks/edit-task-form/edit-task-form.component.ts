@@ -61,6 +61,12 @@ export class EditTaskFormComponent implements OnInit {
   // Prestations
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
+  // admin data
+  adminDataGroup: FormGroup;
+  originUserCtrl: FormControl;
+  destinationUserCtrl: FormControl;
+  doneCtrl: FormControl;
+  inProgressCtrl: FormControl;
 
   constructor(private fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar,
     private tasksService: TasksService) {
@@ -91,6 +97,12 @@ export class EditTaskFormComponent implements OnInit {
       panneDescription: this.panneDescriptionCtrl
     });
     this.prestationsArray = fb.array([]);
+    this.adminDataGroup = fb.group({
+      originUser: this.originUserCtrl,
+      destinationUser: this.destinationUserCtrl,
+      done: this.doneCtrl,
+      inProgress: this.inProgressCtrl,
+    });
     this.ATDForm = fb.group({
       task: this.taskGroup,
       client: this.clientGroup,
@@ -209,6 +221,18 @@ export class EditTaskFormComponent implements OnInit {
     } else {
       return;
     }
+  }
+
+  unlock() {
+    this.ATDForm.enable();
+    this.enablePrestation();
+    this.ATDForm.get('task').get('taskType').disable();
+  }
+
+  lock() {
+    this.ATDForm.disable();
+    this.disablePrestation();
+    this.ATDForm.get('task').get('taskType').disable();
   }
 
   register() {
