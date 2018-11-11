@@ -53,6 +53,8 @@ import { TaskTabOneComponent } from './tasks/task-tab-one/task-tab-one.component
 import { EditTaskFormComponent } from './tasks/edit-task-form/edit-task-form.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserFormComponent } from './user-login/user-form/user-form.component';
+import { DelayDialogComponent } from './tasks/task-list/delay-dialog/delay-dialog.component';
+import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { UserFormComponent } from './user-login/user-form/user-form.component';
     TaskTabOneComponent,
     EditTaskFormComponent,
     UserLoginComponent,
-    UserFormComponent
+    UserFormComponent,
+    DelayDialogComponent,
+    DoneDialogComponent
   ],
   imports: [
     BrowserModule,
