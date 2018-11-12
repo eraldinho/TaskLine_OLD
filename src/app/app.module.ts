@@ -105,7 +105,8 @@ import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.c
     MatAutocompleteModule,
     MatTabsModule
   ],
-  entryComponents: [],
+  entryComponents: [DelayDialogComponent,
+    DoneDialogComponent],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
   ],

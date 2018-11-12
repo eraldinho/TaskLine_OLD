@@ -1,3 +1,18 @@
-<p>
-  delay-dialog works!
-</p>
+<h3>Modification de l'échéance pour la tache {{taskName}}</h3>
+<form (ngSubmit)="register()" [formGroup]="DForm">
+  <div>
+    <mat-form-field class="input-margin">
+      <input formControlName="newDueDate" matInput placeholder="Nouvelle echéance" [matDatepicker]="picker" (focus)="picker.open()">
+    </mat-form-field>
+    <mat-datepicker #picker></mat-datepicker>
+  </div>
+  <div>
+    <mat-form-field style="width:100%">
+      <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
+    </mat-form-field>
+  </div>
+</form>
+<mat-dialog-actions>
+    <button mat-button type="button" (click) = 'valider()' cdkFocusInitial>Ajouter</button>
+    <button mat-button type="button" (click) = 'annuler()'>Annuler</button>
+</mat-dialog-actions>

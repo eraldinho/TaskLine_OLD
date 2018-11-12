@@ -242,7 +242,7 @@ export class EditTaskFormComponent implements OnInit {
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
-    this.scrudService.UpdateDocument('tasks', this.taskID, this.ATDForm.value)
+    this.scrudService.SetDocument('tasks', this.taskID, this.ATDForm.value)
     .then((result) => {
       let action: string;
       result === 1 ?  (action = 'Succès') : action = 'Echec';
