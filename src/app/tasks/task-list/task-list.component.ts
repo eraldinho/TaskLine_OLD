@@ -1,10 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import { TasksService } from '../../services/tasks/tasks.service';
-import {MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
 import { DelayDialogComponent } from './delay-dialog/delay-dialog.component';
-import { database } from 'firebase';
-
+import { DoneDialogComponent} from './done-dialog/done-dialog.component';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -12,7 +11,10 @@ import { database } from 'firebase';
 })
 export class TaskListComponent implements OnInit {
 
-  constructor(private scrudService: ScrudService, private tasksService: TasksService, private dialog: MatDialog) { }
+  constructor(private scrudService: ScrudService,
+              private tasksService: TasksService,
+              private dialog: MatDialog,
+              public snackBar: MatSnackBar) { }
 
   Tasks;
 
@@ -29,17 +31,25 @@ export class TaskListComponent implements OnInit {
       taskID: taskId,
       taskname: taskName,
       taskduedate: taskDueDate,
+      tasktype: taskType
     };
     const dialogRef = this.dialog.open(DelayDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result.newDueDate);
-      this.scrudService.UpdateDocument('tasks', taskId, {task: {taskCreationDate: taskCreationDate,
-        taskDueDate: Date.parse(result.newDueDate),
-        taskName: taskName,
-        taskOperator: taskOperator,
-        taskType: taskType}})
-      .then(val => console.log('updated!'));
+      if (result !== 0) {
+        this.scrudService.UpdateDocument('tasks', taskId, {task: {taskCreationDate: taskCreationDate,
+          taskDueDate: Date.parse(result.newDueDate),
+          taskName: taskName,
+          taskOperator: taskOperator,
+          taskType: taskType}})
+          .then(val => {
+            let action: string;
+            val === 1 ?  (action = 'Succès') : action = 'Echec';
+            this.snackBar.open('Moodification échéance Tâche', action, {
+            duration: 3000,
+            });
+          });
+      }
     });
   }
 
@@ -48,8 +58,29 @@ export class TaskListComponent implements OnInit {
     this.tasksService.editTask(task);
   }
 
-  done(taskId) {
-    console.log(taskId);
+  doneDialog(taskId, taskName, taskType) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.width = '100%';
+    dialogConfig.data = {
+      taskID: taskId,
+      taskname: taskName,
+      tasktype: taskType
+    };
+    const dialogRef = this.dialog.open(DoneDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 0) {
+        this.scrudService.UpdateDocument('tasks', taskId, {done: true})
+        .then(val => {
+          let action: string;
+          val === 1 ?  (action = 'Succès') : action = 'Echec';
+          this.snackBar.open('Validation Tâche', action, {
+          duration: 3000,
+          });
+        });
+      }
+    });
   }
 
 }

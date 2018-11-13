@@ -1,3 +1,12 @@
-<p>
-  done-dialog works!
-</p>
+<h3>Validation de la tache {{taskType}} {{taskName}}</h3>
+<form [formGroup]="DoneForm">
+  <div>
+    <mat-form-field style="width:100%"  cdkFocusInitial>
+      <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
+    </mat-form-field>
+  </div>
+</form>
+<mat-dialog-actions>
+    <button mat-button type="button" (click) = 'valider()'>Valider</button>
+    <button mat-button type="button" (click) = 'annuler()'>Annuler</button>
+</mat-dialog-actions>

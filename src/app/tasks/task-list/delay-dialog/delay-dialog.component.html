@@ -1,5 +1,5 @@
-<h3>Modification de l'échéance pour la tache {{taskName}}</h3>
-<form (ngSubmit)="register()" [formGroup]="DForm">
+<h3>Modification de l'échéance pour la tache {{taskType}} {{taskName}}</h3>
+<form [formGroup]="DForm">
   <div>
     <mat-form-field class="input-margin">
       <input formControlName="newDueDate" matInput placeholder="Nouvelle echéance" [matDatepicker]="picker" (focus)="picker.open()">
@@ -13,6 +13,6 @@
   </div>
 </form>
 <mat-dialog-actions>
-    <button mat-button type="button" (click) = 'valider()' cdkFocusInitial>Ajouter</button>
+    <button mat-button type="button" (click) = 'valider()' cdkFocusInitial>Modifier</button>
     <button mat-button type="button" (click) = 'annuler()'>Annuler</button>
 </mat-dialog-actions>

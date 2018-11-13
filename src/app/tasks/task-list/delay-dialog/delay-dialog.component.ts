@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { TaskListComponent } from '../task-list.component';
-import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-delay-dialog',
@@ -12,6 +12,7 @@ export class DelayDialogComponent implements OnInit {
   taskId: string;
   taskName: string;
   taskDueDate: number;
+  taskType: string;
 
   DForm: FormGroup;
   newDueDateCtrl: FormControl;
@@ -25,6 +26,7 @@ export class DelayDialogComponent implements OnInit {
       this.taskId = data.taskID;
       this.taskName = data.taskname;
       this.taskDueDate = data.taskduedate;
+      this.taskType = data.tasktype;
       this.DForm = fb.group({
         newDueDate: this.newDueDateCtrl,
         comment: this.commentCtrl,
@@ -32,14 +34,16 @@ export class DelayDialogComponent implements OnInit {
     }
 
   ngOnInit() {
+    const mydate = new Date(this.taskDueDate);
+    this.DForm.get('newDueDate').setValue(mydate);
   }
 
   valider() {
     this.dialogRef.close(this.DForm.value);
-}
+  }
 
   annuler(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(0);
   }
 
 }
