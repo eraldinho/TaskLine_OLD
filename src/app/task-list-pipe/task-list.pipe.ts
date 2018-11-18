@@ -11,6 +11,7 @@ export class TaskListPipe implements PipeTransform {
     const today = this.setMidnight(new Date().getTime());
     let previousTime: number;
     let nextTime: number;
+    this.cleanDone(items);
     if (items && items.length > 0) {// si il y a des données à traiter
       myitems = items.sort(this.comparator); // on classe du plus récent au plus ancien
       // 1er intercalaire à la date de la tache avec l'echeance la plus proche et on fixe l'heure à minuit
@@ -59,6 +60,15 @@ export class TaskListPipe implements PipeTransform {
     mydate.setSeconds(0);
     mydate.setMilliseconds(0);
     return (mydate.getTime());
+  }
+
+  cleanDone(items) {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].done === true) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
   }
 
 }
