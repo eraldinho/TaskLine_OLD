@@ -47,6 +47,29 @@ export class QuickTaskFormComponent implements OnInit {
   destinationUserCtrl: FormControl;
   doneCtrl: FormControl;
   inProgressCtrl: FormControl;
+  // montage
+  assemblyGroup: FormGroup;
+  checkComponentCtrl: FormControl;
+  assemblyCtrl: FormControl;
+  cableConnectionCtrl: FormControl;
+  BIOSUpdateCtrl: FormControl;
+  BIOSSetUpCtrl: FormControl;
+  LicenceStickerCtrl: FormControl;
+  OSVersionCtrl: FormControl;
+  OSInstallationCtrl: FormControl;
+  OSUpdateCtrl: FormControl;
+  driversCtrl: FormControl;
+  drivesCtrl: FormControl;
+  OSActivationCtrl: FormControl;
+  fanCtrl: FormControl;
+  USBCtrl: FormControl;
+  jackCtrl: FormControl;
+  opticalDriveCtrl: FormControl;
+  cardReaderCtrl: FormControl;
+  shutDownCtrl: FormControl;
+  packagingCtrl: FormControl;
+  softwareValidationCtrl: FormControl;
+  assemblyCommentCtrl: FormControl;
 
   constructor(fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar, private dialog: MatDialog) {
     this.taskGroup = fb.group({
@@ -82,6 +105,29 @@ export class QuickTaskFormComponent implements OnInit {
     done: this.doneCtrl,
     inProgress: this.inProgressCtrl,
   });
+  this.assemblyGroup = fb.group({
+    checkComponent: this.checkComponentCtrl,
+    assembly: this.assemblyCtrl,
+    cableConnection: this.cableConnectionCtrl,
+    BIOSUpdate: this.BIOSUpdateCtrl,
+    BIOSSetUp: this.BIOSSetUpCtrl,
+    LicenceSticker: this.LicenceStickerCtrl,
+    OSVersion: this.OSVersionCtrl,
+    OSInstallation: this.OSInstallationCtrl,
+    OSUpdate: this.OSUpdateCtrl,
+    drivers: this.driversCtrl,
+    drives: this.drivesCtrl,
+    OSActivation: this.OSActivationCtrl,
+    fan: this.fanCtrl,
+    USB: this.USBCtrl,
+    jack: this.jackCtrl,
+    opticalDrive: this.opticalDriveCtrl,
+    cardReader: this.cardReaderCtrl,
+    shutDown: this.shutDownCtrl,
+    packaging: this.packagingCtrl,
+    softwareValidation: this.softwareValidationCtrl,
+    assemblyComment: this.assemblyCommentCtrl
+  });
   this.ATDForm = fb.group({
     task: this.taskGroup,
     client: this.clientGroup,
@@ -89,7 +135,8 @@ export class QuickTaskFormComponent implements OnInit {
     panne: this.panneGroup,
     prestationAdd: this.prestationAddCtrl,
     prestations: this.prestationsArray,
-    comment: this.commentCtrl
+    comment: this.commentCtrl,
+    assemblygroup: this.assemblyGroup
   });
    }
 

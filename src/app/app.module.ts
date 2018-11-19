@@ -38,6 +38,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatRadioModule} from '@angular/material/radio';
 
 // Customs components
 import { NewTaskFormComponent } from './tasks/new-task-form/new-task-form.component';
@@ -103,7 +104,8 @@ import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.c
     MatSelectModule,
     MatCheckboxModule,
     MatAutocompleteModule,
-    MatTabsModule
+    MatTabsModule,
+    MatRadioModule
   ],
   entryComponents: [DelayDialogComponent,
     DoneDialogComponent],

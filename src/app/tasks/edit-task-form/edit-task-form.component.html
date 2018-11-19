@@ -16,6 +16,7 @@
       <mat-datepicker #picker></mat-datepicker>
       <mat-icon *ngIf=taskGroup.disabled (click)="unlock()">lock_open</mat-icon>
       <mat-icon *ngIf=!taskGroup.disabled (click)="lock()">lock</mat-icon>
+      <button *ngIf=!taskGroup.disabled mat-raised-button (clic)=valider()>Modifier</button>
     </div>
     <mat-dialog-content>
       <mat-accordion class="taskFormAccordion">
@@ -130,6 +131,127 @@
             </div>
           </div>
         </mat-expansion-panel>
+        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'montage'" [formGroup]="assemblyGroup">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Montage
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="checkComponent">Liste des composant vérifiée</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="assembly">Montage réalisé</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="cableConnection">Câbles vérifiés</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <span>Mise à jour BIOS</span>
+                <mat-radio-group formControlName="BIOSUpdate">
+                  <mat-radio-button class="input-margin" value="1">Réalisée</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="BIOSSetUp">BIOS paramétré</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <span>Etiquette licence Windows collée</span>
+                <mat-radio-group formControlName="LicenceSticker">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <span>Version Windows vérifiée</span>
+                <mat-radio-group formControlName="OSVersion">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <span>OS installé</span>
+                <mat-radio-group formControlName="OSInstallation">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <span>OS mis à jour</span>
+                <mat-radio-group formControlName="OSUpdate">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <span>Pilotes installés</span>
+                <mat-radio-group formControlName="drivers">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="drives">Disque(s) dur(s) controlé(s)</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <span>OS activé</span>
+                <mat-radio-group formControlName="OSActivation">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="fan">Ventilateur(s) controllé(s)</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="USB">Ports USB controllés</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="jack">Prises Jack controllées</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="opticalDrive">Lecteur(s) optique(s) controllé(s)</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="cardReader">Lecteur(s) de cartes controllé(s)</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+              <mat-checkbox formControlName="shutDown">PC eteint</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <mat-checkbox formControlName="packaging">PC emballé</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <section class="montage-form">
+                <mat-checkbox formControlName="softwareValidation">Validation CEBO effectuée</mat-checkbox>
+            </section>
+            <mat-divider></mat-divider>
+            <div>
+                <mat-form-field style="width:100%">
+                  <textarea formControlName="assemblyComment" matInput placeholder="Commentaires"></textarea>
+                </mat-form-field>
+            </div>
+          </mat-expansion-panel>
         
       </mat-accordion>
       <div>
@@ -138,7 +260,5 @@
         </mat-form-field>
       </div>
     </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button (clic)=valider()>Valider</button>
-    </mat-dialog-actions>
+    <div><button mat-raised-button (clic)=done()>Tâche terminée</button></div>
 </form>
