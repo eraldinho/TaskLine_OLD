@@ -12,6 +12,10 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 export class QuickTaskFormComponent implements OnInit {
   ATDForm: FormGroup;
   commentCtrl: FormControl;
+  originUserCtrl: FormControl;
+  destinationUserCtrl: FormControl;
+  doneCtrl: FormControl;
+  inProgressCtrl: FormControl;
   // tache
   taskGroup: FormGroup;
   taskNameCtrl: FormControl;
@@ -41,12 +45,6 @@ export class QuickTaskFormComponent implements OnInit {
   // Prestations
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
-  // admin data
-  adminDataGroup: FormGroup;
-  originUserCtrl: FormControl;
-  destinationUserCtrl: FormControl;
-  doneCtrl: FormControl;
-  inProgressCtrl: FormControl;
   // montage
   assemblyGroup: FormGroup;
   checkComponentCtrl: FormControl;
@@ -99,12 +97,6 @@ export class QuickTaskFormComponent implements OnInit {
     panneDescription: this.panneDescriptionCtrl
   });
   this.prestationsArray = fb.array([]);
-  this.adminDataGroup = fb.group({
-    originUser: this.originUserCtrl,
-    destinationUser: this.destinationUserCtrl,
-    done: this.doneCtrl,
-    inProgress: this.inProgressCtrl,
-  });
   this.assemblyGroup = fb.group({
     checkComponent: this.checkComponentCtrl,
     assembly: this.assemblyCtrl,
@@ -136,7 +128,11 @@ export class QuickTaskFormComponent implements OnInit {
     prestationAdd: this.prestationAddCtrl,
     prestations: this.prestationsArray,
     comment: this.commentCtrl,
-    assemblygroup: this.assemblyGroup
+    assemblygroup: this.assemblyGroup,
+    originUser: this.originUserCtrl,
+    destinationUser: this.destinationUserCtrl,
+    done: this.doneCtrl,
+    inProgress: this.inProgressCtrl
   });
    }
 

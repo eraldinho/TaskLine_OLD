@@ -19,10 +19,10 @@ export class TasksComponent implements OnInit {
         if (!this.tabs[this.currentUser]) { // si le tableau de taches ouvertes (onglet) n'existe pas pour cet utilisateur
           this.tabs[this.currentUser] = []; // on le crée
         }
-        let indexTab = this.findTaskinTabs(task[1]);
+        let indexTab = this.findTaskinTabs(task[0]);
         if (indexTab.length < 1) {// si l'onglet n'est pas deja ouvert
           this.tabs[this.currentUser].push(task); // ajoute la tache sélectionnée (clic sur btn édit dans liste de tache)
-          indexTab = this.findTaskinTabs(task[1]);
+          indexTab = this.findTaskinTabs(task[0]);
           this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'obglet de la tache nouvellement créée
         } else {
           this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'obglet de la tache nouvellement créée
@@ -32,6 +32,13 @@ export class TasksComponent implements OnInit {
     tasksService.taskNameChanged$.subscribe(
       taskNames => {
         this.changeTaskName(taskNames);
+
+      }
+    );
+
+    tasksService.taskTabClosed$.subscribe(
+      taskID => {
+        this.closeTab(taskID);
 
       }
     );
@@ -58,10 +65,10 @@ export class TasksComponent implements OnInit {
   }
 
   // look for task name in task tab (list of tabs of edited task for this user in UI) and return index if founded
-  findTaskinTabs (taskName): number[] {
+  findTaskinTabs (taskID): number[] {
     const indexTab = [];
     for (let i = 0; i < this.tabs[this.currentUser].length ; i++) {
-      if (this.tabs[this.currentUser][i].indexOf(taskName) > -1) {
+      if (this.tabs[this.currentUser][i].indexOf(taskID) > -1) {
         indexTab.push(i);
       }
     }

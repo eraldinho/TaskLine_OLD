@@ -18,7 +18,6 @@
       <mat-icon *ngIf=!taskGroup.disabled (click)="lock()">lock</mat-icon>
       <button *ngIf=!taskGroup.disabled mat-raised-button (clic)=valider()>Modifier</button>
     </div>
-    <mat-dialog-content>
       <mat-accordion class="taskFormAccordion">
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
           <mat-expansion-panel-header>
@@ -259,6 +258,6 @@
           <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
         </mat-form-field>
       </div>
-    </mat-dialog-content>
-    <div><button mat-raised-button (clic)=done()>Tâche terminée</button></div>
+    <div><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
+    <mat-divider></mat-divider>
 </form>

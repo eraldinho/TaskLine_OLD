@@ -56,6 +56,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserFormComponent } from './user-login/user-form/user-form.component';
 import { DelayDialogComponent } from './tasks/task-list/delay-dialog/delay-dialog.component';
 import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.component';
+import { TaskDoneDialogComponent } from './tasks/edit-task-form/task-done-dialog/task-done-dialog.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.c
     UserLoginComponent,
     UserFormComponent,
     DelayDialogComponent,
-    DoneDialogComponent
+    DoneDialogComponent,
+    TaskDoneDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +110,8 @@ import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.c
     MatRadioModule
   ],
   entryComponents: [DelayDialogComponent,
-    DoneDialogComponent],
+    DoneDialogComponent,
+    TaskDoneDialogComponent],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
   ],

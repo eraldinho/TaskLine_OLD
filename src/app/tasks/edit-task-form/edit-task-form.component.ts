@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material';
-import { stringify } from '@angular/core/src/util';
+import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
 import { TasksService } from '../../services/tasks/tasks.service';
+import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
 
 export interface Prestation {
   nom: string;
@@ -32,6 +32,10 @@ export class EditTaskFormComponent implements OnInit {
   DisabletaskGroup = 1;
   ATDForm: FormGroup;
   commentCtrl: FormControl;
+  originUserCtrl: FormControl;
+  destinationUserCtrl: FormControl;
+  doneCtrl: FormControl;
+  inProgressCtrl: FormControl;
   // tache
   taskGroup: FormGroup;
   taskNameCtrl: FormControl;
@@ -61,12 +65,6 @@ export class EditTaskFormComponent implements OnInit {
   // Prestations
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
-  // admin data
-  adminDataGroup: FormGroup;
-  originUserCtrl: FormControl;
-  destinationUserCtrl: FormControl;
-  doneCtrl: FormControl;
-  inProgressCtrl: FormControl;
   // montage
   assemblyGroup: FormGroup;
   checkComponentCtrl: FormControl;
@@ -91,8 +89,10 @@ export class EditTaskFormComponent implements OnInit {
   softwareValidationCtrl: FormControl;
   assemblyCommentCtrl: FormControl;
 
-  constructor(private fb: FormBuilder, private scrudService: ScrudService, public snackBar: MatSnackBar,
-    private tasksService: TasksService) {
+  constructor(private fb: FormBuilder,
+              private scrudService: ScrudService, public snackBar: MatSnackBar,
+              private tasksService: TasksService,
+              private dialog: MatDialog) {
     this.taskGroup = fb.group({
         taskName: this.taskNameCtrl,
         taskType: this.taskTypeCtrl,
@@ -120,12 +120,6 @@ export class EditTaskFormComponent implements OnInit {
       panneDescription: this.panneDescriptionCtrl
     });
     this.prestationsArray = fb.array([]);
-    this.adminDataGroup = fb.group({
-      originUser: this.originUserCtrl,
-      destinationUser: this.destinationUserCtrl,
-      done: this.doneCtrl,
-      inProgress: this.inProgressCtrl,
-    });
     this.assemblyGroup = fb.group({
       checkComponent: this.checkComponentCtrl,
       assembly: this.assemblyCtrl,
@@ -157,7 +151,11 @@ export class EditTaskFormComponent implements OnInit {
       prestationAdd: this.prestationAddCtrl,
       prestations: this.prestationsArray,
       comment: this.commentCtrl,
-      assemblygroup: this.assemblyGroup
+      assemblygroup: this.assemblyGroup,
+      originUser: this.originUserCtrl,
+      destinationUser: this.destinationUserCtrl,
+      done: this.doneCtrl,
+      inProgress: this.inProgressCtrl
     });
   }
 
@@ -305,4 +303,28 @@ export class EditTaskFormComponent implements OnInit {
     }
   }
 
+  taskDone(taskId) {
+    console.log('taskDOne');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.width = '100%';
+    dialogConfig.data = {
+      taskID: taskId,
+    };
+    const dialogRef = this.dialog.open(TaskDoneDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.scrudService.UpdateDocument('tasks', taskId, {done: true})
+        .then(val => {
+          let action: string;
+          val === 1 ?  (action = 'Succès') : action = 'Echec';
+          this.snackBar.open('Validation Tâche', action, {
+          duration: 3000,
+          });
+          this.tasksService.closeTaskTab(this.taskID);
+        });
+      }
+    });
+  }
 }
