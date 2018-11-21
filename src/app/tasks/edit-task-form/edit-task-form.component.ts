@@ -6,6 +6,7 @@ import {map, startWith} from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
 import { TasksService } from '../../services/tasks/tasks.service';
 import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 export interface Prestation {
   nom: string;
@@ -28,6 +29,7 @@ export class EditTaskFormComponent implements OnInit {
   Prestations;
   myPrestations;
   taskName;
+  currentUser;
   // switch for disabling formgroups
   DisabletaskGroup = 1;
   ATDForm: FormGroup;
@@ -112,7 +114,8 @@ export class EditTaskFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private scrudService: ScrudService, public snackBar: MatSnackBar,
               private tasksService: TasksService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private afAuth: AngularFireAuth) {
       // task
       this.taskNameCtrl = fb.control('');
       this.taskTypeCtrl = fb.control('');
@@ -299,6 +302,13 @@ export class EditTaskFormComponent implements OnInit {
     this.filteredOptions = this.ATDForm.get('prestationAdd').valueChanges.pipe(
       map(nom => this._filter(nom))
     );
+
+    this.currentUser = this.afAuth.authState;
+    this.afAuth.authState.subscribe(userData => {
+      if (userData !== null) {
+        this.currentUser = userData.email;
+      }
+    });
   }
 
   initPrestation(monnom, monprix, moncode) {
@@ -438,5 +448,23 @@ export class EditTaskFormComponent implements OnInit {
         });
       }
     });
+  }
+
+  logIt(display: boolean, formctrl: FormControl, action: string, valuectrl: FormControl) {
+    console.log('hola: ' + valuectrl.value);
+    const mydate = new Date();
+    if (formctrl) {
+      const myDisplayString = '(' + this.currentUser + ' - ' + mydate;
+      formctrl.setValue(myDisplayString);
+    }
+    const myActionString = action + ' => value: ' + valuectrl.value;
+    this.scrudService.AddDoc2Collection('logs',
+      {Date: mydate,
+      Familly: 'Tasks',
+      ID: this.taskID,
+      Name: this.ATDForm.get('task').get('taskName').value,
+      Type: this.ATDForm.get('task').get('taskType').value,
+      User: this.currentUser,
+      Action: myActionString});
   }
 }

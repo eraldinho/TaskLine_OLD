@@ -137,8 +137,8 @@
             </mat-expansion-panel-header>
             <mat-divider></mat-divider>
             <section class="montage-form">
-              <mat-checkbox formControlName="checkComponent">Liste des composant vérifiée</mat-checkbox>
-              <mat-form-field class="input-margin">
+              <mat-checkbox formControlName="checkComponent" (click) = "logIt(true, ATDForm.get('assemblygroup').get('checkComponentLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('checkComponent'))">Liste des composant vérifiée</mat-checkbox>
+              <mat-form-field class="input-margin" class="input-full-width">
                   <input formControlName="checkComponentLog" matInput>
               </mat-form-field>
             </section>
