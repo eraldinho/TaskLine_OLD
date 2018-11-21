@@ -68,31 +68,122 @@ export class EditTaskFormComponent implements OnInit {
   // montage
   assemblyGroup: FormGroup;
   checkComponentCtrl: FormControl;
+  checkComponentLogCtrl: FormControl;
   assemblyCtrl: FormControl;
+  assemblyLogCtrl: FormControl;
   cableConnectionCtrl: FormControl;
+  cableConnectionLogCtrl: FormControl;
   BIOSUpdateCtrl: FormControl;
+  BIOSUpdateLogCtrl: FormControl;
   BIOSSetUpCtrl: FormControl;
+  BIOSSetUpLogCtrl: FormControl;
   LicenceStickerCtrl: FormControl;
+  LicenceStickerLogCtrl: FormControl;
   OSVersionCtrl: FormControl;
+  OSVersionLogCtrl: FormControl;
   OSInstallationCtrl: FormControl;
+  OSInstallationLogCtrl: FormControl;
   OSUpdateCtrl: FormControl;
+  OSUpdateLogCtrl: FormControl;
   driversCtrl: FormControl;
+  driversLogCtrl: FormControl;
   drivesCtrl: FormControl;
+  drivesLogCtrl: FormControl;
   OSActivationCtrl: FormControl;
+  OSActivationLogCtrl: FormControl;
   fanCtrl: FormControl;
+  fanLogCtrl: FormControl;
   USBCtrl: FormControl;
+  USBLogCtrl: FormControl;
   jackCtrl: FormControl;
+  jackLogCtrl: FormControl;
   opticalDriveCtrl: FormControl;
+  opticalDriveLogCtrl: FormControl;
   cardReaderCtrl: FormControl;
+  cardReaderLogCtrl: FormControl;
   shutDownCtrl: FormControl;
+  shutDownLogCtrl: FormControl;
   packagingCtrl: FormControl;
+  packagingLogCtrl: FormControl;
   softwareValidationCtrl: FormControl;
+  softwareValidationLogCtrl: FormControl;
   assemblyCommentCtrl: FormControl;
 
   constructor(private fb: FormBuilder,
               private scrudService: ScrudService, public snackBar: MatSnackBar,
               private tasksService: TasksService,
               private dialog: MatDialog) {
+      // task
+      this.taskNameCtrl = fb.control('');
+      this.taskTypeCtrl = fb.control('');
+      this.taskCreationDateCtrl = fb.control('');
+      this.taskDueDateCtrl = fb.control('');
+      this.taskOperatorCtrl = fb.control('');
+      // client
+      this.clientNameCtrl = fb.control('');
+      this.clientFirstNameCtrl = fb.control('');
+      this.clientNumberCtrl = fb.control('');
+      this.clientMailCtrl = fb.control('');
+      this.clientPhoneCtrl = fb.control('');
+      // device
+      this.deviceTypeCtrl = fb.control('');
+      this.deviceBrandCtrl = fb.control('');
+      this.deviceStartCtrl = fb.control('');
+      this.deviceDisplayCtrl = fb.control('');
+      this.deviceOsStartCtrl = fb.control('');
+      this.deviceResetCtrl = fb.control('');
+      this.deviceDescriptionCtrl = fb.control('');
+      // panne
+      this.panneDescriptionCtrl = fb.control('');
+      // montage
+      this.checkComponentCtrl = fb.control('');
+      this.assemblyCtrl = fb.control('');
+      this.cableConnectionCtrl = fb.control('');
+      this.BIOSUpdateCtrl = fb.control('');
+      this.BIOSSetUpCtrl = fb.control('');
+      this.LicenceStickerCtrl = fb.control('');
+      this.OSVersionCtrl = fb.control('');
+      this.OSInstallationCtrl = fb.control('');
+      this.OSUpdateCtrl = fb.control('');
+      this.driversCtrl = fb.control('');
+      this.drivesCtrl = fb.control('');
+      this.OSActivationCtrl = fb.control('');
+      this.fanCtrl = fb.control('');
+      this.USBCtrl = fb.control('');
+      this.jackCtrl = fb.control('');
+      this.opticalDriveCtrl = fb.control('');
+      this.cardReaderCtrl = fb.control('');
+      this.shutDownCtrl = fb.control('');
+      this.packagingCtrl = fb.control('');
+      this.softwareValidationCtrl = fb.control('');
+      this.checkComponentLogCtrl = fb.control('');
+      this.assemblyLogCtrl = fb.control('');
+      this.cableConnectionLogCtrl = fb.control('');
+      this.BIOSUpdateLogCtrl = fb.control('');
+      this.BIOSSetUpLogCtrl = fb.control('');
+      this.LicenceStickerLogCtrl = fb.control('');
+      this.OSVersionLogCtrl = fb.control('');
+      this.OSInstallationLogCtrl = fb.control('');
+      this.OSUpdateLogCtrl = fb.control('');
+      this.driversLogCtrl = fb.control('');
+      this.drivesLogCtrl = fb.control('');
+      this.OSActivationLogCtrl = fb.control('');
+      this.fanLogCtrl = fb.control('');
+      this.USBLogCtrl = fb.control('');
+      this.jackLogCtrl = fb.control('');
+      this.opticalDriveLogCtrl = fb.control('');
+      this.cardReaderLogCtrl = fb.control('');
+      this.shutDownLogCtrl = fb.control('');
+      this.packagingLogCtrl = fb.control('');
+      this.softwareValidationLogCtrl = fb.control('');
+      this.assemblyCommentCtrl = fb.control('');
+      // ATDForm
+      this.prestationAddCtrl = fb.control('');
+      this.commentCtrl = fb.control('');
+      this.originUserCtrl = fb.control('');
+      this.destinationUserCtrl = fb.control('');
+      this.doneCtrl = fb.control('');
+      this.inProgressCtrl = fb.control('');
     this.taskGroup = fb.group({
         taskName: this.taskNameCtrl,
         taskType: this.taskTypeCtrl,
@@ -141,6 +232,26 @@ export class EditTaskFormComponent implements OnInit {
       shutDown: this.shutDownCtrl,
       packaging: this.packagingCtrl,
       softwareValidation: this.softwareValidationCtrl,
+      checkComponentLog: this.checkComponentLogCtrl,
+      assemblyLog: this.assemblyLogCtrl,
+      cableConnectionLog: this.cableConnectionLogCtrl,
+      BIOSUpdateLog: this.BIOSUpdateLogCtrl,
+      BIOSSetUpLog: this.BIOSSetUpCtrl,
+      LicenceStickerLog: this.LicenceStickerLogCtrl,
+      OSVersionLog: this.OSVersionLogCtrl,
+      OSInstallationLog: this.OSInstallationLogCtrl,
+      OSUpdateLog: this.OSUpdateLogCtrl,
+      driversLog: this.driversLogCtrl,
+      drivesLog: this.drivesLogCtrl,
+      OSActivationLog: this.OSActivationLogCtrl,
+      fanLog: this.fanLogCtrl,
+      USBLog: this.USBLogCtrl,
+      jackLog: this.jackLogCtrl,
+      opticalDriveLog: this.opticalDriveLogCtrl,
+      cardReaderLog: this.cardReaderLogCtrl,
+      shutDownLog: this.shutDownLogCtrl,
+      packagingLog: this.packagingLogCtrl,
+      softwareValidationLog: this.softwareValidationLogCtrl,
       assemblyComment: this.assemblyCommentCtrl
     });
     this.ATDForm = fb.group({
@@ -278,6 +389,7 @@ export class EditTaskFormComponent implements OnInit {
     this.ATDForm.disable();
     this.disablePrestation();
     this.ATDForm.get('task').get('taskType').disable();
+    this.register();
   }
 
   register() {

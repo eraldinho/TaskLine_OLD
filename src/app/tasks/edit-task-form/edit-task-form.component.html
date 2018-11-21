@@ -16,7 +16,6 @@
       <mat-datepicker #picker></mat-datepicker>
       <mat-icon *ngIf=taskGroup.disabled (click)="unlock()">lock_open</mat-icon>
       <mat-icon *ngIf=!taskGroup.disabled (click)="lock()">lock</mat-icon>
-      <button *ngIf=!taskGroup.disabled mat-raised-button (clic)=valider()>Modifier</button>
     </div>
       <mat-accordion class="taskFormAccordion">
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
@@ -139,14 +138,23 @@
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="checkComponent">Liste des composant vérifiée</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="checkComponentLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="assembly">Montage réalisé</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="assemblyLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="cableConnection">Câbles vérifiés</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="cableConnectionLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
@@ -155,10 +163,16 @@
                   <mat-radio-button class="input-margin" value="1">Réalisée</mat-radio-button>
                   <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
                 </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="BIOSUpdateLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="BIOSSetUp">BIOS paramétré</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="BIOSSetUpLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
@@ -167,6 +181,9 @@
                   <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
                   <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
                 </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="LicenceStickerLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
@@ -175,6 +192,9 @@
                   <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
                   <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
                 </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="OSVersionLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
@@ -183,6 +203,9 @@
                   <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
                   <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
                 </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="OSInstallationLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
@@ -191,6 +214,9 @@
                   <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
                   <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
                 </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="OSUpdateLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
@@ -199,10 +225,16 @@
                   <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
                   <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
                 </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="driversLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="drives">Disque(s) dur(s) controlé(s)</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="drivesLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
@@ -211,38 +243,73 @@
                   <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
                   <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
                 </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="OSActivationLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="fan">Ventilateur(s) controllé(s)</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="fanLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="USB">Ports USB controllés</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="USBLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="jack">Prises Jack controllées</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="jackLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
-              <mat-checkbox formControlName="opticalDrive">Lecteur(s) optique(s) controllé(s)</mat-checkbox>
+                <span>Lecteur(s) optique(s) controllé(s)</span>
+                <mat-radio-group formControlName="opticalDrive">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="opticalDriveLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
-              <mat-checkbox formControlName="cardReader">Lecteur(s) de cartes controllé(s)</mat-checkbox>
+                <span>Lecteur(s) de cartes controllé(s)</span>
+                <mat-radio-group formControlName="cardReader">
+                  <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                  <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field class="input-margin">
+                    <input formControlName="cardReaderLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
               <mat-checkbox formControlName="shutDown">PC eteint</mat-checkbox>
+              <mat-form-field class="input-margin">
+                  <input formControlName="shutDownLog" matInput>
+              </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
                 <mat-checkbox formControlName="packaging">PC emballé</mat-checkbox>
+                <mat-form-field class="input-margin">
+                    <input formControlName="packagingLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
                 <mat-checkbox formControlName="softwareValidation">Validation CEBO effectuée</mat-checkbox>
+                <mat-form-field class="input-margin">
+                    <input formControlName="softwareValidationLog" matInput>
+                </mat-form-field>
             </section>
             <mat-divider></mat-divider>
             <div>
