@@ -451,7 +451,8 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   logIt(display: boolean, formctrl: FormControl, action: string, valuectrl: FormControl) {
-    console.log('hola: ' + valuectrl.value);
+    if (!this.ATDForm.get('assemblygroup').disabled) {
+      console.log('hola: ' + valuectrl.value);
     const mydate = new Date();
     if (formctrl) {
       const myDisplayString = '(' + this.currentUser + ' - ' + mydate;
@@ -466,5 +467,6 @@ export class EditTaskFormComponent implements OnInit {
       Type: this.ATDForm.get('task').get('taskType').value,
       User: this.currentUser,
       Action: myActionString});
+    }
   }
 }
