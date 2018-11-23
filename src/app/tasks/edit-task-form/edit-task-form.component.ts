@@ -7,6 +7,7 @@ import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/ma
 import { TasksService } from '../../services/tasks/tasks.service';
 import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { DatePipe } from '@angular/common';
 
 export interface Prestation {
   nom: string;
@@ -115,7 +116,8 @@ export class EditTaskFormComponent implements OnInit {
               private scrudService: ScrudService, public snackBar: MatSnackBar,
               private tasksService: TasksService,
               private dialog: MatDialog,
-              private afAuth: AngularFireAuth) {
+              private afAuth: AngularFireAuth,
+              public datepipe: DatePipe) {
       // task
       this.taskNameCtrl = fb.control('');
       this.taskTypeCtrl = fb.control('');
@@ -399,7 +401,6 @@ export class EditTaskFormComponent implements OnInit {
     this.ATDForm.disable();
     this.disablePrestation();
     this.ATDForm.get('task').get('taskType').disable();
-    this.register();
   }
 
   register() {
@@ -407,7 +408,6 @@ export class EditTaskFormComponent implements OnInit {
     this.ATDForm.enable();
     this.ATDForm.controls['prestations'].enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
-    console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
     this.scrudService.SetDocument('tasks', this.taskID, this.ATDForm.value)
     .then((result) => {
@@ -419,7 +419,6 @@ export class EditTaskFormComponent implements OnInit {
     });
     this.ATDForm.disable();
     this.ATDForm.controls['prestations'].disable();
-    console.log('taskNames: ' + this.taskName + ', ' + this.ATDForm.get('task').get('taskName').value);
     if (this.taskName !== this.ATDForm.get('task').get('taskName').value) {
       this.tasksService.changeTaskName([this.taskName, this.taskName = this.ATDForm.get('task').get('taskName').value]);
     }
@@ -450,15 +449,15 @@ export class EditTaskFormComponent implements OnInit {
     });
   }
 
-  logIt(display: boolean, formctrl: FormControl, action: string, valuectrl: FormControl) {
+  logIt(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
     if (!this.ATDForm.get('assemblygroup').disabled) {
       console.log('hola: ' + valuectrl.value);
     const mydate = new Date();
-    if (formctrl) {
-      const myDisplayString = '(' + this.currentUser + ' - ' + mydate;
+    if (display) {
+      const myDisplayString = '(' + this.currentUser + ' - ' + this.datepipe.transform(mydate, 'short', 'fr-FR');
       formctrl.setValue(myDisplayString);
     }
-    const myActionString = action + ' => value: ' + valuectrl.value;
+    const myActionString = myaction + ' => value: ' + valuectrl.value;
     this.scrudService.AddDoc2Collection('logs',
       {Date: mydate,
       Familly: 'Tasks',
@@ -468,5 +467,7 @@ export class EditTaskFormComponent implements OnInit {
       User: this.currentUser,
       Action: myActionString});
     }
+    this.register();
+    this.ATDForm.get('assemblygroup').enable();
   }
 }

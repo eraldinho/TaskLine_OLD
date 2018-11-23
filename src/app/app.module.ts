@@ -14,6 +14,8 @@ export const firebaseConfig = environment.firebaseConfig;
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+import { DatePipe } from '@angular/common';
+
 // forms
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -113,7 +115,8 @@ import { TaskDoneDialogComponent } from './tasks/edit-task-form/task-done-dialog
     DoneDialogComponent,
     TaskDoneDialogComponent],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
