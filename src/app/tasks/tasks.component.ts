@@ -58,9 +58,12 @@ export class TasksComponent implements OnInit {
   }
 
   closeTab (task: string) {
-    const indexTab = this.findTaskinTabs(task);
-    for (let i = 0; i < indexTab.length; i++) {
-      this.tabs[this.currentUser].splice(indexTab[i], 1);
+    const indexTab = this.findTaskinTabs(task); // on cherche les occurences de la tache dans les onglets
+    for (let i = 0; i < indexTab.length; i++) { // pour chacune de ces occurences
+      this.tabs[this.currentUser].splice(indexTab[i], 1); // on la supprime (on ferme l'onglet)
+    }
+    if (this.tabs[this.currentUser].length === 0) {// si il n'y a pas d'onglet d'éditiond de tache
+      this.tabSelectedIndex = 0; // on affiche le premier onglet (liste des taches)
     }
   }
 

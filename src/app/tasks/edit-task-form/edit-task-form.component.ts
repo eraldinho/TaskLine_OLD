@@ -6,6 +6,7 @@ import {map, startWith} from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
 import { TasksService } from '../../services/tasks/tasks.service';
 import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
+import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { DatePipe } from '@angular/common';
 
@@ -414,7 +415,7 @@ export class EditTaskFormComponent implements OnInit {
       let action: string;
       result === 1 ?  (action = 'Succès') : action = 'Echec';
       this.snackBar.open('Modification Tâche', action, {
-        duration: 3000,
+        duration: 500,
       });
     });
     this.ATDForm.disable();
@@ -426,27 +427,32 @@ export class EditTaskFormComponent implements OnInit {
 
   taskDone(taskId) {
     console.log('taskDOne');
+    console.log(this.isAllChecked(this.assemblyGroup));
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.width = '100%';
     dialogConfig.data = {
       taskID: taskId,
     };
-    const dialogRef = this.dialog.open(TaskDoneDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.scrudService.UpdateDocument('tasks', taskId, {done: true})
-        .then(val => {
-          let action: string;
-          val === 1 ?  (action = 'Succès') : action = 'Echec';
-          this.snackBar.open('Validation Tâche', action, {
-          duration: 3000,
+    if (this.isAllChecked(this.assemblyGroup)) {
+      const dialogRef = this.dialog.open(TaskDoneDialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 1) {
+          this.scrudService.UpdateDocument('tasks', taskId, {done: true})
+          .then(val => {
+            let action: string;
+            val === 1 ?  (action = 'Succès') : action = 'Echec';
+            this.snackBar.open('Validation Tâche', action, {
+            duration: 3000,
+            });
+            this.tasksService.closeTaskTab(this.taskID);
           });
-          this.tasksService.closeTaskTab(this.taskID);
-        });
-      }
-    });
+        }
+      });
+
+    } else {
+      const dialogRef = this.dialog.open(TaskNotDoneDialogComponent, dialogConfig);
+    }
   }
 
   logIt(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
@@ -469,5 +475,18 @@ export class EditTaskFormComponent implements OnInit {
     }
     this.register();
     this.ATDForm.get('assemblygroup').enable();
+  }
+
+  isAllChecked(group: FormGroup): boolean {
+    let allChecked = true;
+    Object.keys(group.controls).forEach((key: string) => { // on parcours tous les item du group
+      const control = group.get(key);
+      if (control !== group.get('assemblyComment')) { // on ne controle pas le champs commentaire
+        if (!control.value || control.value === false) { // si un champs n'est pas saisi
+          allChecked = false;
+        }
+      }
+    });
+    return allChecked;
   }
 }

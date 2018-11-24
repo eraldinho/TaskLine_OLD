@@ -306,7 +306,7 @@
             </section>
             <mat-divider></mat-divider>
             <section class="montage-form">
-                <mat-checkbox formControlName="softwareValidation" (change) = "logIt(true, ATDForm.get('assemblygroup').get('OSInstallationLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('OSInstallation'))">Validation CEBO effectuée</mat-checkbox>
+                <mat-checkbox formControlName="softwareValidation" (change) = "logIt(true, ATDForm.get('assemblygroup').get('softwareValidationLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('softwareValidation'))">Validation CEBO effectuée</mat-checkbox>
                 <mat-form-field class="input-full-width">
                     <input formControlName="softwareValidationLog" matInput>
                 </mat-form-field>

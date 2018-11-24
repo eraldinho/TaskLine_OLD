@@ -59,6 +59,7 @@ import { UserFormComponent } from './user-login/user-form/user-form.component';
 import { DelayDialogComponent } from './tasks/task-list/delay-dialog/delay-dialog.component';
 import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.component';
 import { TaskDoneDialogComponent } from './tasks/edit-task-form/task-done-dialog/task-done-dialog.component';
+import { TaskNotDoneDialogComponent } from './tasks/edit-task-form/task-not-done-dialog/task-not-done-dialog.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { TaskDoneDialogComponent } from './tasks/edit-task-form/task-done-dialog
     UserFormComponent,
     DelayDialogComponent,
     DoneDialogComponent,
-    TaskDoneDialogComponent
+    TaskDoneDialogComponent,
+    TaskNotDoneDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +115,8 @@ import { TaskDoneDialogComponent } from './tasks/edit-task-form/task-done-dialog
   ],
   entryComponents: [DelayDialogComponent,
     DoneDialogComponent,
-    TaskDoneDialogComponent],
+    TaskDoneDialogComponent,
+    TaskNotDoneDialogComponent],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
     DatePipe
