@@ -23,9 +23,9 @@ export class TasksComponent implements OnInit {
         if (indexTab.length < 1) {// si l'onglet n'est pas deja ouvert
           this.tabs[this.currentUser].push(task); // ajoute la tache sélectionnée (clic sur btn édit dans liste de tache)
           indexTab = this.findTaskinTabs(task[0]);
-          this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'obglet de la tache nouvellement créée
+          this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'onglet de la tache nouvellement créée
         } else {
-          this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'obglet de la tache nouvellement créée
+          this.tabSelectedIndex = indexTab[0] + 2; // on selectionne l'onglet de la tache nouvellement créée
         }
     });
 

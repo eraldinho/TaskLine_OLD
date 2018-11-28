@@ -5,13 +5,21 @@ import {Item} from '../item/item';
 })
 export class TaskListPipe implements PipeTransform {
 
-  transform(items: Array<any>): Array<any> {
+  transform(items: Array<any>, args?: Array<object>): Array<any> {
     let myitems: Array<any>;
     const myitemsComplete: Array<any> = [];
     const today = this.setMidnight(new Date().getTime());
     let previousTime: number;
     let nextTime: number;
-    if (items && items.length > 0) {
+    if (items && items.length > 0 && args) {
+      args.forEach(filter => {
+        if (filter.name === "type") {
+          this.clean (items, filter.name, filter.value) {
+            
+          }
+        }
+
+      });
       this.cleanDone(items); // on supprime les tache terminées
     }
     if (items && items.length > 0) {// si il y a des données à traiter

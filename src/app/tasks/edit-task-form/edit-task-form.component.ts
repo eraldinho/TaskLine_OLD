@@ -291,7 +291,6 @@ export class EditTaskFormComponent implements OnInit {
           }
         }
       }
-      console.log('edit  ' + JSON.stringify(val));
       this.ATDForm.setValue(val);
       const mydate = new Date(this.ATDForm.get('task').get('taskDueDate').value);
       this.ATDForm.get('task').get('taskDueDate').setValue(mydate);
@@ -402,6 +401,7 @@ export class EditTaskFormComponent implements OnInit {
     this.ATDForm.disable();
     this.disablePrestation();
     this.ATDForm.get('task').get('taskType').disable();
+    this.register();
   }
 
   register() {

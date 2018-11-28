@@ -60,6 +60,7 @@ import { DelayDialogComponent } from './tasks/task-list/delay-dialog/delay-dialo
 import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.component';
 import { TaskDoneDialogComponent } from './tasks/edit-task-form/task-done-dialog/task-done-dialog.component';
 import { TaskNotDoneDialogComponent } from './tasks/edit-task-form/task-not-done-dialog/task-not-done-dialog.component';
+import { TaskFilterComponent } from './tasks/task-filter/task-filter.component';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { TaskNotDoneDialogComponent } from './tasks/edit-task-form/task-not-done
     DelayDialogComponent,
     DoneDialogComponent,
     TaskDoneDialogComponent,
-    TaskNotDoneDialogComponent
+    TaskNotDoneDialogComponent,
+    TaskFilterComponent
   ],
   imports: [
     BrowserModule,
