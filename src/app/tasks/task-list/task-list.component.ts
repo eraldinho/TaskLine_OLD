@@ -16,8 +16,8 @@ export class TaskListComponent implements OnInit {
               private dialog: MatDialog,
               public snackBar: MatSnackBar) {
     tasksService.taskFiltered$.subscribe(
-      filter => {
-        this.filterTask(filter);
+      myfilter => {
+        this.filterTask(myfilter);
       }
     );
   }
@@ -90,33 +90,27 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  filterTask(filter) {
+  filterTask(myfilter) {
     console.log('filter');
-    switch (filter[0]) {
-      case 'find': this.filters = [filter[1], this.filters[1],
-      this.filters[2], this.filters[3], this.filters[4], this.filters[5], this.filters[6]];
+    switch (myfilter[0]) {
+      case 'find': this.filters[0] = myfilter[1];
       break;
-      case 'type': this.filters = [this.filters[0], filter[1],
-       this.filters[2], this.filters[3], this.filters[4], this.filters[5], this.filters[6]];
+      case 'type': this.filters[1] = myfilter[1];
       break;
-      case 'status': this.filters = [this.filters[0], this.filters[1],
-      filter[1], this.filters[3], this.filters[4], this.filters[5], this.filters[6]];
+      case 'status': this.filters[2] = myfilter[1];
       break;
-      case 'date': this.filters = [this.filters[0], this.filters[1],
-      this.filters[2], filter[1], this.filters[4], this.filters[5], this.filters[6]];
+      case 'date': this.filters[3] = myfilter[1];
       break;
-      case 'oUser': this.filters = [this.filters[0], this.filters[1],
-      this.filters[2], this.filters[3], filter[1], this.filters[5], this.filters[6]];
+      case 'oUser': this.filters[4] = myfilter[1];
       break;
-      case 'dUser': this.filters = [this.filters[0], this.filters[1],
-      this.filters[2], this.filters[3], this.filters[4], filter[1], this.filters[6]];
+      case 'dUser': this.filters[5] = myfilter[1];
       break;
-      case 'attenteRC': this.filters = [this.filters[0], this.filters[1],
-      this.filters[2], this.filters[3], this.filters[4], this.filters[5], filter[1]];
+      case 'attenteRC': this.filters[6] = myfilter[1];
       break;
       case 'all': this.filters = ['', '', '', '', '', '', ''];
       break;
     }
+    this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
     console.log(this.filters);
   }
 

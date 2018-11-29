@@ -84,7 +84,7 @@ export class TaskListPipe implements PipeTransform {
 
   cleanFind(items, value) {
     for (let i = 0; i < items.length; i++) {
-      if (items[i].task.type === value) {
+      if (items[i].task.taskName.indexOf(value) === -1) {
         items.splice(i, 1);
         i = i - 1;
       }
@@ -104,7 +104,7 @@ export class TaskListPipe implements PipeTransform {
   cleanStatus(items, value) {
     console.log('cleanstatus');
     for (let i = 0; i < items.length; i++) {
-      if (items[i].type === value) {
+      if (items[i].status !== value) {
         items.splice(i, 1);
         i = i - 1;
       }
@@ -114,7 +114,7 @@ export class TaskListPipe implements PipeTransform {
   cleanDate(items, value) {
     console.log('cleandate');
     for (let i = 0; i < items.length; i++) {
-      if (items[i].type === value) {
+      if (items[i].task.taskDueDate !== Date.parse(value)) {
         items.splice(i, 1);
         i = i - 1;
       }
@@ -141,7 +141,7 @@ export class TaskListPipe implements PipeTransform {
 
   cleanWCA(items, value) {
     for (let i = 0; i < items.length; i++) {
-      if (items[i].type === value) {
+      if (items[i].WCA === value) {
         items.splice(i, 1);
         i = i - 1;
       }
