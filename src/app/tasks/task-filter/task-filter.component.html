@@ -1,29 +1,67 @@
 <form (ngSubmit)="register()" [formGroup]="TFForm">
     <span>Filtres</span>
     <div>
-        <input formControlName="find" placeholder="recherche">
+        <input formControlName="find" (keyup)="this.filter('find',TFForm.get('find').value)">
     </div>
     <div>
         <span>Type: </span>
         <mat-form-field>
-            <mat-select [(value)]="selected">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
+            <mat-select formControlName="type" (selectionChange)="filter('type',TFForm.get('type').value)">
+              <mat-option value=""></mat-option>
+              <mat-option value="atelier">atelier</mat-option>
+              <mat-option value="compta">compta</mat-option>
+              <mat-option value="expedition">expedition</mat-option>
+              <mat-option value="montage">montage</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
     <div>
         <span>Status: </span>
         <mat-form-field>
-            <mat-select [(value)]="selected">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
+            <mat-select formControlName="status" (selectionChange)="filter('status',TFForm.get('status').value)">
+              <mat-option value=""></mat-option>
+              <mat-option value="afaire">à faire</mat-option>
+              <mat-option value="encours">en cours</mat-option>
+              <mat-option value="terminee">terminée</mat-option>
+              <mat-option value="attenteclient">attente client</mat-option>
             </mat-select>
         </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="input-margin">
+            <input formControlName="date" matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" (dateChange)="filter('date',TFForm.get('date').value)">
+        </mat-form-field>
+        <mat-datepicker #picker></mat-datepicker>
+    </div>
+    <!--<div>
+        <span>Créateur: </span>
+        <mat-form-field>
+            <mat-select formControlName="oUser" (selectionChange)="filter('oUser',TFForm.get('oUser').value)">
+              <mat-option value=""></mat-option>
+              <mat-option value="option1">atelier</mat-option>
+              <mat-option value="option2">compta</mat-option>
+              <mat-option value="option3">expedition</mat-option>
+              <mat-option value="option3">montage</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <span>Destinataire: </span>
+        <mat-form-field value="">
+            <mat-select formControlName="dUser" (selectionChange)="filter('dUser',TFForm.get('dUser').value)">
+              <mat-option></mat-option>
+              <mat-option value="option1">atelier</mat-option>
+              <mat-option value="option2">compta</mat-option>
+              <mat-option value="option3">expedition</mat-option>
+              <mat-option value="option3">montage</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>-->
+    <div>
+        <mat-checkbox formControlName="wFCAnswer" (change)="filter('attenteRC',TFForm.get('wFCAnswer').value)">Attente réponse client</mat-checkbox>
+    </div>
+    <div>
+        <button type="button" mat-raised-button (click)="filter('all','clean');TFForm.reset()">Vider les filtres</button>
     </div>
 </form>
 

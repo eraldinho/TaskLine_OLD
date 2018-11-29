@@ -14,9 +14,16 @@ export class TaskListComponent implements OnInit {
   constructor(private scrudService: ScrudService,
               private tasksService: TasksService,
               private dialog: MatDialog,
-              public snackBar: MatSnackBar) { }
+              public snackBar: MatSnackBar) {
+    tasksService.taskFiltered$.subscribe(
+      filter => {
+        this.filterTask(filter);
+      }
+    );
+  }
 
   Tasks;
+  filters = ['', '', '', '', '', '', ''];
 
   ngOnInit() {
     this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
@@ -81,6 +88,36 @@ export class TaskListComponent implements OnInit {
         });
       }
     });
+  }
+
+  filterTask(filter) {
+    console.log('filter');
+    switch (filter[0]) {
+      case 'find': this.filters = [filter[1], this.filters[1],
+      this.filters[2], this.filters[3], this.filters[4], this.filters[5], this.filters[6]];
+      break;
+      case 'type': this.filters = [this.filters[0], filter[1],
+       this.filters[2], this.filters[3], this.filters[4], this.filters[5], this.filters[6]];
+      break;
+      case 'status': this.filters = [this.filters[0], this.filters[1],
+      filter[1], this.filters[3], this.filters[4], this.filters[5], this.filters[6]];
+      break;
+      case 'date': this.filters = [this.filters[0], this.filters[1],
+      this.filters[2], filter[1], this.filters[4], this.filters[5], this.filters[6]];
+      break;
+      case 'oUser': this.filters = [this.filters[0], this.filters[1],
+      this.filters[2], this.filters[3], filter[1], this.filters[5], this.filters[6]];
+      break;
+      case 'dUser': this.filters = [this.filters[0], this.filters[1],
+      this.filters[2], this.filters[3], this.filters[4], filter[1], this.filters[6]];
+      break;
+      case 'attenteRC': this.filters = [this.filters[0], this.filters[1],
+      this.filters[2], this.filters[3], this.filters[4], this.filters[5], filter[1]];
+      break;
+      case 'all': this.filters = ['', '', '', '', '', '', ''];
+      break;
+    }
+    console.log(this.filters);
   }
 
 }

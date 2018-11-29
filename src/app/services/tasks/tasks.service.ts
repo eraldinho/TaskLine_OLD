@@ -11,11 +11,13 @@ export class TasksService {
   private tasksEdited = new Subject<string[]>();
   private taskNameChanged = new Subject<string[]>();
   private taskTabClosed = new Subject<string>();
+  private taskFiltered = new Subject<string[]>();
 
   // Observable string streams
   tasksEdited$ = this.tasksEdited.asObservable();
   taskNameChanged$ = this.taskNameChanged.asObservable();
   taskTabClosed$ = this.taskTabClosed.asObservable();
+  taskFiltered$ = this.taskFiltered.asObservable();
 
   // Service message commands
   // task = [taskId, taskName, taskType]
@@ -29,6 +31,10 @@ export class TasksService {
 
   closeTaskTab(taskID: string) {
     this.taskTabClosed.next(taskID);
+  }
+
+  filterTask(filter: string, value: string) {
+    this.taskFiltered.next([filter, value]);
   }
 
 }

@@ -5,22 +5,32 @@ import {Item} from '../item/item';
 })
 export class TaskListPipe implements PipeTransform {
 
-  transform(items: Array<any>, args?: Array<object>): Array<any> {
+  transform(items: Array<any>, args?: string[]): Array<any> {
     let myitems: Array<any>;
     const myitemsComplete: Array<any> = [];
     const today = this.setMidnight(new Date().getTime());
     let previousTime: number;
     let nextTime: number;
     if (items && items.length > 0 && args) {
-      args.forEach(filter => {
-        if (filter.name === "type") {
-          this.clean (items, filter.name, filter.value) {
-            
-          }
+      for (let i = 0; i < args.length; i++) {
+        console.log('switch');
+        switch (i) {
+          case 0: if (args[i] !== '') { this.cleanFind(items, args[i]); }
+          break;
+          case 1: if (args[i] !== '') { this.cleanType(items, args[i]); }
+          break;
+          case 2: if (args[i] !== '') { this.cleanStatus(items, args[i]); }
+          break;
+          case 3: if (args[i] !== '') { this.cleanDate(items, args[i]); }
+          break;
+          case 4: if (args[i] !== '') { this.cleanoUser(items, args[i]); }
+          break;
+          case 5: if (args[i] !== '') { this.cleandUser(items, args[i]); }
+          break;
+          case 6: if (args[i] !== '') { this.cleanWCA(items, args[i]); }
+          break;
         }
-
-      });
-      this.cleanDone(items); // on supprime les tache terminées
+      }
     }
     if (items && items.length > 0) {// si il y a des données à traiter
       myitems = items.sort(this.comparator); // on classe du plus récent au plus ancien
@@ -72,9 +82,66 @@ export class TaskListPipe implements PipeTransform {
     return (mydate.getTime());
   }
 
-  cleanDone(items) {
+  cleanFind(items, value) {
     for (let i = 0; i < items.length; i++) {
-      if (items[i].done === true) {
+      if (items[i].task.type === value) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
+  }
+
+  cleanType(items, value) {
+    console.log('cleantype');
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].task.taskType !== value) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
+  }
+
+  cleanStatus(items, value) {
+    console.log('cleanstatus');
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type === value) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
+  }
+
+  cleanDate(items, value) {
+    console.log('cleandate');
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type === value) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
+  }
+
+  cleanoUser(items, value) {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type === value) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
+  }
+
+  cleandUser(items, value) {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type === value) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
+  }
+
+  cleanWCA(items, value) {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type === value) {
         items.splice(i, 1);
         i = i - 1;
       }
