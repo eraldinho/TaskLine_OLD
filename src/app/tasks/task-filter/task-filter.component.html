@@ -1,4 +1,4 @@
-<form (ngSubmit)="register()" [formGroup]="TFForm">
+<form [formGroup]="TFForm">
     <span>Filtres</span>
     <div>
         <input formControlName="find" (keyup)="this.filter('find',TFForm.get('find').value)">

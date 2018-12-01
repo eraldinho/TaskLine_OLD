@@ -16,6 +16,12 @@ export interface Prestation {
   code: string;
 }
 
+export interface Progress {
+  detail: string;
+  done: boolean;
+  log: string;
+}
+
 @Component({
   selector: 'app-edit-task-form',
   templateUrl: './edit-task-form.component.html',
@@ -38,8 +44,9 @@ export class EditTaskFormComponent implements OnInit {
   commentCtrl: FormControl;
   originUserCtrl: FormControl;
   destinationUserCtrl: FormControl;
-  doneCtrl: FormControl;
-  inProgressCtrl: FormControl;
+  statusCtrl: FormControl;
+  WCACtrl: FormControl;
+  CMPCtrl: FormControl;
   // tache
   taskGroup: FormGroup;
   taskNameCtrl: FormControl;
@@ -69,6 +76,9 @@ export class EditTaskFormComponent implements OnInit {
   // Prestations
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
+  // avancement
+  inProgressArray: FormArray;
+  progressAddCtrl: FormControl;
   // montage
   assemblyGroup: FormGroup;
   checkComponentCtrl: FormControl;
@@ -185,11 +195,13 @@ export class EditTaskFormComponent implements OnInit {
       this.assemblyCommentCtrl = fb.control('');
       // ATDForm
       this.prestationAddCtrl = fb.control('');
+      this.inProgressArray = fb.array([]);
       this.commentCtrl = fb.control('');
       this.originUserCtrl = fb.control('');
       this.destinationUserCtrl = fb.control('');
-      this.doneCtrl = fb.control('');
-      this.inProgressCtrl = fb.control('');
+      this.statusCtrl = fb.control('');
+      this.WCACtrl = fb.control('');
+      this.CMPCtrl = fb.control('');
     this.taskGroup = fb.group({
         taskName: this.taskNameCtrl,
         taskType: this.taskTypeCtrl,
@@ -260,6 +272,7 @@ export class EditTaskFormComponent implements OnInit {
       softwareValidationLog: this.softwareValidationLogCtrl,
       assemblyComment: this.assemblyCommentCtrl
     });
+    this.inProgressArray = fb.array([]);
     this.ATDForm = fb.group({
       task: this.taskGroup,
       client: this.clientGroup,
@@ -268,26 +281,41 @@ export class EditTaskFormComponent implements OnInit {
       prestationAdd: this.prestationAddCtrl,
       prestations: this.prestationsArray,
       comment: this.commentCtrl,
+      progressAdd: this.progressAddCtrl,
+      inProgress: this.inProgressArray,
       assemblygroup: this.assemblyGroup,
       originUser: this.originUserCtrl,
       destinationUser: this.destinationUserCtrl,
-      done: this.doneCtrl,
-      inProgress: this.inProgressCtrl
+      status: this.statusCtrl,
+      WCA: this.WCACtrl,
+      CMP: this.CMPCtrl
     });
   }
 
   ngOnInit() {
     const control = <FormArray>this.ATDForm.controls['prestations'];
+    const control2 = <FormArray>this.ATDForm.controls['inProgress'];
     this.cleanPrestation();
+    this.cleaninProgress();
     this.ATDForm.disable();
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
     this.mytask.subscribe(val => {
+      console.log(val);
       if (val.prestations) {
         console.log('prestations' + '***' + val.prestations.length + '@@@' + control.length);
         if (val.prestations.length > 0 && val.prestations.length > control.length) {
           for (let i = 0; i < val.prestations.length; i++ ) {
             console.log(i);
             this.addEmptyPrestation();
+          }
+        }
+      }
+      if (val.inProgress) {
+        console.log('inProgress' + '***' + val.inProgress.length + '@@@' + control2.length);
+        if (val.inProgress.length > 0 && val.inProgress.length > control2.length) {
+          for (let i = 0; i < val.inProgress.length; i++ ) {
+            console.log(i);
+            this.addEmptyProgress();
           }
         }
       }
@@ -322,12 +350,27 @@ export class EditTaskFormComponent implements OnInit {
     });
   }
 
+  initProgress(myAction,  myLog) {
+    // initialize our Progress
+    return this.fb.group({
+        action: [myAction],
+        log: [myLog]
+    });
+  }
+
   addEmptyPrestation() {
     // add  empty Prestation to the list
     const control = <FormArray>this.ATDForm.controls['prestations'];
     control.push(this.initPrestation('', '', ''));
     this.ATDForm.get('prestationAdd').setValue('');
     this.ATDForm.controls['prestations'].disable();
+  }
+
+  addEmptyProgress() {
+    // add  empty Progress to the list
+    const control = <FormArray>this.ATDForm.controls['inProgress'];
+    control.push(this.initProgress('', ''));
+    this.ATDForm.controls['inProgress'].disable();
   }
 
   addPrestation() {
@@ -345,6 +388,22 @@ export class EditTaskFormComponent implements OnInit {
     }
   }
 
+  addProgress() {
+    // add Progress to the list
+    if (this.ATDForm.controls.progressAdd.enabled) {
+      if (this.ATDForm.get('progressAdd').value) {
+          const control = <FormArray>this.ATDForm.controls['inProgress'];
+          const mydate = new Date ();
+          const myDisplayString = '(' + this.currentUser + ' - ' + this.datepipe.transform(mydate, 'short', 'fr-FR');
+          control.push(this.initProgress(this.ATDForm.get('progressAdd').value, myDisplayString));
+          this.ATDForm.get('progressAdd').setValue('');
+          this.ATDForm.controls['inProgress'].disable();
+          this.logIt(false, this.statusCtrl, 'avancement atelier', this.ATDForm.get('progressAdd').value);
+          this.unlock();
+      }
+    }
+  }
+
   removePrestation(i: number) {
     // remove address from the list if addPrestations control is enabled
     if (this.ATDForm.controls.prestationAdd.enabled) {
@@ -354,15 +413,22 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   cleanPrestation() {
-    // remove address from the list
+    // remove prestations from the list
     const control = <FormArray>this.ATDForm.controls['prestations'];
     for (let i = 0; i < control.length; i++) {
       control.removeAt(i);
     }
   }
 
+  cleaninProgress() {
+    // remove progress from the list
+    const control = <FormArray>this.ATDForm.controls['inProgress'];
+    for (let i = 0; i < control.length; i++) {
+      control.removeAt(i);
+    }
+  }
+
   enablePrestation() {
-    // remove address from the list
     const control = <FormArray>this.ATDForm.controls['prestations'];
     for (let i = 0; i < control.length; i++) {
       const prestation = control.get([i]);
@@ -371,11 +437,18 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   disablePrestation() {
-    // remove address from the list
     const control = <FormArray>this.ATDForm.controls['prestations'];
     for (let i = 0; i < control.length; i++) {
       const prestation = control.get([i]);
       prestation.disable();
+    }
+  }
+
+  disableProgress() {
+    const control = <FormArray>this.ATDForm.controls['inProgress'];
+    for (let i = 0; i < control.length; i++) {
+      const progress = control.get([i]);
+      progress.disable();
     }
   }
 
@@ -394,6 +467,7 @@ export class EditTaskFormComponent implements OnInit {
   unlock() {
     this.ATDForm.enable();
     this.enablePrestation();
+    this.ATDForm.get('inProgress').disable();
     this.ATDForm.get('task').get('taskType').disable();
   }
 
@@ -434,11 +508,11 @@ export class EditTaskFormComponent implements OnInit {
     dialogConfig.data = {
       taskID: taskId,
     };
-    if (this.isAllChecked(this.assemblyGroup)) {
+    if (this.isAllChecked(this.assemblyGroup) || this.ATDForm.get('task').get('taskType').value !== 'montage') {
       const dialogRef = this.dialog.open(TaskDoneDialogComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 1) {
-          this.scrudService.UpdateDocument('tasks', taskId, {done: true})
+          this.scrudService.UpdateDocument('tasks', taskId, {status: 'terminee'})
           .then(val => {
             let action: string;
             val === 1 ?  (action = 'Succès') : action = 'Echec';
@@ -474,7 +548,9 @@ export class EditTaskFormComponent implements OnInit {
       Action: myActionString});
     }
     this.register();
-    this.ATDForm.get('assemblygroup').enable();
+    if (this.ATDForm.get('task').get('taskType').value === 'montage') {
+      this.ATDForm.get('assemblygroup').enable();
+    }
   }
 
   isAllChecked(group: FormGroup): boolean {

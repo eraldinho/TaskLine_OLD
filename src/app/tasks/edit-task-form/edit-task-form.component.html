@@ -129,6 +129,41 @@
             </div>
           </div>
         </mat-expansion-panel>
+        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Avancement
+              </mat-panel-title>
+              <mat-panel-description>
+                Liste actions réalisées
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+          
+            <section class="example-section">
+                <mat-form-field style="width:100%">
+                    <textarea matInput formControlName="progressAdd"></textarea>
+                </mat-form-field>
+                <mat-icon (click)="addProgress('myprogress','myLog')">add_circle_outlined</mat-icon>
+            </section>
+            <div  formArrayName="inProgress">
+              <mat-card *ngFor="let progress of ATDForm.controls.inProgress.controls; let i=index">
+                <div [formGroupName]="i">
+                  <mat-card-content>
+                    <div>
+                        <mat-form-field style="width:100%">
+                            <input style="width:100%" matInput formControlName="log">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field style="width:100%">
+                            <textarea matInput formControlName="action"></textarea>
+                        </mat-form-field>
+                    </div>
+                  </mat-card-content>
+                </div>
+              </mat-card>
+            </div>
+          </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'montage'" [formGroup]="assemblyGroup">
             <mat-expansion-panel-header>
               <mat-panel-title>

@@ -14,8 +14,9 @@ export class QuickTaskFormComponent implements OnInit {
   commentCtrl: FormControl;
   originUserCtrl: FormControl;
   destinationUserCtrl: FormControl;
-  doneCtrl: FormControl;
-  inProgressCtrl: FormControl;
+  statusCtrl: FormControl;
+  WCACtrl: FormControl;
+  CMPCtrl: FormControl;
   // tache
   taskGroup: FormGroup;
   taskNameCtrl: FormControl;
@@ -45,6 +46,9 @@ export class QuickTaskFormComponent implements OnInit {
   // Prestations
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
+  // avancement
+  inProgressArray: FormArray;
+  progressAddCtrl: FormControl;
   // montage
   assemblyGroup: FormGroup;
   checkComponentCtrl: FormControl;
@@ -157,11 +161,13 @@ this.softwareValidationLogCtrl = fb.control('');
 this.assemblyCommentCtrl = fb.control('');
 // ATDForm
 this.prestationAddCtrl = fb.control('');
+this.progressAddCtrl = fb.control('');
 this.commentCtrl = fb.control('');
 this.originUserCtrl = fb.control('');
 this.destinationUserCtrl = fb.control('');
-this.doneCtrl = fb.control('');
-this.inProgressCtrl = fb.control('');
+this.statusCtrl = fb.control('');
+this.WCACtrl = fb.control('');
+this.CMPCtrl = fb.control('');
 this.taskGroup = fb.group({
 taskName: this.taskNameCtrl,
 taskType: this.taskTypeCtrl,
@@ -189,6 +195,7 @@ this.panneGroup = fb.group({
 panneDescription: this.panneDescriptionCtrl
 });
 this.prestationsArray = fb.array([]);
+this.inProgressArray = fb.array([]);
 this.assemblyGroup = fb.group({
 checkComponent: this.checkComponentCtrl,
 assembly: this.assemblyCtrl,
@@ -240,11 +247,14 @@ panne: this.panneGroup,
 prestationAdd: this.prestationAddCtrl,
 prestations: this.prestationsArray,
 comment: this.commentCtrl,
+progressAdd: this.progressAddCtrl,
+inProgress: this.inProgressArray,
 assemblygroup: this.assemblyGroup,
 originUser: this.originUserCtrl,
 destinationUser: this.destinationUserCtrl,
-done: this.doneCtrl,
-inProgress: this.inProgressCtrl
+status: this.statusCtrl,
+WCA: this.WCACtrl,
+CMP: this.CMPCtrl
 });
 }
 
