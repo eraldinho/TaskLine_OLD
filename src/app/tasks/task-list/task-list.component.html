@@ -9,7 +9,7 @@
         <mat-chip>
             <a>{{ task.task.taskName }}</a>
         </mat-chip>
-        <!--<mat-chip>{{ task.id }}</mat-chip>-->
+        <mat-chip>{{ task.id }}</mat-chip>
         <mat-chip>{{ task.task.taskDueDate|date:'dd/MM/yyyy' }}</mat-chip>
         <mat-chip style="background-color: #c98732" (click)=delayDialog(task.id,task.task.taskName,task.task.taskDueDate,task.task.taskCreationDate,task.task.taskOperator,task.task.taskType)><mat-icon>access_time</mat-icon></mat-chip>
         <mat-chip (click)=edit(task.id,task.task.taskName,task.task.taskType)><mat-icon>edit</mat-icon></mat-chip>

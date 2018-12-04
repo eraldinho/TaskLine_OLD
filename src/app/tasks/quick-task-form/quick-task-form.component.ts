@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import {MatSnackBar} from '@angular/material';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-quick-task-form',
@@ -264,10 +264,10 @@ CMP: this.CMPCtrl
 
   AddTask(type: string, delai: number, complementNom: string= '') {
     if (this.ATDForm.value.task.taskName) {
-      const today = Date.now();
+      const today = moment().startOf('day').add(delai, 'day').unix() * 1000;
       this.ATDForm.value.task.taskName = complementNom + this.ATDForm.value.task.taskName;
       this.ATDForm.value.task.taskType = type;
-      this.ATDForm.value.task.taskDueDate = today + delai;
+      this.ATDForm.value.task.taskDueDate = today;
       this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
       .then((result) => {
         let action: string;

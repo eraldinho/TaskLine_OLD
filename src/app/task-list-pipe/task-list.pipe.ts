@@ -13,7 +13,6 @@ export class TaskListPipe implements PipeTransform {
     let nextTime: number;
     if (items && items.length > 0 && args) {
       for (let i = 0; i < args.length; i++) {
-        console.log('switch');
         switch (i) {
           case 0: if (args[i] !== '') { this.cleanFind(items, args[i]); }
           break;
@@ -92,7 +91,6 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanType(items, value) {
-    console.log('cleantype');
     for (let i = 0; i < items.length; i++) {
       if (items[i].task.taskType !== value) {
         items.splice(i, 1);
@@ -102,7 +100,6 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanStatus(items, value) {
-    console.log('cleanstatus');
     for (let i = 0; i < items.length; i++) {
       if (items[i].status !== value) {
         items.splice(i, 1);
@@ -112,7 +109,6 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanDate(items, value) {
-    console.log('cleandate');
     for (let i = 0; i < items.length; i++) {
       if (items[i].task.taskDueDate !== Date.parse(value)) {
         items.splice(i, 1);

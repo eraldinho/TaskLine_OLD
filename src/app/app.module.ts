@@ -16,6 +16,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { DatePipe } from '@angular/common';
 
+import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
 // forms
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +27,6 @@ import {MatToolbarModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MAT_DATE_LOCALE} from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -41,6 +42,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatRadioModule} from '@angular/material/radio';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 // Customs components
 import { NewTaskFormComponent } from './tasks/new-task-form/new-task-form.component';
@@ -99,6 +101,7 @@ import { TaskFilterComponent } from './tasks/task-filter/task-filter.component';
     MatButtonModule,
     MatDialogModule,
     MatDatepickerModule,
+    MatMomentDateModule,
     MatNativeDateModule,
     MatIconModule,
     MatSnackBarModule,
@@ -120,7 +123,8 @@ import { TaskFilterComponent } from './tasks/task-filter/task-filter.component';
     TaskDoneDialogComponent,
     TaskNotDoneDialogComponent],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
     DatePipe
   ],
   bootstrap: [AppComponent]
