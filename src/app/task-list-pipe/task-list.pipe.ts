@@ -83,7 +83,9 @@ export class TaskListPipe implements PipeTransform {
 
   cleanFind(items, value) {
     for (let i = 0; i < items.length; i++) {
-      if (items[i].task.taskName.indexOf(value) === -1) {
+      if (items[i].task.taskName
+        .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) === -1) {
         items.splice(i, 1);
         i = i - 1;
       }

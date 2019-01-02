@@ -13,6 +13,7 @@ export class TaskFilterComponent implements OnInit {
   typeCtrl: FormControl;
   statusCtrl: FormControl;
   dateCtrl: FormControl;
+  date2Ctrl: FormControl;
   oUserCtrl: FormControl;
   dUserCtrl: FormControl;
   wFCAnswerCtrl: FormControl;
@@ -23,6 +24,7 @@ export class TaskFilterComponent implements OnInit {
       type: this.typeCtrl,
       status: this.statusCtrl,
       date: this.dateCtrl,
+      date2: this.date2Ctrl,
       oUser: this.oUserCtrl,
       dUser: this.dUserCtrl,
       wFCAnswer: this.wFCAnswerCtrl

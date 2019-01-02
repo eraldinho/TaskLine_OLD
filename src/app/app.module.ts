@@ -123,6 +123,7 @@ import { TaskFilterComponent } from './tasks/task-filter/task-filter.component';
     TaskDoneDialogComponent,
     TaskNotDoneDialogComponent],
   providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
     DatePipe

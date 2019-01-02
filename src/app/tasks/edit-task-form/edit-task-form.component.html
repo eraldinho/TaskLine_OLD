@@ -11,7 +11,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="input-margin">
-          <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()" readonly>
+          <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
       </mat-form-field>
       <mat-datepicker #picker></mat-datepicker>
       <mat-icon *ngIf=taskGroup.disabled (click)="unlock()">lock_open</mat-icon>
