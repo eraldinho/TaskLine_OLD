@@ -18,7 +18,7 @@ export class TaskListPipe implements PipeTransform {
           break;
           case 1: if (args[i] !== '') { this.cleanType(items, args[i]); }
           break;
-          case 2: if (args[i] !== '') { this.cleanStatus(items, args[i]); }
+          case 2: this.cleanStatus(items, args[i]);
           break;
           case 3: if (args[i] !== '') { this.cleanDate(items, args[i]); }
           break;
@@ -102,10 +102,21 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanStatus(items, value) {
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].status !== value) {
-        items.splice(i, 1);
-        i = i - 1;
+    console.log(value);
+    if (value === '') {// si il n'y a pas de filtre sur le status
+      console.log('nonterminee');
+      for (let i = 0; i < items.length; i++) {// on affiche que les taches non terminées
+        if (items[i].status === 'terminee') {// c.a.d on supprime les taches terminées
+          items.splice(i, 1);
+          i = i - 1;
+        }
+      }
+    } else {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].status !== value) {
+          items.splice(i, 1);
+          i = i - 1;
+        }
       }
     }
   }

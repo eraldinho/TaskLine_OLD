@@ -35,7 +35,6 @@ export class TaskFilterComponent implements OnInit {
   }
 
   filter(filter: string, value: string) {
-    console.log(filter + '-----' + value);
     if (filter === 'date') {
     }
     this.tasksService.filterTask(filter, value);

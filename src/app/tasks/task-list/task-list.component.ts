@@ -30,7 +30,6 @@ export class TaskListComponent implements OnInit {
   }
 
   delayDialog(taskId, taskName, taskDueDate, taskCreationDate, taskOperator, taskType): void {
-    console.log(taskId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.width = '100%';
@@ -78,7 +77,7 @@ export class TaskListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
-        this.scrudService.UpdateDocument('tasks', taskId, {done: true})
+        this.scrudService.UpdateDocument('tasks', taskId, {status: 'terminee'})
         .then(val => {
           let action: string;
           val === 1 ?  (action = 'Succès') : action = 'Echec';
@@ -91,7 +90,6 @@ export class TaskListComponent implements OnInit {
   }
 
   filterTask(myfilter) {
-    console.log('filter');
     switch (myfilter[0]) {
       case 'find': this.filters[0] = myfilter[1];
       break;
@@ -111,7 +109,6 @@ export class TaskListComponent implements OnInit {
       break;
     }
     this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
-    console.log(this.filters);
   }
 
 }

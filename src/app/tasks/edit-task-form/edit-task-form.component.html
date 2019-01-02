@@ -14,8 +14,8 @@
           <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
       </mat-form-field>
       <mat-datepicker #picker></mat-datepicker>
-      <mat-icon *ngIf=taskGroup.disabled (click)="unlock()">lock_open</mat-icon>
-      <mat-icon *ngIf=!taskGroup.disabled (click)="lock()">lock</mat-icon>
+      <mat-icon *ngIf="taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
+      <mat-icon *ngIf="!taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="lock()">lock</mat-icon>
     </div>
       <mat-accordion class="taskFormAccordion">
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
@@ -360,6 +360,6 @@
           <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
         </mat-form-field>
       </div>
-    <div><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
+    <div *ngIf = "ATDForm.get('status').value != 'terminee'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
     <mat-divider></mat-divider>
 </form>
