@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import localeFr from '@angular/common/locales/fr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,8 +14,6 @@ import { environment } from '../environments/environment';
 export const firebaseConfig = environment.firebaseConfig;
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-import { DatePipe } from '@angular/common';
 
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
@@ -125,8 +124,7 @@ import { TaskFilterComponent } from './tasks/task-filter/task-filter.component';
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-    DatePipe
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
   ],
   bootstrap: [AppComponent]
 })

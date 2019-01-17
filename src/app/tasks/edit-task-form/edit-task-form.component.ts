@@ -8,7 +8,7 @@ import { TasksService } from '../../services/tasks/tasks.service';
 import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
 import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 export interface Prestation {
   nom: string;
@@ -127,8 +127,7 @@ export class EditTaskFormComponent implements OnInit {
               private scrudService: ScrudService, public snackBar: MatSnackBar,
               private tasksService: TasksService,
               private dialog: MatDialog,
-              private afAuth: AngularFireAuth,
-              public datepipe: DatePipe) {
+              private afAuth: AngularFireAuth) {
       // task
       this.taskNameCtrl = fb.control('');
       this.taskTypeCtrl = fb.control('');
@@ -394,7 +393,7 @@ export class EditTaskFormComponent implements OnInit {
       if (this.ATDForm.get('progressAdd').value) {
           const control = <FormArray>this.ATDForm.controls['inProgress'];
           const mydate = new Date ();
-          const myDisplayString = '(' + this.currentUser + ' - ' + this.datepipe.transform(mydate, 'short', 'fr-FR');
+          const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).format('dddd, MMMM Do YYYY, h:mm:ss a');
           control.push(this.initProgress(this.ATDForm.get('progressAdd').value, myDisplayString));
           this.ATDForm.get('progressAdd').setValue('');
           this.ATDForm.controls['inProgress'].disable();
@@ -469,6 +468,8 @@ export class EditTaskFormComponent implements OnInit {
     this.enablePrestation();
     this.ATDForm.get('inProgress').disable();
     this.ATDForm.get('task').get('taskType').disable();
+    this.disableLogInput(this.assemblyGroup);
+
   }
 
   lock() {
@@ -534,7 +535,7 @@ export class EditTaskFormComponent implements OnInit {
       console.log('hola: ' + valuectrl.value);
     const mydate = new Date();
     if (display) {
-      const myDisplayString = '(' + this.currentUser + ' - ' + this.datepipe.transform(mydate, 'short', 'fr-FR');
+      const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).locale('fr').format('LLLL');
       formctrl.setValue(myDisplayString);
     }
     const myActionString = myaction + ' => value: ' + valuectrl.value;
@@ -550,6 +551,7 @@ export class EditTaskFormComponent implements OnInit {
     this.register();
     if (this.ATDForm.get('task').get('taskType').value === 'montage') {
       this.ATDForm.get('assemblygroup').enable();
+      this.disableLogInput(this.assemblyGroup);
     }
   }
 
@@ -564,5 +566,14 @@ export class EditTaskFormComponent implements OnInit {
       }
     });
     return allChecked;
+  }
+
+  disableLogInput(group: FormGroup) {
+    Object.keys(group.controls).forEach((key: string) => { // on parcours tous les item du group
+      const control = group.get(key);
+      if (key.endsWith('Log')) {
+        control.disable();
+      }
+    });
   }
 }
