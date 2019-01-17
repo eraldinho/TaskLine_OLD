@@ -1,4 +1,4 @@
-<div  style="min-height: 300px"><mat-card *ngFor="let task of Tasks | async | taskList:filters">
+<div  style="min-height: 600px"><mat-card *ngFor="let task of Tasks | async | taskList:filters">
     <mat-chip-list *ngIf=!task.isNotItem>
         <mat-chip *ngIf="task.task.taskType == 'atelier'"><mat-icon>build</mat-icon></mat-chip>
         <mat-chip *ngIf="task.task.taskType == 'compta'"><mat-icon>euro_symbol</mat-icon></mat-chip>

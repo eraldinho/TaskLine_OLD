@@ -20,13 +20,15 @@ export class TaskListPipe implements PipeTransform {
           break;
           case 2: this.cleanStatus(items, args[i]);
           break;
-          case 3: if (args[i] !== '') { this.cleanDate(items, args[i]); }
+          case 3: if (args[i] !== '') { this.cleanDateD(items, args[i]); }
           break;
-          case 4: if (args[i] !== '') { this.cleanoUser(items, args[i]); }
+          case 4: if (args[i] !== '') { this.cleanDateF(items, args[i]); }
           break;
-          case 5: if (args[i] !== '') { this.cleandUser(items, args[i]); }
+          case 5: if (args[i] !== '') { this.cleanoUser(items, args[i]); }
           break;
-          case 6: if (args[i] !== '') { this.cleanWCA(items, args[i]); }
+          case 6: if (args[i] !== '') { this.cleandUser(items, args[i]); }
+          break;
+          case 7: if (args[i] !== '') { this.cleanWCA(items, args[i]); }
           break;
         }
       }
@@ -121,9 +123,18 @@ export class TaskListPipe implements PipeTransform {
     }
   }
 
-  cleanDate(items, value) {
+  cleanDateD(items, value) {
     for (let i = 0; i < items.length; i++) {
-      if (items[i].task.taskDueDate !== Date.parse(value)) {
+      if (items[i].task.taskDueDate < Date.parse(value)) {
+        items.splice(i, 1);
+        i = i - 1;
+      }
+    }
+  }
+
+  cleanDateF(items, value) {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].task.taskDueDate > Date.parse(value)) {
         items.splice(i, 1);
         i = i - 1;
       }

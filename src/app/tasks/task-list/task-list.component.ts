@@ -23,7 +23,7 @@ export class TaskListComponent implements OnInit {
   }
 
   Tasks;
-  filters = ['', '', '', '', '', '', ''];
+  filters = ['', '', '', '', '', '', '', ''];
 
   ngOnInit() {
     this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
@@ -97,15 +97,17 @@ export class TaskListComponent implements OnInit {
       break;
       case 'status': this.filters[2] = myfilter[1];
       break;
-      case 'date': this.filters[3] = myfilter[1];
+      case 'dateD': this.filters[3] = myfilter[1];
       break;
-      case 'oUser': this.filters[4] = myfilter[1];
+      case 'dateF': this.filters[4] = myfilter[1];
       break;
-      case 'dUser': this.filters[5] = myfilter[1];
+      case 'oUser': this.filters[5] = myfilter[1];
       break;
-      case 'attenteRC': this.filters[6] = myfilter[1];
+      case 'dUser': this.filters[6] = myfilter[1];
       break;
-      case 'all': this.filters = ['', '', '', '', '', '', ''];
+      case 'attenteRC': this.filters[7] = myfilter[1];
+      break;
+      case 'all': this.filters = ['', '', '', '', '', '', '', ''];
       break;
     }
     this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');

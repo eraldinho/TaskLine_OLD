@@ -29,15 +29,15 @@
     </div>
     <div>
         <mat-form-field class="input-margin">
-            <input formControlName="date" matInput placeholder="Date début" [matDatepicker]="picker" (focus)="picker.open()" (dateChange)="filter('date',TFForm.get('date').value)">
+            <input formControlName="date" matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" (dateChange)="filter('dateD',TFForm.get('date').value)">
         </mat-form-field>
         <mat-datepicker #picker></mat-datepicker>
     </div>
     <div>
         <mat-form-field class="input-margin">
-            <input formControlName="date2" matInput placeholder="Date fin" [matDatepicker]="picker2" (focus)="picker.open()" (dateChange)="filter('date2',TFForm.get('date').value)">
-            </mat-form-field>
-        <mat-datepicker #picker></mat-datepicker>
+            <input formControlName="date2" matInput placeholder="Date fin" [matDatepicker]="picker2" (focus)="picker2.open()"  (dateChange)="filter('dateF',TFForm.get('date2').value)">
+        </mat-form-field>
+        <mat-datepicker #picker2></mat-datepicker>
     </div>
     <!--<div>
         <span>Créateur: </span>

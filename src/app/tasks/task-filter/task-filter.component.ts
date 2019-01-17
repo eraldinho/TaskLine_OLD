@@ -35,7 +35,8 @@ export class TaskFilterComponent implements OnInit {
   }
 
   filter(filter: string, value: string) {
-    if (filter === 'date') {
+    if (filter === 'dateD' && this.TFForm.get('date2').pristine) {
+      this.tasksService.filterTask('dateF', value);
     }
     this.tasksService.filterTask(filter, value);
   }
