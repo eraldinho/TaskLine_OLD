@@ -62,6 +62,12 @@ import { DoneDialogComponent } from './tasks/task-list/done-dialog/done-dialog.c
 import { TaskDoneDialogComponent } from './tasks/edit-task-form/task-done-dialog/task-done-dialog.component';
 import { TaskNotDoneDialogComponent } from './tasks/edit-task-form/task-not-done-dialog/task-not-done-dialog.component';
 import { TaskFilterComponent } from './tasks/task-filter/task-filter.component';
+import { AssemblyFormComponent } from './shared/forms/assemblyform/assembly-form/assembly-form.component';
+import { CustomerFormComponent } from './shared/forms/customerform/customer-form/customer-form.component';
+import { DeliveryFormComponent } from './shared/forms/deliveryform/delivery-form/delivery-form.component';
+import { DeviceFormComponent } from './shared/forms/deviceform/device-form/device-form.component';
+import { FailureFormComponent } from './shared/forms/failureform/failure-form/failure-form.component';
+import { TaskFormComponent } from './shared/forms/taskform/task-form/task-form.component';
 
 
 @NgModule({
@@ -84,7 +90,13 @@ import { TaskFilterComponent } from './tasks/task-filter/task-filter.component';
     DoneDialogComponent,
     TaskDoneDialogComponent,
     TaskNotDoneDialogComponent,
-    TaskFilterComponent
+    TaskFilterComponent,
+    AssemblyFormComponent,
+    CustomerFormComponent,
+    DeliveryFormComponent,
+    DeviceFormComponent,
+    FailureFormComponent,
+    TaskFormComponent
   ],
   imports: [
     BrowserModule,
