@@ -1,3 +1,184 @@
-<p>
-  assembly-form works!
-</p>
+          <div [formGroup]="assemblyGroup">
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="checkComponent" (change) = "logIt(true, ATDForm.get('assemblygroup').get('checkComponentLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('checkComponent'))">Liste des composant vérifiée</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="checkComponentLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="assembly" (change) = "logIt(true, ATDForm.get('assemblygroup').get('assemblyLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('assembly'))">Montage réalisé</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="assemblyLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="cableConnection" (change) = "logIt(true, ATDForm.get('assemblygroup').get('cableConnectionLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('cableConnection'))">Câbles vérifiés</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="cableConnectionLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Mise à jour BIOS</span>
+                  <mat-radio-group formControlName="BIOSUpdate" (change) = "logIt(true, ATDForm.get('assemblygroup').get('BIOSUpdateLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('BIOSUpdate'))">
+                    <mat-radio-button class="input-margin" value="1">Réalisée</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="BIOSUpdateLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="BIOSSetUp" (change) = "logIt(true, ATDForm.get('assemblygroup').get('BIOSSetUpLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('BIOSSetUp'))">BIOS paramétré</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="BIOSSetUpLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Version de Windows vérifiée</span>
+                  <mat-radio-group formControlName="OSVersion" (change) = "logIt(true, ATDForm.get('assemblygroup').get('OSVersionLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('OSVersion'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSVersionLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Etiquette de licence collée</span>
+                  <mat-radio-group formControlName="LicenceSticker" (change) = "logIt(true, ATDForm.get('assemblygroup').get('LicenceStickerLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('LicenceSticker'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="LicenceStickerLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>OS installé</span>
+                  <mat-radio-group formControlName="OSInstallation" (change) = "logIt(true, ATDForm.get('assemblygroup').get('OSInstallationLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('OSInstallation'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSInstallationLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>OS mis à jour</span>
+                  <mat-radio-group formControlName="OSUpdate" (change) = "logIt(true, ATDForm.get('assemblygroup').get('OSUpdateLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('OSUpdate'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSUpdateLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Pilotes installés</span>
+                  <mat-radio-group formControlName="drivers" (change) = "logIt(true, ATDForm.get('assemblygroup').get('driversLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('drivers'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="driversLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="drives" (change) = "logIt(true, ATDForm.get('assemblygroup').get('drivesLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('drives'))">Disque(s) dur(s) controlé(s)</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="drivesLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>OS activé</span>
+                  <mat-radio-group formControlName="OSActivation" (change) = "logIt(true, ATDForm.get('assemblygroup').get('OSActivationLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('OSActivation'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSActivationLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="fan" (change) = "logIt(true, ATDForm.get('assemblygroup').get('fanLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('fan'))">Ventilateur(s) controllé(s)</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="fanLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="USB" (change) = "logIt(true, ATDForm.get('assemblygroup').get('USBLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('USB'))">Ports USB controllés</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="USBLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="jack" (change) = "logIt(true, ATDForm.get('assemblygroup').get('jackLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('jack'))">Prises Jack controllées</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="jackLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Lecteur(s) optique(s) controllé(s)</span>
+                  <mat-radio-group formControlName="opticalDrive" (change) = "logIt(true, ATDForm.get('assemblygroup').get('opticalDriveLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('opticalDrive'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="opticalDriveLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Lecteur(s) de cartes controllé(s)</span>
+                  <mat-radio-group formControlName="cardReader" (change) = "logIt(true, ATDForm.get('assemblygroup').get('cardReaderLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('cardReader'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="cardReaderLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="shutDown" (change) = "logIt(true, ATDForm.get('assemblygroup').get('shutDownLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('shutDown'))">PC eteint</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="shutDownLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <mat-checkbox formControlName="packaging" (change) = "logIt(true, ATDForm.get('assemblygroup').get('packagingLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('packaging'))">PC emballé</mat-checkbox>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="packagingLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <mat-checkbox formControlName="softwareValidation" (change) = "logIt(true, ATDForm.get('assemblygroup').get('softwareValidationLog'), 'vérification des composants', ATDForm.get('assemblygroup').get('softwareValidation'))">Validation CEBO effectuée</mat-checkbox>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="softwareValidationLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <div>
+                  <mat-form-field style="width:100%">
+                    <textarea formControlName="assemblyComment" matInput placeholder="Commentaires"></textarea>
+                  </mat-form-field>
+              </div>
+          </div>

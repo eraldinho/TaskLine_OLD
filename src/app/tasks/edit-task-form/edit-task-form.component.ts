@@ -4,11 +4,15 @@ import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
-import { TasksService } from '../../services/tasks/tasks.service';
-import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
-import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as moment from 'moment';
+
+import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
+import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
+
+import { TasksService } from '../../services/tasks/tasks.service';
+import { AssemblyFormService } from '../../services/forms/assemblyformservice/assembly-form.service';
+
 
 export interface Prestation {
   nom: string;
@@ -28,6 +32,9 @@ export interface Progress {
   styleUrls: ['./edit-task-form.component.scss']
 })
 export class EditTaskFormComponent implements OnInit {
+  get assemblyGroup(): FormGroup {
+    return this.assemblyFormService.assemblyGroup;
+  }
 
   @Input() taskID: string;
   filteredOptions: Observable<Prestation[]>;
@@ -79,55 +86,12 @@ export class EditTaskFormComponent implements OnInit {
   // avancement
   inProgressArray: FormArray;
   progressAddCtrl: FormControl;
-  // montage
-  assemblyGroup: FormGroup;
-  checkComponentCtrl: FormControl;
-  checkComponentLogCtrl: FormControl;
-  assemblyCtrl: FormControl;
-  assemblyLogCtrl: FormControl;
-  cableConnectionCtrl: FormControl;
-  cableConnectionLogCtrl: FormControl;
-  BIOSUpdateCtrl: FormControl;
-  BIOSUpdateLogCtrl: FormControl;
-  BIOSSetUpCtrl: FormControl;
-  BIOSSetUpLogCtrl: FormControl;
-  LicenceStickerCtrl: FormControl;
-  LicenceStickerLogCtrl: FormControl;
-  OSVersionCtrl: FormControl;
-  OSVersionLogCtrl: FormControl;
-  OSInstallationCtrl: FormControl;
-  OSInstallationLogCtrl: FormControl;
-  OSUpdateCtrl: FormControl;
-  OSUpdateLogCtrl: FormControl;
-  driversCtrl: FormControl;
-  driversLogCtrl: FormControl;
-  drivesCtrl: FormControl;
-  drivesLogCtrl: FormControl;
-  OSActivationCtrl: FormControl;
-  OSActivationLogCtrl: FormControl;
-  fanCtrl: FormControl;
-  fanLogCtrl: FormControl;
-  USBCtrl: FormControl;
-  USBLogCtrl: FormControl;
-  jackCtrl: FormControl;
-  jackLogCtrl: FormControl;
-  opticalDriveCtrl: FormControl;
-  opticalDriveLogCtrl: FormControl;
-  cardReaderCtrl: FormControl;
-  cardReaderLogCtrl: FormControl;
-  shutDownCtrl: FormControl;
-  shutDownLogCtrl: FormControl;
-  packagingCtrl: FormControl;
-  packagingLogCtrl: FormControl;
-  softwareValidationCtrl: FormControl;
-  softwareValidationLogCtrl: FormControl;
-  assemblyCommentCtrl: FormControl;
-
   constructor(private fb: FormBuilder,
               private scrudService: ScrudService, public snackBar: MatSnackBar,
               private tasksService: TasksService,
               private dialog: MatDialog,
-              private afAuth: AngularFireAuth) {
+              private afAuth: AngularFireAuth,
+              private assemblyFormService: AssemblyFormService) {
       // task
       this.taskNameCtrl = fb.control('');
       this.taskTypeCtrl = fb.control('');
@@ -150,48 +114,6 @@ export class EditTaskFormComponent implements OnInit {
       this.deviceDescriptionCtrl = fb.control('');
       // panne
       this.panneDescriptionCtrl = fb.control('');
-      // montage
-      this.checkComponentCtrl = fb.control('');
-      this.assemblyCtrl = fb.control('');
-      this.cableConnectionCtrl = fb.control('');
-      this.BIOSUpdateCtrl = fb.control('');
-      this.BIOSSetUpCtrl = fb.control('');
-      this.LicenceStickerCtrl = fb.control('');
-      this.OSVersionCtrl = fb.control('');
-      this.OSInstallationCtrl = fb.control('');
-      this.OSUpdateCtrl = fb.control('');
-      this.driversCtrl = fb.control('');
-      this.drivesCtrl = fb.control('');
-      this.OSActivationCtrl = fb.control('');
-      this.fanCtrl = fb.control('');
-      this.USBCtrl = fb.control('');
-      this.jackCtrl = fb.control('');
-      this.opticalDriveCtrl = fb.control('');
-      this.cardReaderCtrl = fb.control('');
-      this.shutDownCtrl = fb.control('');
-      this.packagingCtrl = fb.control('');
-      this.softwareValidationCtrl = fb.control('');
-      this.checkComponentLogCtrl = fb.control('');
-      this.assemblyLogCtrl = fb.control('');
-      this.cableConnectionLogCtrl = fb.control('');
-      this.BIOSUpdateLogCtrl = fb.control('');
-      this.BIOSSetUpLogCtrl = fb.control('');
-      this.LicenceStickerLogCtrl = fb.control('');
-      this.OSVersionLogCtrl = fb.control('');
-      this.OSInstallationLogCtrl = fb.control('');
-      this.OSUpdateLogCtrl = fb.control('');
-      this.driversLogCtrl = fb.control('');
-      this.drivesLogCtrl = fb.control('');
-      this.OSActivationLogCtrl = fb.control('');
-      this.fanLogCtrl = fb.control('');
-      this.USBLogCtrl = fb.control('');
-      this.jackLogCtrl = fb.control('');
-      this.opticalDriveLogCtrl = fb.control('');
-      this.cardReaderLogCtrl = fb.control('');
-      this.shutDownLogCtrl = fb.control('');
-      this.packagingLogCtrl = fb.control('');
-      this.softwareValidationLogCtrl = fb.control('');
-      this.assemblyCommentCtrl = fb.control('');
       // ATDForm
       this.prestationAddCtrl = fb.control('');
       this.inProgressArray = fb.array([]);
@@ -228,49 +150,6 @@ export class EditTaskFormComponent implements OnInit {
       panneDescription: this.panneDescriptionCtrl
     });
     this.prestationsArray = fb.array([]);
-    this.assemblyGroup = fb.group({
-      checkComponent: this.checkComponentCtrl,
-      assembly: this.assemblyCtrl,
-      cableConnection: this.cableConnectionCtrl,
-      BIOSUpdate: this.BIOSUpdateCtrl,
-      BIOSSetUp: this.BIOSSetUpCtrl,
-      LicenceSticker: this.LicenceStickerCtrl,
-      OSVersion: this.OSVersionCtrl,
-      OSInstallation: this.OSInstallationCtrl,
-      OSUpdate: this.OSUpdateCtrl,
-      drivers: this.driversCtrl,
-      drives: this.drivesCtrl,
-      OSActivation: this.OSActivationCtrl,
-      fan: this.fanCtrl,
-      USB: this.USBCtrl,
-      jack: this.jackCtrl,
-      opticalDrive: this.opticalDriveCtrl,
-      cardReader: this.cardReaderCtrl,
-      shutDown: this.shutDownCtrl,
-      packaging: this.packagingCtrl,
-      softwareValidation: this.softwareValidationCtrl,
-      checkComponentLog: this.checkComponentLogCtrl,
-      assemblyLog: this.assemblyLogCtrl,
-      cableConnectionLog: this.cableConnectionLogCtrl,
-      BIOSUpdateLog: this.BIOSUpdateLogCtrl,
-      BIOSSetUpLog: this.BIOSSetUpCtrl,
-      LicenceStickerLog: this.LicenceStickerLogCtrl,
-      OSVersionLog: this.OSVersionLogCtrl,
-      OSInstallationLog: this.OSInstallationLogCtrl,
-      OSUpdateLog: this.OSUpdateLogCtrl,
-      driversLog: this.driversLogCtrl,
-      drivesLog: this.drivesLogCtrl,
-      OSActivationLog: this.OSActivationLogCtrl,
-      fanLog: this.fanLogCtrl,
-      USBLog: this.USBLogCtrl,
-      jackLog: this.jackLogCtrl,
-      opticalDriveLog: this.opticalDriveLogCtrl,
-      cardReaderLog: this.cardReaderLogCtrl,
-      shutDownLog: this.shutDownLogCtrl,
-      packagingLog: this.packagingLogCtrl,
-      softwareValidationLog: this.softwareValidationLogCtrl,
-      assemblyComment: this.assemblyCommentCtrl
-    });
     this.inProgressArray = fb.array([]);
     this.ATDForm = fb.group({
       task: this.taskGroup,
