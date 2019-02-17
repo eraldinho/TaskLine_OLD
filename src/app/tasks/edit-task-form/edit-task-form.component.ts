@@ -14,6 +14,10 @@ import { TasksService } from '../../services/tasks/tasks.service';
 
 import { AssemblyFormService } from '../../services/forms/assemblyformservice/assembly-form.service';
 import { CustomerFormService } from '../../services/forms/customerformservice/customer-form.service';
+import { DeliveryFormService } from '../../services/forms/deliveryformservice/delivery-form.service';
+import { DeviceFormService } from '../../services/forms/deviceformservice/device-form.service';
+import { FailureFormService } from '../../services/forms/failureformservice/failure-form.service';
+import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
 
 
 export interface Prestation {
@@ -40,6 +44,18 @@ export class EditTaskFormComponent implements OnInit {
   get customerGroup(): FormGroup {
     return this.customerFormService.customerGroup;
   }
+  get deliveryGroup(): FormGroup {
+    return this.deliveryFormService.deliveryGroup;
+  }
+  get deviceGroup(): FormGroup {
+    return this.deviceFormService.deviceGroup;
+  }
+  get failureGroup(): FormGroup {
+    return this.failureFormService.failureGroup;
+  }
+  get taskGroup(): FormGroup {
+    return this.taskFormService.taskGroup;
+  }
 
   @Input() taskID: string;
   filteredOptions: Observable<Prestation[]>;
@@ -59,25 +75,6 @@ export class EditTaskFormComponent implements OnInit {
   statusCtrl: FormControl;
   WCACtrl: FormControl;
   CMPCtrl: FormControl;
-  // tache
-  taskGroup: FormGroup;
-  taskNameCtrl: FormControl;
-  taskCreationDateCtrl: FormControl;
-  taskDueDateCtrl: FormControl;
-  taskOperatorCtrl: FormControl;
-  taskTypeCtrl: FormControl;
-  // materiel
-  deviceGroup: FormGroup;
-  deviceTypeCtrl: FormControl;
-  deviceBrandCtrl: FormControl;
-  deviceStartCtrl: FormControl;
-  deviceDisplayCtrl: FormControl;
-  deviceOsStartCtrl: FormControl;
-  deviceResetCtrl: FormControl;
-  deviceDescriptionCtrl: FormControl;
-  // Panne
-  panneGroup: FormGroup;
-  panneDescriptionCtrl: FormControl;
   // Prestations
   prestationsArray: FormArray;
   prestationAddCtrl: FormControl;
@@ -90,23 +87,11 @@ export class EditTaskFormComponent implements OnInit {
               private dialog: MatDialog,
               private afAuth: AngularFireAuth,
               private assemblyFormService: AssemblyFormService,
-              private customerFormService: CustomerFormService) {
-      // task
-      this.taskNameCtrl = fb.control('');
-      this.taskTypeCtrl = fb.control('');
-      this.taskCreationDateCtrl = fb.control('');
-      this.taskDueDateCtrl = fb.control('');
-      this.taskOperatorCtrl = fb.control('');
-      // device
-      this.deviceTypeCtrl = fb.control('');
-      this.deviceBrandCtrl = fb.control('');
-      this.deviceStartCtrl = fb.control('');
-      this.deviceDisplayCtrl = fb.control('');
-      this.deviceOsStartCtrl = fb.control('');
-      this.deviceResetCtrl = fb.control('');
-      this.deviceDescriptionCtrl = fb.control('');
-      // panne
-      this.panneDescriptionCtrl = fb.control('');
+              private customerFormService: CustomerFormService,
+              private deliveryFormService: DeliveryFormService,
+              private deviceFormService: DeviceFormService,
+              private failureFormService: FailureFormService,
+              private taskFormService: TaskFormService) {
       // ATDForm
       this.prestationAddCtrl = fb.control('');
       this.inProgressArray = fb.array([]);
@@ -116,32 +101,13 @@ export class EditTaskFormComponent implements OnInit {
       this.statusCtrl = fb.control('');
       this.WCACtrl = fb.control('');
       this.CMPCtrl = fb.control('');
-    this.taskGroup = fb.group({
-        taskName: this.taskNameCtrl,
-        taskType: this.taskTypeCtrl,
-        taskCreationDate: this.taskCreationDateCtrl,
-        taskDueDate: this.taskDueDateCtrl,
-        taskOperator: this.taskOperatorCtrl
-    });
-    this.deviceGroup = fb.group({
-      deviceType: this.deviceTypeCtrl,
-      deviceBrand: this.deviceBrandCtrl,
-      deviceStart: this.deviceStartCtrl,
-      deviceDisplay: this.deviceDisplayCtrl,
-      deviceOsStart: this.deviceOsStartCtrl,
-      deviceReset: this.deviceResetCtrl,
-      deviceDescription: this.deviceDescriptionCtrl
-    });
-    this.panneGroup = fb.group({
-      panneDescription: this.panneDescriptionCtrl
-    });
     this.prestationsArray = fb.array([]);
     this.inProgressArray = fb.array([]);
     this.ATDForm = fb.group({
       task: this.taskGroup,
       customergroup: this.customerGroup,
-      device: this.deviceGroup,
-      panne: this.panneGroup,
+      devicegroup: this.deviceGroup,
+      failuregroup: this.failureGroup,
       prestationAdd: this.prestationAddCtrl,
       prestations: this.prestationsArray,
       comment: this.commentCtrl,

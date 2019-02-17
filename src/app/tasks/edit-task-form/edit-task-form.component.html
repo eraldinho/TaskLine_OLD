@@ -1,22 +1,5 @@
 <form (ngSubmit)="register()" [formGroup]="ATDForm">
-  <div [formGroup]="taskGroup">
-      <mat-form-field class="input-margin">
-        <input formControlName="taskName" matInput placeholder="Nom de la tâche">
-      </mat-form-field>
-      <mat-form-field class="input-margin">
-        <mat-select formControlName="taskType" placeholder="Type de tâche">
-          <mat-option *ngFor="let Type of Types" [value]="Type">
-            {{Type}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="input-margin">
-          <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
-      </mat-form-field>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-icon *ngIf="taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
-      <mat-icon *ngIf="!taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="lock()">lock</mat-icon>
-    </div>
+      <app-task-form [taskGroup]="ATDForm.get('taskgroup')"></app-task-form>
       <mat-accordion class="taskFormAccordion">
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
           <mat-expansion-panel-header>
@@ -29,7 +12,6 @@
           </mat-expansion-panel-header>
           <app-customer-form [customerGroup]="ATDForm.get('customergroup')"></app-customer-form>
         </mat-expansion-panel>
-        
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -39,27 +21,9 @@
               Description du matériel
             </mat-panel-description>
           </mat-expansion-panel-header>
-        
-          <mat-form-field class="input-margin">
-            <input formControlName="deviceType" matInput placeholder="Type">
-          </mat-form-field>
-          <mat-form-field class="input-margin">
-            <input formControlName="deviceBrand" matInput placeholder="Marque">
-          </mat-form-field>
-          <section class="example-section">
-            <mat-checkbox class="example-margin" formControlName="deviceStart">Le PC démarre</mat-checkbox>
-            <mat-checkbox class="input-margin" formControlName="deviceDisplay">Affichage Ok</mat-checkbox>
-            <mat-checkbox class="input-margin" formControlName="deviceOsStart">L'OS démarre</mat-checkbox>
-            <mat-checkbox class="example-margin" formControlName="deviceReset">Formatage possible</mat-checkbox>
-          </section>
-          <div>
-              <mat-form-field style="width:100%">
-                <textarea formControlName="deviceDescription" matInput placeholder="Description"></textarea>
-              </mat-form-field>
-          </div>
+          <app-device-form [deviceGroup]="ATDForm.get('devicegroup')"></app-device-form>
         </mat-expansion-panel>
-        
-        <mat-expansion-panel  [formGroup]="panneGroup" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Panne
@@ -68,15 +32,8 @@
               Description de la panne
             </mat-panel-description>
           </mat-expansion-panel-header>
-        
-          <div>
-            <mat-form-field style="width:100%">
-              <textarea formControlName="panneDescription" matInput placeholder="Description de la panne"></textarea>
-            </mat-form-field>
-        </div>
-        
+          <app-failure-form [failureGroup]="ATDForm.get('failuregroup')"></app-failure-form>
         </mat-expansion-panel>
-
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
           <mat-expansion-panel-header>
             <mat-panel-title>

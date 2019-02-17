@@ -1,3 +1,18 @@
-<p>
-  task-form works!
-</p>
+<div [formGroup]="taskGroup">
+    <mat-form-field class="input-margin">
+      <input formControlName="taskName" matInput placeholder="Nom de la tâche">
+    </mat-form-field>
+    <mat-form-field class="input-margin">
+      <mat-select formControlName="taskType" placeholder="Type de tâche">
+        <mat-option *ngFor="let Type of Types" [value]="Type">
+          {{Type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="input-margin">
+        <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
+    </mat-form-field>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-icon *ngIf="taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
+    <mat-icon *ngIf="!taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="lock()">lock</mat-icon>
+</div>
