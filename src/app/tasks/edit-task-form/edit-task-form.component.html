@@ -27,22 +27,7 @@
               Coordonnées du client
             </mat-panel-description>
           </mat-expansion-panel-header>
-        
-          <mat-form-field class="input-margin">
-            <input formControlName="clientName" matInput placeholder="Nom">
-          </mat-form-field>
-          <mat-form-field class="input-margin">
-            <input formControlName="clientFirstName" matInput placeholder="Prénom">
-          </mat-form-field>
-          <mat-form-field class="input-margin">
-            <input formControlName="clientNumber" matInput placeholder="Numéro Client">
-          </mat-form-field>
-          <mat-form-field class="input-margin">
-            <input formControlName="clientMail" matInput placeholder="Mail">
-          </mat-form-field>
-          <mat-form-field class="input-margin">
-            <input formControlName="clientPhone" matInput placeholder="Téléphone">
-          </mat-form-field>
+          <app-customer-form [customerGroup]="ATDForm.get('customergroup')"></app-customer-form>
         </mat-expansion-panel>
         
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">

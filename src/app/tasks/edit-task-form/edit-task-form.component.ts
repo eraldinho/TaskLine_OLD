@@ -11,7 +11,9 @@ import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.com
 import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
 
 import { TasksService } from '../../services/tasks/tasks.service';
+
 import { AssemblyFormService } from '../../services/forms/assemblyformservice/assembly-form.service';
+import { CustomerFormService } from '../../services/forms/customerformservice/customer-form.service';
 
 
 export interface Prestation {
@@ -34,6 +36,9 @@ export interface Progress {
 export class EditTaskFormComponent implements OnInit {
   get assemblyGroup(): FormGroup {
     return this.assemblyFormService.assemblyGroup;
+  }
+  get customerGroup(): FormGroup {
+    return this.customerFormService.customerGroup;
   }
 
   @Input() taskID: string;
@@ -61,13 +66,6 @@ export class EditTaskFormComponent implements OnInit {
   taskDueDateCtrl: FormControl;
   taskOperatorCtrl: FormControl;
   taskTypeCtrl: FormControl;
-  // client
-  clientGroup: FormGroup;
-  clientNameCtrl: FormControl;
-  clientFirstNameCtrl: FormControl;
-  clientNumberCtrl: FormControl;
-  clientMailCtrl: FormControl;
-  clientPhoneCtrl: FormControl;
   // materiel
   deviceGroup: FormGroup;
   deviceTypeCtrl: FormControl;
@@ -91,19 +89,14 @@ export class EditTaskFormComponent implements OnInit {
               private tasksService: TasksService,
               private dialog: MatDialog,
               private afAuth: AngularFireAuth,
-              private assemblyFormService: AssemblyFormService) {
+              private assemblyFormService: AssemblyFormService,
+              private customerFormService: CustomerFormService) {
       // task
       this.taskNameCtrl = fb.control('');
       this.taskTypeCtrl = fb.control('');
       this.taskCreationDateCtrl = fb.control('');
       this.taskDueDateCtrl = fb.control('');
       this.taskOperatorCtrl = fb.control('');
-      // client
-      this.clientNameCtrl = fb.control('');
-      this.clientFirstNameCtrl = fb.control('');
-      this.clientNumberCtrl = fb.control('');
-      this.clientMailCtrl = fb.control('');
-      this.clientPhoneCtrl = fb.control('');
       // device
       this.deviceTypeCtrl = fb.control('');
       this.deviceBrandCtrl = fb.control('');
@@ -130,13 +123,6 @@ export class EditTaskFormComponent implements OnInit {
         taskDueDate: this.taskDueDateCtrl,
         taskOperator: this.taskOperatorCtrl
     });
-    this.clientGroup = fb.group({
-      clientName: this.clientNameCtrl,
-      clientFirstName: this.clientFirstNameCtrl,
-      clientNumber: this.clientNumberCtrl,
-      clientMail: this.clientMailCtrl,
-      clientPhone: this.clientPhoneCtrl
-    });
     this.deviceGroup = fb.group({
       deviceType: this.deviceTypeCtrl,
       deviceBrand: this.deviceBrandCtrl,
@@ -153,7 +139,7 @@ export class EditTaskFormComponent implements OnInit {
     this.inProgressArray = fb.array([]);
     this.ATDForm = fb.group({
       task: this.taskGroup,
-      client: this.clientGroup,
+      customergroup: this.customerGroup,
       device: this.deviceGroup,
       panne: this.panneGroup,
       prestationAdd: this.prestationAddCtrl,
