@@ -17,6 +17,7 @@ import { CustomerFormService } from '../../services/forms/customerformservice/cu
 import { DeliveryFormService } from '../../services/forms/deliveryformservice/delivery-form.service';
 import { DeviceFormService } from '../../services/forms/deviceformservice/device-form.service';
 import { FailureFormService } from '../../services/forms/failureformservice/failure-form.service';
+import { ProgressFormService } from '../../services/forms/progressformservice/progress-form.service';
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
 
 
@@ -53,6 +54,9 @@ export class EditTaskFormComponent implements OnInit {
   get failureGroup(): FormGroup {
     return this.failureFormService.failureGroup;
   }
+  get progressGroup(): FormGroup {
+    return this.progressFormService.progressGroup;
+  }
   get taskGroup(): FormGroup {
     return this.taskFormService.taskGroup;
   }
@@ -69,18 +73,6 @@ export class EditTaskFormComponent implements OnInit {
   // switch for disabling formgroups
   DisabletaskGroup = 1;
   ATDForm: FormGroup;
-  commentCtrl: FormControl;
-  originUserCtrl: FormControl;
-  destinationUserCtrl: FormControl;
-  statusCtrl: FormControl;
-  WCACtrl: FormControl;
-  CMPCtrl: FormControl;
-  // Prestations
-  prestationsArray: FormArray;
-  prestationAddCtrl: FormControl;
-  // avancement
-  inProgressArray: FormArray;
-  progressAddCtrl: FormControl;
   constructor(private fb: FormBuilder,
               private scrudService: ScrudService, public snackBar: MatSnackBar,
               private tasksService: TasksService,
@@ -91,34 +83,16 @@ export class EditTaskFormComponent implements OnInit {
               private deliveryFormService: DeliveryFormService,
               private deviceFormService: DeviceFormService,
               private failureFormService: FailureFormService,
+              private progressFormService: ProgressFormService,
               private taskFormService: TaskFormService) {
-      // ATDForm
-      this.prestationAddCtrl = fb.control('');
-      this.inProgressArray = fb.array([]);
-      this.commentCtrl = fb.control('');
-      this.originUserCtrl = fb.control('');
-      this.destinationUserCtrl = fb.control('');
-      this.statusCtrl = fb.control('');
-      this.WCACtrl = fb.control('');
-      this.CMPCtrl = fb.control('');
-    this.prestationsArray = fb.array([]);
-    this.inProgressArray = fb.array([]);
     this.ATDForm = fb.group({
       task: this.taskGroup,
-      customergroup: this.customerGroup,
-      devicegroup: this.deviceGroup,
-      failuregroup: this.failureGroup,
-      prestationAdd: this.prestationAddCtrl,
-      prestations: this.prestationsArray,
-      comment: this.commentCtrl,
-      progressAdd: this.progressAddCtrl,
-      inProgress: this.inProgressArray,
-      assemblygroup: this.assemblyGroup,
-      originUser: this.originUserCtrl,
-      destinationUser: this.destinationUserCtrl,
-      status: this.statusCtrl,
-      WCA: this.WCACtrl,
-      CMP: this.CMPCtrl
+      customer: this.customerGroup,
+      device: this.deviceGroup,
+      failure: this.failureGroup,
+      delivery: this.deliveryGroup,
+      progress: this.progressGroup,
+      assembly: this.assemblyGroup
     });
   }
 

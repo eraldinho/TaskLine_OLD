@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -7,5 +7,10 @@ import { FormGroup } from '@angular/forms';
 export class DeliveryFormService {
   public deliveryGroup: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.deliveryGroup = this.fb.group({
+      deliveryArray: this.fb.array([]),
+      deliveryAdd: [null, Validators.required]
+    });
+  }
 }

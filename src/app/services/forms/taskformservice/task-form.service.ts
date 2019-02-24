@@ -13,7 +13,13 @@ export class TaskFormService {
       taskType: [null, Validators.required],
       taskCreationDate: [null, Validators.required],
       taskDueDate: [null, Validators.required],
-      taskOperator: [null, Validators.required]
-  });
-   }
+      taskOperator: [null, Validators.required],
+      originUser: [null, Validators.required],
+      destinationUser: [null, Validators.required],
+      status: [null, Validators.required],
+      WCA: [null, Validators.required],
+      CMP: [null, Validators.required],
+      comment: [null, Validators.required]
+    });
+  }
 }

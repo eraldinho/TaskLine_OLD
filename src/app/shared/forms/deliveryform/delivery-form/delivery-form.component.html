@@ -1,3 +1,29 @@
-<p>
-  delivery-form works!
-</p>
+<div [formGroup]="deliveryGroup">
+    <section class="example-section">
+        <mat-form-field style="width:100%">
+            <input matInput formControlName="prestationAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
+                ({{presta.code_CEBO}}) {{presta.nom}}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-icon (click)="addPrestation('nom','prix','code')">add_circle_outlined</mat-icon>
+    </section>
+    <div  formArrayName="prestations">
+      <div *ngFor="let presta of ATDForm.controls.prestations.controls; let i=index">
+        <div [formGroupName]="i">
+            <section class="example-section">
+                <mat-form-field style="width:100%">
+                    <input matInput formControlName="nom">
+                </mat-form-field>
+                <mat-form-field style="width:100%">
+                    <input matInput formControlName="prix">
+                </mat-form-field>
+                <mat-icon (click)="removePrestation(i)">delete</mat-icon>
+            </section>
+        </div>
+      </div>
+    </div>
+</div>
+

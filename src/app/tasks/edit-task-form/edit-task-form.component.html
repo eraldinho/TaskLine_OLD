@@ -1,5 +1,5 @@
 <form (ngSubmit)="register()" [formGroup]="ATDForm">
-      <app-task-form [taskGroup]="ATDForm.get('taskgroup')"></app-task-form>
+      <app-task-form [taskGroup]="ATDForm.get('task')"></app-task-form>
       <mat-accordion class="taskFormAccordion">
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
           <mat-expansion-panel-header>
@@ -10,7 +10,7 @@
               Coordonnées du client
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <app-customer-form [customerGroup]="ATDForm.get('customergroup')"></app-customer-form>
+          <app-customer-form [customerGroup]="ATDForm.get('customer')"></app-customer-form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
           <mat-expansion-panel-header>
@@ -21,7 +21,7 @@
               Description du matériel
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <app-device-form [deviceGroup]="ATDForm.get('devicegroup')"></app-device-form>
+          <app-device-form [deviceGroup]="ATDForm.get('device')"></app-device-form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
           <mat-expansion-panel-header>
@@ -32,7 +32,7 @@
               Description de la panne
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <app-failure-form [failureGroup]="ATDForm.get('failuregroup')"></app-failure-form>
+          <app-failure-form [failureGroup]="ATDForm.get('failure')"></app-failure-form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
           <mat-expansion-panel-header>
@@ -43,33 +43,7 @@
               Liste des prestations à effectuer
             </mat-panel-description>
           </mat-expansion-panel-header>
-        
-          <section class="example-section">
-              <mat-form-field style="width:100%">
-                  <input matInput formControlName="prestationAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
-                      ({{presta.code_CEBO}}) {{presta.nom}}
-                    </mat-option>
-                  </mat-autocomplete>
-              </mat-form-field>
-              <mat-icon (click)="addPrestation('nom','prix','code')">add_circle_outlined</mat-icon>
-          </section>
-          <div  formArrayName="prestations">
-            <div *ngFor="let presta of ATDForm.controls.prestations.controls; let i=index">
-              <div [formGroupName]="i">
-                  <section class="example-section">
-                      <mat-form-field style="width:100%">
-                          <input matInput formControlName="nom">
-                      </mat-form-field>
-                      <mat-form-field style="width:100%">
-                          <input matInput formControlName="prix">
-                      </mat-form-field>
-                      <mat-icon (click)="removePrestation(i)">delete</mat-icon>
-                  </section>
-              </div>
-            </div>
-          </div>
+          <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')"></app-delivery-form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
             <mat-expansion-panel-header>
@@ -80,31 +54,7 @@
                 Liste actions réalisées
               </mat-panel-description>
             </mat-expansion-panel-header>
-          
-            <section class="example-section">
-                <mat-form-field style="width:100%">
-                    <textarea matInput formControlName="progressAdd"></textarea>
-                </mat-form-field>
-                <mat-icon (click)="addProgress('myprogress','myLog')">add_circle_outlined</mat-icon>
-            </section>
-            <div  formArrayName="inProgress">
-              <mat-card *ngFor="let progress of ATDForm.controls.inProgress.controls; let i=index">
-                <div [formGroupName]="i">
-                  <mat-card-content>
-                    <div>
-                        <mat-form-field style="width:100%">
-                            <input style="width:100%" matInput formControlName="log">
-                        </mat-form-field>
-                    </div>
-                    <div>
-                        <mat-form-field style="width:100%">
-                            <textarea matInput formControlName="action"></textarea>
-                        </mat-form-field>
-                    </div>
-                  </mat-card-content>
-                </div>
-              </mat-card>
-            </div>
+            <app-progress-form [progressGroup]="ATDForm.get('progress')"></app-progress-form> 
           </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'montage'" [formGroup]="assemblyGroup">
             <mat-expansion-panel-header>
@@ -112,7 +62,7 @@
                 Montage
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-assembly-form [assemblyGroup]="ATDForm.get('assemblygroup')"></app-assembly-form>
+            <app-assembly-form [assemblyGroup]="ATDForm.get('assembly')"></app-assembly-form>
           </mat-expansion-panel>
         
       </mat-accordion>
