@@ -74,7 +74,8 @@ export class EditTaskFormComponent implements OnInit {
   DisabletaskGroup = 1;
   ATDForm: FormGroup;
   constructor(private fb: FormBuilder,
-              private scrudService: ScrudService, public snackBar: MatSnackBar,
+              private scrudService: ScrudService,
+              public snackBar: MatSnackBar,
               private tasksService: TasksService,
               private dialog: MatDialog,
               private afAuth: AngularFireAuth,

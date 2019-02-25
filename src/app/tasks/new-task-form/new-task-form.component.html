@@ -17,7 +17,7 @@
       </div>
       <mat-dialog-content>
         <mat-accordion>
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
+          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="customerGroup">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Client
@@ -25,19 +25,19 @@
             </mat-expansion-panel-header>
           
             <mat-form-field class="input-margin">
-              <input formControlName="clientName" matInput placeholder="Nom">
+              <input formControlName="customerName" matInput placeholder="Nom">
             </mat-form-field>
             <mat-form-field class="input-margin">
-              <input formControlName="clientFirstName" matInput placeholder="Prénom">
+              <input formControlName="customerFirstName" matInput placeholder="Prénom">
             </mat-form-field>
             <mat-form-field class="input-margin">
-              <input formControlName="clientNumber" matInput placeholder="Numéro Client">
+              <input formControlName="customerNumber" matInput placeholder="Numéro Client">
             </mat-form-field>
             <mat-form-field class="input-margin">
-              <input formControlName="clientMail" matInput placeholder="Mail">
+              <input formControlName="customerMail" matInput placeholder="Mail">
             </mat-form-field>
             <mat-form-field class="input-margin">
-              <input formControlName="clientPhone" matInput placeholder="Téléphone">
+              <input formControlName="customerPhone" matInput placeholder="Téléphone">
             </mat-form-field>
           </mat-expansion-panel>
           
@@ -67,7 +67,7 @@
             </div>
           </mat-expansion-panel>
           
-          <mat-expansion-panel  [formGroup]="panneGroup" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel  [formGroup]="failure" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Panne
@@ -82,7 +82,7 @@
           
           </mat-expansion-panel>
 
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deliveryGroup">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Prestations
@@ -91,7 +91,7 @@
           
             <section class="example-section">
                 <mat-form-field style="width:100%">
-                    <input matInput formControlName="prestationAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
+                    <input matInput formControlName="deliveryAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
                     <mat-autocomplete #auto="matAutocomplete">
                       <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
                         ({{presta.code_CEBO}}) {{presta.nom}}
@@ -100,7 +100,7 @@
                 </mat-form-field>
                 <mat-icon (click)="addPrestation('nom','prix','code')">add_circle_outlined</mat-icon>
             </section>
-            <div  formArrayName="prestations">
+            <div  formArrayName="delivery">
               <div *ngFor="let presta of ATDForm.controls.prestations.controls; let i=index">
                 <div [formGroupName]="i">
                     <section class="example-section">
@@ -117,11 +117,6 @@
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-        <div>
-          <mat-form-field style="width:100%">
-            <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
-          </mat-form-field>
-        </div>
       </mat-dialog-content>
       <mat-dialog-actions>
         <button mat-button>Ajouter</button>
