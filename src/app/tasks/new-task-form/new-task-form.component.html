@@ -67,7 +67,7 @@
             </div>
           </mat-expansion-panel>
           
-          <mat-expansion-panel  [formGroup]="failure" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel  [formGroup]="failureGroup" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Panne
@@ -76,7 +76,7 @@
           
             <div>
               <mat-form-field style="width:100%">
-                <textarea formControlName="panneDescription" matInput placeholder="Description de la panne"></textarea>
+                <textarea formControlName="failureDescription" matInput placeholder="Description de la panne"></textarea>
               </mat-form-field>
           </div>
           
@@ -100,8 +100,8 @@
                 </mat-form-field>
                 <mat-icon (click)="addPrestation('nom','prix','code')">add_circle_outlined</mat-icon>
             </section>
-            <div  formArrayName="delivery">
-              <div *ngFor="let presta of ATDForm.controls.prestations.controls; let i=index">
+            <div  formArrayName="deliveryArray">
+              <div *ngFor="let presta of ATDForm.controls.delivery.controls.deliveryArray.controls; let i=index">
                 <div [formGroupName]="i">
                     <section class="example-section">
                         <mat-form-field style="width:100%">

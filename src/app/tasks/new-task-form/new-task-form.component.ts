@@ -98,25 +98,25 @@ export class NewTaskFormComponent implements OnInit {
 
   addPrestation() {
     // add Prestation to the list
-    if (this.ATDForm.get('prestationAdd').value) {
-      const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
+    if (this.ATDForm.get('delivery').get('deliveryAdd').value) {
+      const value = this.ATDForm.get('delivery').get('deliveryAdd').value.split('   /   ');
       if (value.length === 3) {
-        const control = <FormArray>this.ATDForm.controls['prestations'];
+        const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
         control.push(this.initPrestation(value[0], value[1], value[2]));
-        this.ATDForm.get('prestationAdd').setValue('');
+        this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
       }
     }
   }
 
   removePrestation(i: number) {
     // remove address from the list
-    const control = <FormArray>this.ATDForm.controls['prestations'];
+    const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
     control.removeAt(i);
   }
 
   cleanPrestation() {
     // remove address from the list
-    const control = <FormArray>this.ATDForm.controls['prestations'];
+    const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
     for (let i = 0; i < control.length; i++) {
       control.removeAt(i);
     }
@@ -135,9 +135,9 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   register() {
-    this.ATDForm.get('prestationAdd').setValue('');
+    this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
     this.ATDForm.enable();
-    this.ATDForm.controls['prestations'].enable();
+    this.ATDForm.get('delivery').get('deliveryArray').enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
