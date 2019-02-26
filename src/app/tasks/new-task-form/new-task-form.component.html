@@ -88,33 +88,19 @@
                 Prestations
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')"></app-delivery-form>
           
-            <section class="example-section">
-                <mat-form-field style="width:100%">
-                    <input matInput formControlName="deliveryAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
-                    <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
-                        ({{presta.code_CEBO}}) {{presta.nom}}
-                      </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-                <mat-icon (click)="addPrestation('nom','prix','code')">add_circle_outlined</mat-icon>
-            </section>
-            <div  formArrayName="deliveryArray">
-              <div *ngFor="let presta of ATDForm.controls.delivery.controls.deliveryArray.controls; let i=index">
-                <div [formGroupName]="i">
-                    <section class="example-section">
-                        <mat-form-field style="width:100%">
-                            <input matInput formControlName="nom">
-                        </mat-form-field>
-                        <mat-form-field style="width:100%">
-                            <input matInput formControlName="prix">
-                        </mat-form-field>
-                        <mat-icon (click)="removePrestation(i)">delete</mat-icon>
-                    </section>
-                </div>
-              </div>
-            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Avancement
+                </mat-panel-title>
+                <mat-panel-description>
+                  Liste actions réalisées
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <app-progress-form [progressGroup]="ATDForm.get('progress')"></app-progress-form> 
           </mat-expansion-panel>
         </mat-accordion>
       </mat-dialog-content>

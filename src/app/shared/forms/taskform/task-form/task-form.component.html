@@ -13,6 +13,6 @@
         <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
     </mat-form-field>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-icon *ngIf="taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
-    <mat-icon *ngIf="!taskGroup.disabled && ATDForm.get('status').value != 'terminee'" (click)="lock()">lock</mat-icon>
+    <mat-icon *ngIf="taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
+    <mat-icon *ngIf="!taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="lock()">lock</mat-icon>
 </div>

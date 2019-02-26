@@ -98,9 +98,9 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    const control2 = <FormArray>this.ATDForm.controls['inProgress'];
-    this.cleanPrestation();
+    const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
+    const control2 = <FormArray>this.ATDForm.get('progress').get('progressArray');
+    this.tasksService.cleanDelivery(this.ATDForm);
     this.cleaninProgress();
     this.ATDForm.disable();
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
@@ -111,7 +111,7 @@ export class EditTaskFormComponent implements OnInit {
         if (val.prestations.length > 0 && val.prestations.length > control.length) {
           for (let i = 0; i < val.prestations.length; i++ ) {
             console.log(i);
-            this.addEmptyPrestation();
+            this.tasksService.addEmptyDelivery(this.ATDForm, this.fb);
           }
         }
       }
@@ -134,7 +134,7 @@ export class EditTaskFormComponent implements OnInit {
     this.taskTypes.subscribe(val => this.Types = val.types);
     this.Prestations = this.scrudService.RetrieveCollection('prestations');
     this.Prestations.subscribe(val => this.myPrestations = val);
-    this.filteredOptions = this.ATDForm.get('prestationAdd').valueChanges.pipe(
+    this.filteredOptions = this.ATDForm.get('delivery').get('deliveryAdd').valueChanges.pipe(
       map(nom => this._filter(nom))
     );
 
@@ -146,15 +146,6 @@ export class EditTaskFormComponent implements OnInit {
     });
   }
 
-  initPrestation(monnom, monprix, moncode) {
-    // initialize our Prestation
-    return this.fb.group({
-        nom: [monnom],
-        prix: [monprix],
-        code: [moncode]
-    });
-  }
-
   initProgress(myAction,  myLog) {
     // initialize our Progress
     return this.fb.group({
@@ -163,34 +154,11 @@ export class EditTaskFormComponent implements OnInit {
     });
   }
 
-  addEmptyPrestation() {
-    // add  empty Prestation to the list
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    control.push(this.initPrestation('', '', ''));
-    this.ATDForm.get('prestationAdd').setValue('');
-    this.ATDForm.controls['prestations'].disable();
-  }
-
   addEmptyProgress() {
     // add  empty Progress to the list
     const control = <FormArray>this.ATDForm.controls['inProgress'];
     control.push(this.initProgress('', ''));
     this.ATDForm.controls['inProgress'].disable();
-  }
-
-  addPrestation() {
-    // add Prestation to the list if addPrestations control is enabled
-    if (this.ATDForm.controls.prestationAdd.enabled) {
-      if (this.ATDForm.get('prestationAdd').value) {
-        const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
-        if (value.length === 3) {
-          const control = <FormArray>this.ATDForm.controls['prestations'];
-          control.push(this.initPrestation(value[0], value[1], value[2]));
-          this.ATDForm.controls['prestations'].disable();
-          this.ATDForm.get('prestationAdd').setValue('');
-        }
-      }
-    }
   }
 
   addProgress() {
@@ -203,54 +171,22 @@ export class EditTaskFormComponent implements OnInit {
           control.push(this.initProgress(this.ATDForm.get('progressAdd').value, myDisplayString));
           this.ATDForm.get('progressAdd').setValue('');
           this.ATDForm.controls['inProgress'].disable();
-          this.logIt(false, this.statusCtrl, 'avancement atelier', this.ATDForm.get('progressAdd').value);
+          this.logIt(false, this.ATDForm.controls['task'].get['status'], 'avancement atelier', this.ATDForm.get('progressAdd').value);
           this.unlock();
       }
     }
   }
 
-  removePrestation(i: number) {
-    // remove address from the list if addPrestations control is enabled
-    if (this.ATDForm.controls.prestationAdd.enabled) {
-      const control = <FormArray>this.ATDForm.controls['prestations'];
-      control.removeAt(i);
-    }
-  }
-
-  cleanPrestation() {
-    // remove prestations from the list
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    for (let i = 0; i < control.length; i++) {
-      control.removeAt(i);
-    }
-  }
-
   cleaninProgress() {
     // remove progress from the list
-    const control = <FormArray>this.ATDForm.controls['inProgress'];
+    const control = <FormArray>this.ATDForm.get('progress').get('progressArray');
     for (let i = 0; i < control.length; i++) {
       control.removeAt(i);
-    }
-  }
-
-  enablePrestation() {
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    for (let i = 0; i < control.length; i++) {
-      const prestation = control.get([i]);
-      prestation.enable();
-    }
-  }
-
-  disablePrestation() {
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    for (let i = 0; i < control.length; i++) {
-      const prestation = control.get([i]);
-      prestation.disable();
     }
   }
 
   disableProgress() {
-    const control = <FormArray>this.ATDForm.controls['inProgress'];
+    const control = <FormArray>this.ATDForm.get('progress').get('progressArray');
     for (let i = 0; i < control.length; i++) {
       const progress = control.get([i]);
       progress.disable();
@@ -271,7 +207,7 @@ export class EditTaskFormComponent implements OnInit {
 
   unlock() {
     this.ATDForm.enable();
-    this.enablePrestation();
+    this.tasksService.enableDelivery(this.ATDForm);
     this.ATDForm.get('inProgress').disable();
     this.ATDForm.get('task').get('taskType').disable();
     this.disableLogInput(this.assemblyGroup);
@@ -280,7 +216,7 @@ export class EditTaskFormComponent implements OnInit {
 
   lock() {
     this.ATDForm.disable();
-    this.disablePrestation();
+    this.tasksService.disableDelivery(this.ATDForm);
     this.ATDForm.get('task').get('taskType').disable();
     this.register();
   }

@@ -66,11 +66,6 @@
           </mat-expansion-panel>
         
       </mat-accordion>
-      <div>
-        <mat-form-field style="width:100%">
-          <textarea formControlName="comment" matInput placeholder="Commentaires"></textarea>
-        </mat-form-field>
-      </div>
-    <div *ngIf = "ATDForm.get('status').value != 'terminee'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
+    <div *ngIf = "ATDForm.get('task').get('status').value != 'terminee'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
     <mat-divider></mat-divider>
 </form>
