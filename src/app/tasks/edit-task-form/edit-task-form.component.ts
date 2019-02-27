@@ -205,13 +205,17 @@ export class EditTaskFormComponent implements OnInit {
     }
   }
 
+  isLocked(state: boolean) {
+    console.log('isLocked');
+    state ? this.lock() : this.unlock();
+  }
+
   unlock() {
     this.ATDForm.enable();
     this.tasksService.enableDelivery(this.ATDForm);
-    this.ATDForm.get('inProgress').disable();
+    this.ATDForm.get('progress').get('progressArray').disable();
     this.ATDForm.get('task').get('taskType').disable();
     this.disableLogInput(this.assemblyGroup);
-
   }
 
   lock() {
@@ -222,9 +226,9 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   register() {
-    this.ATDForm.get('prestationAdd').setValue('');
+    this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
     this.ATDForm.enable();
-    this.ATDForm.controls['prestations'].enable();
+    this.ATDForm.get('delivery').get('deliveryArray').enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
     this.scrudService.SetDocument('tasks', this.taskID, this.ATDForm.value)
@@ -236,7 +240,7 @@ export class EditTaskFormComponent implements OnInit {
       });
     });
     this.ATDForm.disable();
-    this.ATDForm.controls['prestations'].disable();
+    this.ATDForm.get('delivery').get('deliveryArray').disable();
     if (this.taskName !== this.ATDForm.get('task').get('taskName').value) {
       this.tasksService.changeTaskName([this.taskName, this.taskName = this.ATDForm.get('task').get('taskName').value]);
     }

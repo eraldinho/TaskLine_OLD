@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -8,10 +8,21 @@ import { FormGroup } from '@angular/forms';
 })
 export class TaskFormComponent implements OnInit {
   @Input() taskGroup: FormGroup;
+  @Output() lockForm = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  lock() {
+    console.log('lock');
+    this.lockForm.emit(true);
+  }
+
+  unlock() {
+    console.log('unlock');
+    this.lockForm.emit(false);
   }
 
 }

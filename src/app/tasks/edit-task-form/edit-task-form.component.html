@@ -1,7 +1,7 @@
 <form (ngSubmit)="register()" [formGroup]="ATDForm">
-      <app-task-form [taskGroup]="ATDForm.get('task')"></app-task-form>
+      <app-task-form [taskGroup]="ATDForm.get('task')" (lockForm)="isLocked($event)"></app-task-form>
       <mat-accordion class="taskFormAccordion">
-        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="clientGroup">
+        <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="customerGroup">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Client
