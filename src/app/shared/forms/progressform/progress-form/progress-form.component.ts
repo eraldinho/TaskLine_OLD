@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,9 +9,16 @@ import { FormGroup } from '@angular/forms';
 export class ProgressFormComponent implements OnInit {
   @Input() progressGroup: FormGroup;
 
+  @Output() progressAdded = new EventEmitter();
+  @Output() progressRemoved = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addProgress() {
+    this.progressAdded.emit();
   }
 
 }

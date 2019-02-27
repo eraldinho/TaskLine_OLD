@@ -3,10 +3,10 @@
         <mat-form-field style="width:100%">
             <textarea matInput formControlName="progressAdd"></textarea>
         </mat-form-field>
-        <mat-icon (click)="addProgress('myprogress','myLog')">add_circle_outlined</mat-icon>
+        <mat-icon (click)="addProgress()">add_circle_outlined</mat-icon>
     </section>
     <div  formArrayName="progressArray">
-      <mat-card *ngFor="let progress of progressArray; let i=index">
+      <mat-card *ngFor="let progress of progressGroup.controls.progressArray.controls; let i=index">
         <div [formGroupName]="i">
           <mat-card-content>
             <div>

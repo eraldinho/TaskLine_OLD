@@ -24,7 +24,16 @@ import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 @Component({
   selector: 'app-edit-task-form',
   templateUrl: './edit-task-form.component.html',
-  styleUrls: ['./edit-task-form.component.scss']
+  styleUrls: ['./edit-task-form.component.scss'],
+  providers:  [
+    AssemblyFormService,
+    CustomerFormService,
+    DeliveryFormService,
+    DeviceFormService,
+    FailureFormService,
+    ProgressFormService,
+    TaskFormService
+ ]
 })
 export class EditTaskFormComponent implements OnInit {
   get assemblyGroup(): FormGroup {
@@ -144,22 +153,23 @@ export class EditTaskFormComponent implements OnInit {
 
   addEmptyProgress() {
     // add  empty Progress to the list
-    const control = <FormArray>this.ATDForm.controls['inProgress'];
+    const control = <FormArray>this.ATDForm.get('progress').get('progressArray');
     control.push(this.initProgress('', ''));
-    this.ATDForm.controls['inProgress'].disable();
+    this.ATDForm.get('progress').get('progressArray').disable();
   }
 
   addProgress() {
     // add Progress to the list
-    if (this.ATDForm.controls.progressAdd.enabled) {
-      if (this.ATDForm.get('progressAdd').value) {
-          const control = <FormArray>this.ATDForm.controls['inProgress'];
+    if (this.ATDForm.get('progress').get('progressAdd').enabled) {
+      if (this.ATDForm.get('progress').get('progressAdd').value) {
+          const control = <FormArray>this.ATDForm.get('progress').get('progressArray');
           const mydate = new Date ();
           const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).format('dddd, MMMM Do YYYY, h:mm:ss a');
-          control.push(this.initProgress(this.ATDForm.get('progressAdd').value, myDisplayString));
-          this.ATDForm.get('progressAdd').setValue('');
-          this.ATDForm.controls['inProgress'].disable();
-          this.logIt(false, this.ATDForm.controls['task'].get['status'], 'avancement atelier', this.ATDForm.get('progressAdd').value);
+          control.push(this.initProgress(this.ATDForm.get('progress').get('progressAdd').value, myDisplayString));
+          this.ATDForm.get('progress').get('progressAdd').setValue('');
+          this.ATDForm.get('progress').get('progressArray').disable();
+          this.logIt(false, this.ATDForm.controls['task'].get['status'], 'avancement atelier',
+           this.ATDForm.get('progress').get('progressAdd').value);
           this.unlock();
       }
     }
@@ -266,7 +276,7 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   logIt(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
-    if (!this.ATDForm.get('assemblygroup').disabled) {
+    if (!this.ATDForm.get('assembly').disabled) {
       console.log('hola: ' + valuectrl.value);
     const mydate = new Date();
     if (display) {

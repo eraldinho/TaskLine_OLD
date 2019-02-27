@@ -43,7 +43,7 @@
               Liste des prestations à effectuer
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')" [filteredDelivery]="filteredOptions"></app-delivery-form>
+          <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')" [filteredDelivery]="filteredOptions" (deliveryAdded)="tasksService.addDelivery(ATDForm,fb)" (deliveryRemoved)="tasksService.removeDelivery($event, ATDForm)"></app-delivery-form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
             <mat-expansion-panel-header>
@@ -54,7 +54,7 @@
                 Liste actions réalisées
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-progress-form [progressGroup]="ATDForm.get('progress')"></app-progress-form> 
+            <app-progress-form [progressGroup]="ATDForm.get('progress')" (progressAdded)="addProgress()"></app-progress-form> 
           </mat-expansion-panel>
         <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'montage'" [formGroup]="assemblyGroup">
             <mat-expansion-panel-header>
