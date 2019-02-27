@@ -12,13 +12,8 @@ import { DeviceFormService } from '../../services/forms/deviceformservice/device
 import { FailureFormService } from '../../services/forms/failureformservice/failure-form.service';
 import { ProgressFormService } from '../../services/forms/progressformservice/progress-form.service';
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
-
-
-export interface Prestation {
-  nom: string;
-  prix: number;
-  code: string;
-}
+import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
+import { TasksService } from 'src/app/services/tasks/tasks.service';
 
 @Component({
   selector: 'app-new-task-form',
@@ -48,7 +43,7 @@ export class NewTaskFormComponent implements OnInit {
     return this.taskFormService.taskGroup;
   }
 
-  filteredOptions: Observable<Prestation[]>;
+  filteredOptions: Observable<Delivery[]>;
   taskTypes;
   Types;
   Prestations;
@@ -59,6 +54,7 @@ export class NewTaskFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private scrudService: ScrudService,
               public snackBar: MatSnackBar,
+              private tasksService: TasksService,
               private assemblyFormService: AssemblyFormService,
               private customerFormService: CustomerFormService,
               private deliveryFormService: DeliveryFormService,
@@ -97,15 +93,22 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   addPrestation() {
+    console.log(this.ATDForm.get('delivery').get('deliveryAdd').value);
     // add Prestation to the list
     if (this.ATDForm.get('delivery').get('deliveryAdd').value) {
       const value = this.ATDForm.get('delivery').get('deliveryAdd').value.split('   /   ');
       if (value.length === 3) {
+        console.log('ok3');
         const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
+        console.log(this.ATDForm.get('delivery').get('deliveryArray'));
         control.push(this.initPrestation(value[0], value[1], value[2]));
         this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
       }
     }
+  }
+
+  addDelivery() {
+    this.tasksService.addDelivery(this.ATDForm, this.fb);
   }
 
   removePrestation(i: number) {

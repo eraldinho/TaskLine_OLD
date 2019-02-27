@@ -3,15 +3,15 @@
         <mat-form-field style="width:100%">
             <input matInput formControlName="deliveryAdd" [matAutocomplete]="auto" placeholder="ajouter une prestation">
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let presta of filteredOptions | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
+              <mat-option *ngFor="let presta of filteredDelivery | async" [value]="presta.nom+'   /   '+presta.prix_TTC+'   /   '+presta.code_CEBO">
                 ({{presta.code_CEBO}}) {{presta.nom}}
               </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-icon (click)="addPrestation('nom','prix','code')">add_circle_outlined</mat-icon>
+        <mat-icon (click)="onAddDelivery()">add_circle_outlined</mat-icon>
     </section>
-    <div  formArrayName="deliveryArray">
-      <div *ngFor="let presta of deliveryArray; let i=index">
+    <div formArrayName="deliveryArray">
+      <div *ngFor="let presta of deliveryGroup.controls.deliveryArray.controls; let i=index">
         <div [formGroupName]="i">
             <section class="example-section">
                 <mat-form-field style="width:100%">
@@ -20,7 +20,7 @@
                 <mat-form-field style="width:100%">
                     <input matInput formControlName="prix">
                 </mat-form-field>
-                <mat-icon (click)="removePrestation(i)">delete</mat-icon>
+                <mat-icon (click)="onRemoveDelivery(i)">delete</mat-icon>
             </section>
         </div>
       </div>

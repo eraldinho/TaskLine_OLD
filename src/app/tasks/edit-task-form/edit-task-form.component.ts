@@ -19,19 +19,7 @@ import { DeviceFormService } from '../../services/forms/deviceformservice/device
 import { FailureFormService } from '../../services/forms/failureformservice/failure-form.service';
 import { ProgressFormService } from '../../services/forms/progressformservice/progress-form.service';
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
-
-
-export interface Prestation {
-  nom: string;
-  prix: number;
-  code: string;
-}
-
-export interface Progress {
-  detail: string;
-  done: boolean;
-  log: string;
-}
+import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 
 @Component({
   selector: 'app-edit-task-form',
@@ -62,7 +50,7 @@ export class EditTaskFormComponent implements OnInit {
   }
 
   @Input() taskID: string;
-  filteredOptions: Observable<Prestation[]>;
+  filteredOptions: Observable<Delivery[]>;
   taskTypes;
   Types;
   mytask;
@@ -106,19 +94,19 @@ export class EditTaskFormComponent implements OnInit {
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
     this.mytask.subscribe(val => {
       console.log(val);
-      if (val.prestations) {
-        console.log('prestations' + '***' + val.prestations.length + '@@@' + control.length);
-        if (val.prestations.length > 0 && val.prestations.length > control.length) {
-          for (let i = 0; i < val.prestations.length; i++ ) {
+      if (val.delivery.deliveryArray) {
+        console.log('prestations' + '***' + val.delivery.deliveryArray.length + '@@@' + control.length);
+        if (val.delivery.deliveryArray.length > 0 && val.delivery.deliveryArray.length > control.length) {
+          for (let i = 0; i < val.delivery.deliveryArray.length; i++ ) {
             console.log(i);
             this.tasksService.addEmptyDelivery(this.ATDForm, this.fb);
           }
         }
       }
-      if (val.inProgress) {
-        console.log('inProgress' + '***' + val.inProgress.length + '@@@' + control2.length);
-        if (val.inProgress.length > 0 && val.inProgress.length > control2.length) {
-          for (let i = 0; i < val.inProgress.length; i++ ) {
+      if (val.progress.progressArray) {
+        console.log('inProgress' + '***' + val.progress.progressArray.length + '@@@' + control2.length);
+        if (val.progress.progressArray.length > 0 && val.progress.progressArray.length > control2.length) {
+          for (let i = 0; i < val.progress.progressArray.length; i++ ) {
             console.log(i);
             this.addEmptyProgress();
           }
@@ -205,6 +193,7 @@ export class EditTaskFormComponent implements OnInit {
     }
   }
 
+  //the next 3 functions are used to lock and unlock the ATDForm by responding to event sent by App-Task-Form
   isLocked(state: boolean) {
     console.log('isLocked');
     state ? this.lock() : this.unlock();

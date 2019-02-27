@@ -88,7 +88,7 @@
                 Prestations
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')"></app-delivery-form>
+            <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')" [filteredDelivery]="filteredOptions" (deliveryAdded)="addDelivery()" (deliveryRemoved)="removeDelivery($event)"></app-delivery-form>
           
           </mat-expansion-panel>
           <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">

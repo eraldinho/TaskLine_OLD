@@ -55,6 +55,21 @@ export class TasksService {
     form.get('delivery').get('deliveryArray').disable();
   }
 
+  addDelivery(form: FormGroup, fb: FormBuilder) {
+    console.log(form.get('delivery').get('deliveryAdd').value);
+    // add Prestation to the list
+    if (form.get('delivery').get('deliveryAdd').value) {
+      const value = form.get('delivery').get('deliveryAdd').value.split('   /   ');
+      if (value.length === 3) {
+        console.log('ok3');
+        const control = <FormArray>form.get('delivery').get('deliveryArray');
+        console.log(form.get('delivery').get('deliveryArray'));
+        control.push(this.initDelivery(value[0], value[1], value[2], fb));
+        form.get('delivery').get('deliveryAdd').setValue('');
+      }
+    }
+  }
+
   removeDelivery(i: number, form: FormGroup) {
     // remove address from the list
     const control = <FormArray>form.get('delivery').get('deliveryArray');
