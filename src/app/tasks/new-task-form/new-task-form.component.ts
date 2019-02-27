@@ -83,48 +83,6 @@ export class NewTaskFormComponent implements OnInit {
     );
   }
 
-  initPrestation(monnom, monprix, moncode) {
-    // initialize our Prestation
-    return this.fb.group({
-        nom: [monnom],
-        prix: [monprix],
-        code: [moncode]
-    });
-  }
-
-  addPrestation() {
-    console.log(this.ATDForm.get('delivery').get('deliveryAdd').value);
-    // add Prestation to the list
-    if (this.ATDForm.get('delivery').get('deliveryAdd').value) {
-      const value = this.ATDForm.get('delivery').get('deliveryAdd').value.split('   /   ');
-      if (value.length === 3) {
-        console.log('ok3');
-        const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
-        console.log(this.ATDForm.get('delivery').get('deliveryArray'));
-        control.push(this.initPrestation(value[0], value[1], value[2]));
-        this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
-      }
-    }
-  }
-
-  addDelivery() {
-    this.tasksService.addDelivery(this.ATDForm, this.fb);
-  }
-
-  removePrestation(i: number) {
-    // remove address from the list
-    const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
-    control.removeAt(i);
-  }
-
-  cleanPrestation() {
-    // remove address from the list
-    const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
-    for (let i = 0; i < control.length; i++) {
-      control.removeAt(i);
-    }
-  }
-
   private _filter(value) {
     if (value) {
       const filterValue = value.toLowerCase();
@@ -156,7 +114,7 @@ export class NewTaskFormComponent implements OnInit {
 
   cancel() {
     this.ATDForm.reset();
-    this.cleanPrestation();
+    this.tasksService.cleanDelivery(this.ATDForm);
   }
 
 }
