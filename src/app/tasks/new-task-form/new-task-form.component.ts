@@ -88,20 +88,8 @@ export class NewTaskFormComponent implements OnInit {
     this.Prestations = this.scrudService.RetrieveCollection('prestations');
     this.Prestations.subscribe(val => this.myPrestations = val);
     this.filteredOptions = this.ATDForm.get('delivery').get('deliveryAdd').valueChanges.pipe(
-      map(nom => this._filter(nom))
+      map(nom => this.tasksService.filter(nom, this.myPrestations))
     );
-  }
-
-  private _filter(value) {
-    if (value) {
-      const filterValue = value.toLowerCase();
-      if (filterValue !== '') {
-        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue)
-        || option.code_CEBO.toLowerCase().includes(filterValue));
-      }
-    } else {
-      return;
-    }
   }
 
   register() {

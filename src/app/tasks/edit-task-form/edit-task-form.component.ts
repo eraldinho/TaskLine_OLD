@@ -132,7 +132,7 @@ export class EditTaskFormComponent implements OnInit {
     this.Prestations = this.scrudService.RetrieveCollection('prestations');
     this.Prestations.subscribe(val => this.myPrestations = val);
     this.filteredOptions = this.ATDForm.get('delivery').get('deliveryAdd').valueChanges.pipe(
-      map(nom => this._filter(nom))
+      map(nom => this.tasksService.filter(nom, this.myPrestations))
     );
 
     this.currentUser = this.afAuth.authState;
@@ -188,18 +188,6 @@ export class EditTaskFormComponent implements OnInit {
     for (let i = 0; i < control.length; i++) {
       const progress = control.get([i]);
       progress.disable();
-    }
-  }
-
-  private _filter(value) {
-    if (value) {
-      const filterValue = value.toLowerCase();
-      if (filterValue !== '') {
-        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue)
-        || option.code_CEBO.toLowerCase().includes(filterValue));
-      }
-    } else {
-      return;
     }
   }
 
@@ -277,7 +265,7 @@ export class EditTaskFormComponent implements OnInit {
 
   logIt(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
     if (!this.ATDForm.get('assembly').disabled) {
-      console.log('hola: ' + valuectrl.value);
+      console.log('hola: ' + valuectrl);
     const mydate = new Date();
     if (display) {
       const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).locale('fr').format('LLLL');
@@ -295,7 +283,7 @@ export class EditTaskFormComponent implements OnInit {
     }
     this.register();
     if (this.ATDForm.get('task').get('taskType').value === 'montage') {
-      this.ATDForm.get('assemblygroup').enable();
+      this.ATDForm.get('assembly').enable();
       this.disableLogInput(this.assemblyGroup);
     }
   }

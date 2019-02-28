@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { TasksService } from 'src/app/services/tasks/tasks.service';
 
 @Component({
   selector: 'app-assembly-form',
@@ -8,10 +9,15 @@ import { FormGroup } from '@angular/forms';
 })
 export class AssemblyFormComponent implements OnInit {
   @Input() assemblyGroup: FormGroup;
+  @Output() needLog = new EventEmitter<object>();
 
-  constructor() { }
+  constructor(tasksService: TasksService) { }
 
   ngOnInit() {
+  }
+
+  onAssembly(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
+    this.needLog.emit({needdisplay: display, wheretoLog: formctrl, whattoLog: myaction, value: valuectrl});
   }
 
 }

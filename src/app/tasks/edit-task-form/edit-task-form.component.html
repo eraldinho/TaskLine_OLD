@@ -62,7 +62,7 @@
                 Montage
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <app-assembly-form [assemblyGroup]="ATDForm.get('assembly')"></app-assembly-form>
+            <app-assembly-form [assemblyGroup]="ATDForm.get('assembly')" (needLog)="logIt($event.needdisplay,$event.wheretoLog,$event.whattoLog,$event.value)"></app-assembly-form>
           </mat-expansion-panel>
         
       </mat-accordion>
