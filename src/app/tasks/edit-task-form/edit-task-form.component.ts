@@ -246,7 +246,10 @@ export class EditTaskFormComponent implements OnInit {
       const dialogRef = this.dialog.open(TaskDoneDialogComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 1) {
-          this.scrudService.UpdateDocument('tasks', taskId, {status: 'terminee'})
+          const myUpdate = this.ATDForm.get('task').value;
+          myUpdate.status = 'terminee';
+          myUpdate.taskDueDate = Date.parse(myUpdate.taskDueDate);
+          this.scrudService.UpdateDocument('tasks', taskId, {task: myUpdate})
           .then(val => {
             let action: string;
             val === 1 ?  (action = 'Succès') : action = 'Echec';

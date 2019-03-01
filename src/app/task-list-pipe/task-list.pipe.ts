@@ -108,14 +108,14 @@ export class TaskListPipe implements PipeTransform {
     if (value === '') {// si il n'y a pas de filtre sur le status
       console.log('nonterminee');
       for (let i = 0; i < items.length; i++) {// on affiche que les taches non terminées
-        if (items[i].status === 'terminee') {// c.a.d on supprime les taches terminées
+        if (items[i].task.status === 'terminee') {// c.a.d on supprime les taches terminées
           items.splice(i, 1);
           i = i - 1;
         }
       }
     } else {
       for (let i = 0; i < items.length; i++) {
-        if (items[i].status !== value) {
+        if (items[i].task.status !== value) {
           items.splice(i, 1);
           i = i - 1;
         }

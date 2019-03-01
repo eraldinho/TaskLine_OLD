@@ -77,12 +77,17 @@ export class TaskListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
-        this.scrudService.UpdateDocument('tasks', taskId, {status: 'terminee'})
-        .then(val => {
-          let action: string;
-          val === 1 ?  (action = 'Succès') : action = 'Echec';
-          this.snackBar.open('Validation Tâche', action, {
-          duration: 3000,
+        const mytask = this.scrudService.RetrieveDocument('tasks/' + taskId);
+        mytask.subscribe(Task => {
+          const myUpdate = Task.task;
+          myUpdate.status = 'terminee';
+          this.scrudService.UpdateDocument('tasks', taskId, {task: myUpdate})
+          .then(val => {
+            let action: string;
+            val === 1 ?  (action = 'Succès') : action = 'Echec';
+            this.snackBar.open('Validation Tâche', action, {
+            duration: 3000,
+            });
           });
         });
       }

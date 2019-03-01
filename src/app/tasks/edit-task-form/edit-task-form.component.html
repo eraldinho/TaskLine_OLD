@@ -64,7 +64,6 @@
             </mat-expansion-panel-header>
             <app-assembly-form [assemblyGroup]="ATDForm.get('assembly')" (needLog)="logIt($event.needdisplay,$event.wheretoLog,$event.whattoLog,$event.value)"></app-assembly-form>
           </mat-expansion-panel>
-        
       </mat-accordion>
     <div *ngIf = "ATDForm.get('task').get('status').value != 'terminee'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
     <mat-divider></mat-divider>
