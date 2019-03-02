@@ -130,7 +130,16 @@ export class EditTaskFormComponent implements OnInit {
 
     });
     this.Locations = this.scrudService.RetrieveCollection('locations');
-    this.Locations.subscribe(val => this.LocationsAvailable = val.filter(aLocation => aLocation.used === false));
+    this.Locations.subscribe(val => this.LocationsAvailable = val.filter(aLocation => aLocation.used === false)
+      .sort(function(a, b) {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      }));
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
     this.taskTypes.subscribe(val => this.Types = val.types);
     this.Prestations = this.scrudService.RetrieveCollection('prestations');
