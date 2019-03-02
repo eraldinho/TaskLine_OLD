@@ -1,111 +1,62 @@
 <form (ngSubmit)="register()" [formGroup]="ATDForm">
-    <div [formGroup]="taskGroup">
-        <mat-form-field class="input-margin">
-          <input formControlName="taskName" matInput placeholder="Nom de la tâche">
-        </mat-form-field>
-        <mat-form-field class="input-margin">
-          <mat-select formControlName="taskType" placeholder="Type de tâche">
-            <mat-option *ngFor="let Type of Types" [value]="Type">
-              {{Type}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="input-margin">
-            <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
-        </mat-form-field>
-        <mat-datepicker #picker></mat-datepicker>
-      </div>
-      <mat-dialog-content>
-        <mat-accordion>
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="customerGroup">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Client
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-          
-            <mat-form-field class="input-margin">
-              <input formControlName="customerName" matInput placeholder="Nom">
-            </mat-form-field>
-            <mat-form-field class="input-margin">
-              <input formControlName="customerFirstName" matInput placeholder="Prénom">
-            </mat-form-field>
-            <mat-form-field class="input-margin">
-              <input formControlName="customerNumber" matInput placeholder="Numéro Client">
-            </mat-form-field>
-            <mat-form-field class="input-margin">
-              <input formControlName="customerMail" matInput placeholder="Mail">
-            </mat-form-field>
-            <mat-form-field class="input-margin">
-              <input formControlName="customerPhone" matInput placeholder="Téléphone">
-            </mat-form-field>
-          </mat-expansion-panel>
-          
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Matériel
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-          
-            <mat-form-field class="input-margin">
-              <input formControlName="deviceType" matInput placeholder="Type">
-            </mat-form-field>
-            <mat-form-field class="input-margin">
-              <input formControlName="deviceBrand" matInput placeholder="Marque">
-            </mat-form-field>
-            <section class="example-section">
-              <mat-checkbox class="input-margin" formControlName="deviceStart">Le PC démarre</mat-checkbox>
-              <mat-checkbox class="input-margin" formControlName="deviceDisplay">Affichage Ok</mat-checkbox>
-              <mat-checkbox class="input-margin" formControlName="deviceOsStart">L'OS démarre</mat-checkbox>
-              <mat-checkbox class="input-margin" formControlName="deviceReset">Formatage possible</mat-checkbox>
-            </section>
-            <div>
-                <mat-form-field style="width:100%">
-                  <textarea formControlName="deviceDescription" matInput placeholder="Description"></textarea>
-                </mat-form-field>
-            </div>
-          </mat-expansion-panel>
-          
-          <mat-expansion-panel  [formGroup]="failureGroup" *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Panne
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-          
-            <div>
-              <mat-form-field style="width:100%">
-                <textarea formControlName="failureDescription" matInput placeholder="Description de la panne"></textarea>
-              </mat-form-field>
-          </div>
-          
-          </mat-expansion-panel>
-
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deliveryGroup">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Prestations
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')" [filteredDelivery]="filteredOptions" (deliveryAdded)="tasksService.addDelivery(ATDForm,fb)" (deliveryRemoved)="tasksService.removeDelivery($event, ATDForm)"></app-delivery-form>
-          
-          </mat-expansion-panel>
-          <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Avancement
-                </mat-panel-title>
-                <mat-panel-description>
-                  Liste actions réalisées
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-              <app-progress-form [progressGroup]="ATDForm.get('progress')"></app-progress-form> 
-          </mat-expansion-panel>
-        </mat-accordion>
-      </mat-dialog-content>
-      <mat-dialog-actions>
-        <button mat-button>Ajouter</button>
-        <button mat-button type="button" (click) = 'cancel()'>Annuler</button>
-      </mat-dialog-actions>
+    <app-task-form [taskGroup]="ATDForm.get('task')" [Types]="Types" [LocationsAvailable]="LocationsAvailable" (lockForm)="isLocked($event)"></app-task-form>
+    <mat-accordion class="taskFormAccordion">
+      <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="customerGroup">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Client
+          </mat-panel-title>
+          <mat-panel-description>
+            Coordonnées du client
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-customer-form [customerGroup]="ATDForm.get('customer')"></app-customer-form>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Matériel
+          </mat-panel-title>
+          <mat-panel-description>
+            Description du matériel
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-device-form [deviceGroup]="ATDForm.get('device')"></app-device-form>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Panne
+          </mat-panel-title>
+          <mat-panel-description>
+            Description de la panne
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-failure-form [failureGroup]="ATDForm.get('failure')"></app-failure-form>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Prestations
+          </mat-panel-title>
+          <mat-panel-description>
+            Liste des prestations à effectuer
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')" [filteredDelivery]="filteredOptions" (deliveryAdded)="tasksService.addDelivery(ATDForm,fb)" (deliveryRemoved)="tasksService.removeDelivery($event, ATDForm)"></app-delivery-form>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Avancement
+            </mat-panel-title>
+            <mat-panel-description>
+              Liste actions réalisées
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-progress-form [progressGroup]="ATDForm.get('progress')" (progressAdded)="addProgress()"></app-progress-form> 
+        </mat-expansion-panel>
+    </mat-accordion>
+  <div *ngIf = "ATDForm.get('task').get('status').value != 'terminee'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
+  <mat-divider></mat-divider>
 </form>

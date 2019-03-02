@@ -85,9 +85,49 @@ export class TaskListPipe implements PipeTransform {
 
   cleanFind(items, value) {
     for (let i = 0; i < items.length; i++) {
-      if (items[i].task.taskName
-        .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) === -1) {
+      console.log(items[i]);
+      let mustSplice: boolean = true;
+      //customerName
+      if (items[i].customer.customerName) {
+        if (items[i].customer.customerName
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      //customerFirstName
+      if (items[i].customer.customerFirstName) {
+        if (items[i].customer.customerFirstName
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      //customerMail
+      if (items[i].customer.customerMail) {
+        if (items[i].customer.customerMail
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      //customerPhone
+      if (items[i].customer.customerPhone) {
+        if (items[i].customer.customerPhone
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      //taskName
+      if (items[i].task.taskName) {
+        if (items[i].task.taskName
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      if (mustSplice) {
         items.splice(i, 1);
         i = i - 1;
       }

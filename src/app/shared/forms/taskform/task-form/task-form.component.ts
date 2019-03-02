@@ -8,11 +8,16 @@ import { FormGroup } from '@angular/forms';
 })
 export class TaskFormComponent implements OnInit {
   @Input() taskGroup: FormGroup;
+  @Input() Types: string[];
+  @Input() LocationsAvailable: object[];
   @Output() lockForm = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
+    console.log('app-task-form');
+    console.log(this.Types);
+    console.log(this.LocationsAvailable);
   }
 
   lock() {

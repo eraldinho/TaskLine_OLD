@@ -38,7 +38,8 @@ export class TasksService {
     this.taskFiltered.next([filter, value]);
   }
 
-  initDelivery(monnom: string, monprix: string, moncode: string, fb: FormBuilder) {
+  initDelivery(moncode: string, monnom: string, monprix: string, fb: FormBuilder) {
+    console.log(monnom + ' ' + monprix + ' ' + moncode);
     // initialize our Prestation
     return fb.group({
         nom: [monnom],
@@ -61,7 +62,7 @@ export class TasksService {
     if (form.get('delivery').get('deliveryAdd').value) {
       const value = form.get('delivery').get('deliveryAdd').value.split('   /   ');
       if (value.length === 3) {
-        console.log('ok3');
+        console.log(value);
         const control = <FormArray>form.get('delivery').get('deliveryArray');
         console.log(form.get('delivery').get('deliveryArray'));
         control.push(this.initDelivery(value[0], value[1], value[2], fb));

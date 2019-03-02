@@ -60,6 +60,8 @@ export class EditTaskFormComponent implements OnInit {
 
   @Input() taskID: string;
   filteredOptions: Observable<Delivery[]>;
+  Locations;
+  LocationsAvailable;
   taskTypes;
   Types;
   mytask;
@@ -127,6 +129,8 @@ export class EditTaskFormComponent implements OnInit {
       this.taskName = this.ATDForm.get('task').get('taskName').value;
 
     });
+    this.Locations = this.scrudService.RetrieveCollection('locations');
+    this.Locations.subscribe(val => this.LocationsAvailable = val.filter(aLocation => aLocation.used === false));
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
     this.taskTypes.subscribe(val => this.Types = val.types);
     this.Prestations = this.scrudService.RetrieveCollection('prestations');

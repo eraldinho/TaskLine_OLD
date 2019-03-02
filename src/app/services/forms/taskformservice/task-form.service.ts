@@ -17,6 +17,7 @@ export class TaskFormService {
       originUser: [null, Validators.required],
       destinationUser: [null, Validators.required],
       status: [null, Validators.required],
+      location: [null, Validators.required],
       WCA: [null, Validators.required],
       CMP: [null, Validators.required],
       comment: [null, Validators.required]

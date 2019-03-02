@@ -53,6 +53,8 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   filteredOptions: Observable<Delivery[]>;
+  Locations;
+  LocationsAvailable;
   taskTypes;
   Types;
   Prestations;
@@ -83,6 +85,8 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.Locations = this.scrudService.RetrieveCollection('locations');
+    this.Locations.subscribe(val => this.LocationsAvailable = val.filter(aLocation => aLocation.used === false));
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
     this.taskTypes.subscribe(val => this.Types = val.types);
     this.Prestations = this.scrudService.RetrieveCollection('prestations');
