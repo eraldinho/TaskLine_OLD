@@ -66,12 +66,16 @@ export class ScrudService {
     const doc = this.afs.doc(collectionName + '/' + documentName);
     return new Promise<number>(function (resolve, reject) {
       console.log(data);
+      console.log(doc.ref.id);
+      if (doc.ref.id === 'null') {
+        console.log('resolve');
+        resolve(-1);
+      }
       doc.update(data)
       .then(() => {
         console.log('success');
         resolve(1);
-      } ) .catch(err => {
-        console.log(err);
+      }).catch(err => {
         reject(0);
       });
     });

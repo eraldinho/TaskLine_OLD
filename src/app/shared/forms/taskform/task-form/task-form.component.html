@@ -14,12 +14,13 @@
     </mat-form-field>
     <mat-datepicker #picker></mat-datepicker>
     <mat-form-field class="input-margin" *ngIf="taskGroup.get('taskType').value=='atelier' || taskGroup.get('taskType').value=='montage'">
-        <mat-select formControlName="location" placeholder="Emplacement">
+        <mat-select formControlName="locationAdd" placeholder="Emplacement" (selectionChange)="onLocationUsed()">
           <mat-option *ngFor="let location of LocationsAvailable" [value]="location.name">
             {{location.name}}
           </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-icon *ngIf="taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
-    <mat-icon *ngIf="!taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="lock()">lock</mat-icon>
+    <mat-form-field class="input-margin" *ngIf="taskGroup.get('taskType').value=='atelier' || taskGroup.get('taskType').value=='montage'">
+        <input formControlName="location" matInput disabled="true">
+    </mat-form-field>
 </div>

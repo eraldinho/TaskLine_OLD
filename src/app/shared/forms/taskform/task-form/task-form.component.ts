@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ScrudService } from '../../../../services/scrud/scrud.service';
 
 @Component({
   selector: 'app-task-form',
@@ -10,9 +11,8 @@ export class TaskFormComponent implements OnInit {
   @Input() taskGroup: FormGroup;
   @Input() Types: string[];
   @Input() LocationsAvailable: object[];
-  @Output() lockForm = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(private scrudService: ScrudService) { }
 
   ngOnInit() {
     console.log('app-task-form');
@@ -20,14 +20,16 @@ export class TaskFormComponent implements OnInit {
     console.log(this.LocationsAvailable);
   }
 
-  lock() {
-    console.log('lock');
-    this.lockForm.emit(true);
-  }
-
-  unlock() {
-    console.log('unlock');
-    this.lockForm.emit(false);
+  onLocationUsed() {
+    console.log('onLocationUsed');
+    console.log(this.taskGroup.get('location').value);
+    console.log(this.taskGroup.get('locationAdd').value);
+    this.scrudService.UpdateDocument('locations', this.taskGroup.get('location').value, {used: false})
+    .then(val => {
+      this.taskGroup.get('location').setValue(this.taskGroup.get('locationAdd').value);
+      this.scrudService.UpdateDocument('locations', this.taskGroup.get('locationAdd').value, {used: true});
+    })
+    .catch(err => console.log(err));
   }
 
 }
