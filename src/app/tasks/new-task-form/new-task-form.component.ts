@@ -59,6 +59,7 @@ export class NewTaskFormComponent implements OnInit {
   Types;
   Prestations;
   myPrestations;
+  docRef;
   ATDForm: FormGroup;
 
 
@@ -85,6 +86,7 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ATDForm.get('task').get('location').disable();
     this.Locations = this.scrudService.RetrieveCollection('locations');
     this.Locations.subscribe(val => this.LocationsAvailable = val.filter(aLocation => aLocation.used === false)
       .sort(function(a, b) {
@@ -105,21 +107,33 @@ export class NewTaskFormComponent implements OnInit {
     );
   }
 
-  register() {
+  register(type?: number) {
     this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
     this.ATDForm.enable();
     this.ATDForm.get('delivery').get('deliveryArray').enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
-    this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
-    .then((result) => {
+    if (this.docRef) {
+      this.scrudService.SetDocument('tasks', this.docRef, this.ATDForm.value)
+      .then((result) => {
+        let action: string;
+        result === 1 ?  (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
+        this.snackBar.open('Modification Tâche', action, {
+          duration: 500,
+        });
+      });
+    } else {
+      this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
+      .then((result) => {
+      this.ATDForm.get('delivery').get('deliveryArray').disable();
       let action: string;
-      result === 1 ?  (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
+      result !== 0 ? (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
       this.snackBar.open('Ajout Tâche', action, {
         duration: 3000,
       });
     });
+    }
   }
 
   cancel() {
@@ -127,4 +141,11 @@ export class NewTaskFormComponent implements OnInit {
     this.tasksService.cleanDelivery(this.ATDForm);
   }
 
+  LocationSet(location) {
+    this.tasksService.LocationSet(this.ATDForm, location, this.docRef).
+    then(res => {
+      this.docRef = res;
+      console.log('fin : ' + this.docRef);
+    });
+  }
 }

@@ -13,14 +13,14 @@
         <input formControlName="taskDueDate" matInput placeholder="Echéance" [matDatepicker]="picker" (focus)="picker.open()">
     </mat-form-field>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-form-field class="input-margin" *ngIf="taskGroup.get('taskType').value=='atelier' || taskGroup.get('taskType').value=='montage'">
+    <mat-form-field class="input-margin" *ngIf="taskGroup.get('taskType').value=='atelier' && taskGroup.get('taskName').value!==null && taskGroup.get('taskDueDate').value!==null || taskGroup.get('taskType').value=='montage' && taskGroup.get('taskName').value!==null && taskGroup.get('taskDueDate').value!==null">
         <mat-select formControlName="locationAdd" placeholder="Emplacement" (selectionChange)="onLocationUsed()">
           <mat-option *ngFor="let location of LocationsAvailable" [value]="location.name">
             {{location.name}}
           </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field class="input-margin" *ngIf="taskGroup.get('taskType').value=='atelier' || taskGroup.get('taskType').value=='montage'">
-        <input formControlName="location" matInput disabled="true">
+    <mat-form-field class="input-margin" *ngIf="taskGroup.get('taskType').value=='atelier' && taskGroup.get('taskName').value!==null && taskGroup.get('taskDueDate').value!==null || taskGroup.get('taskType').value=='montage' && taskGroup.get('taskName').value!==null && taskGroup.get('taskDueDate').value!==null">
+        <input formControlName="location" matInput>
     </mat-form-field>
 </div>

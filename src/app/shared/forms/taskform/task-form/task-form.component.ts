@@ -11,6 +11,7 @@ export class TaskFormComponent implements OnInit {
   @Input() taskGroup: FormGroup;
   @Input() Types: string[];
   @Input() LocationsAvailable: object[];
+  @Output() LocationSet = new EventEmitter<string>();
 
   constructor(private scrudService: ScrudService) { }
 
@@ -22,11 +23,12 @@ export class TaskFormComponent implements OnInit {
 
   onLocationUsed() {
     console.log('onLocationUsed');
-    console.log(this.taskGroup.get('location').value);
-    console.log(this.taskGroup.get('locationAdd').value);
+    console.log('location: ' + this.taskGroup.get('location').value);
+    console.log('locationAdd :' + this.taskGroup.get('locationAdd').value);
     this.scrudService.UpdateDocument('locations', this.taskGroup.get('location').value, {used: false})
     .then(val => {
       this.taskGroup.get('location').setValue(this.taskGroup.get('locationAdd').value);
+      this.LocationSet.emit(this.taskGroup.get('location').value);
       this.scrudService.UpdateDocument('locations', this.taskGroup.get('locationAdd').value, {used: true});
     })
     .catch(err => console.log(err));

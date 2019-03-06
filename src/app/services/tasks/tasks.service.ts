@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { ScrudService } from '../../services/scrud/scrud.service';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
 
-  constructor() { }
+  constructor(private scrudService: ScrudService,
+              private snackBar: MatSnackBar) { }
   // Observable string sources
   private tasksEdited = new Subject<string[]>();
   private taskNameChanged = new Subject<string[]>();
@@ -111,6 +114,47 @@ export class TasksService {
     } else {
       return;
     }
+  }
+
+  LocationSet(form: FormGroup, location: string, docRef?: string): Promise<string> {
+    const that = this;
+    return new Promise<string>(function (resolve, reject) {
+      console.log('LocationSet' + location + '---' + docRef);
+      form.get('task').get('location').setValue(location);
+      form.disable();
+      that.disableDelivery(form);
+      form.get('task').get('taskType').disable();
+      form.get('delivery').get('deliveryAdd').setValue('');
+      form.enable();
+      form.get('delivery').get('deliveryArray').enable();
+      form.value.task.taskDueDate = Date.parse(form.value.task.taskDueDate);
+      if (docRef) {
+        that.scrudService.SetDocument('tasks', docRef, form.value)
+        .then((result) => {
+          let action: string;
+          result === 1 ?  (action = 'Succès') : action = 'Echec';
+          that.snackBar.open('Modification Tâche', action, {
+            duration: 500,
+          });
+          resolve(docRef);
+        });
+      } else {
+        that.scrudService.AddDoc2Collection('tasks', form.value)
+        .then((result) => {
+          console.log('aa : ' + result.id);
+          form.get('delivery').get('deliveryArray').disable();
+          let action: string;
+          result !== 0 ? (docRef = result.id, action = 'Succès') : action = 'Echec';
+          that.snackBar.open('Ajout Tâche', action, {
+            duration: 3000,
+          });
+          const mydate = new Date(form.get('task').get('taskDueDate').value);
+          form.get('task').get('taskDueDate').setValue(mydate);
+          console.log('LocationSet docRef :' + docRef);
+          resolve(docRef);
+        });
+      }
+    });
   }
 
 }

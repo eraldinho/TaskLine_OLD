@@ -34,13 +34,13 @@ export class ScrudService {
     return this.afs.doc(documentName).valueChanges();
   }
 
-  AddDoc2Collection(collectionName: string, data): Promise<number> {
+  AddDoc2Collection(collectionName: string, data): Promise<any> {
     const collection = this.afs.collection(collectionName);
-    return new Promise<number>(function (resolve, reject) {
+    return new Promise<any>(function (resolve, reject) {
       collection.add(data)
-      .then(() => {
+      .then((docRef) => {
         console.log('success');
-        resolve(1);
+        resolve(docRef);
       } ) .catch(err => {
         console.log(err);
         reject(0);

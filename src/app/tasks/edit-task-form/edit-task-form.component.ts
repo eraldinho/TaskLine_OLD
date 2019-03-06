@@ -215,6 +215,7 @@ export class EditTaskFormComponent implements OnInit {
     this.tasksService.enableDelivery(this.ATDForm);
     this.ATDForm.get('progress').get('progressArray').disable();
     this.ATDForm.get('task').get('taskType').disable();
+    this.ATDForm.get('task').get('location').disable();
     this.disableLogInput(this.assemblyGroup);
   }
 
@@ -225,12 +226,11 @@ export class EditTaskFormComponent implements OnInit {
     this.register();
   }
 
-  register() {
+  register(type?: number) {
     this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
     this.ATDForm.enable();
     this.ATDForm.get('delivery').get('deliveryArray').enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
-    // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
     this.scrudService.SetDocument('tasks', this.taskID, this.ATDForm.value)
     .then((result) => {
       let action: string;
@@ -239,8 +239,8 @@ export class EditTaskFormComponent implements OnInit {
         duration: 500,
       });
     });
-    this.ATDForm.disable();
     this.ATDForm.get('delivery').get('deliveryArray').disable();
+    this.ATDForm.disable();
     if (this.taskName !== this.ATDForm.get('task').get('taskName').value) {
       this.tasksService.changeTaskName([this.taskName, this.taskName = this.ATDForm.get('task').get('taskName').value]);
     }
