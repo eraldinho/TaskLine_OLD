@@ -18,6 +18,17 @@
               </mat-expansion-panel-header>
               <app-customer-form [customerGroup]="ATDForm.get('customer')"></app-customer-form>
             </mat-expansion-panel>
+            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'montage'" [formGroup]="hardwareGroup">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Composants du client
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Liste des Composants fournis par le client
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-customerhardware-form [hardwareGroup]="ATDForm.get('hardware')" (hardwareAdded)="tasksService.addHardware(ATDForm,fb)" (hardwareRemoved)="tasksService.removeHardware($event, ATDForm)"></app-customerhardware-form>
+            </mat-expansion-panel>
             <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
               <mat-expansion-panel-header>
                 <mat-panel-title>

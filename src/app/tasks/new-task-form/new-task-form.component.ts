@@ -12,6 +12,7 @@ import { DeviceFormService } from '../../services/forms/deviceformservice/device
 import { FailureFormService } from '../../services/forms/failureformservice/failure-form.service';
 import { ProgressFormService } from '../../services/forms/progressformservice/progress-form.service';
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
+import { CustomerhardwareFormService } from '../../services/forms/customerhardwareformservice/customerhardware-form.service';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
 
@@ -51,6 +52,9 @@ export class NewTaskFormComponent implements OnInit {
   get taskGroup(): FormGroup {
     return this.taskFormService.taskGroup;
   }
+  get hardwareGroup(): FormGroup {
+    return this.customerhardwareFormService.hardwareGroup;
+  }
 
   filteredOptions: Observable<Delivery[]>;
   Locations;
@@ -73,7 +77,8 @@ export class NewTaskFormComponent implements OnInit {
               private deviceFormService: DeviceFormService,
               private failureFormService: FailureFormService,
               private progressFormService: ProgressFormService,
-              private taskFormService: TaskFormService) {
+              private taskFormService: TaskFormService,
+              private customerhardwareFormService: CustomerhardwareFormService) {
       this.ATDForm = fb.group({
         task: this.taskGroup,
         customer: this.customerGroup,
@@ -81,7 +86,8 @@ export class NewTaskFormComponent implements OnInit {
         failure: this.failureGroup,
         delivery: this.deliveryGroup,
         progress: this.progressGroup,
-        assembly: this.assemblyGroup
+        assembly: this.assemblyGroup,
+        hardware: this.hardwareGroup
       });
   }
 
@@ -147,5 +153,9 @@ export class NewTaskFormComponent implements OnInit {
       this.docRef = res;
       console.log('fin : ' + this.docRef);
     });
+  }
+
+  consolLog() {
+    console.log('ok');
   }
 }

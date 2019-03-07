@@ -69,6 +69,7 @@ import { DeviceFormComponent } from './shared/forms/deviceform/device-form/devic
 import { FailureFormComponent } from './shared/forms/failureform/failure-form/failure-form.component';
 import { TaskFormComponent } from './shared/forms/taskform/task-form/task-form.component';
 import { ProgressFormComponent } from './shared/forms/progressform/progress-form/progress-form.component';
+import { CustomerhardwareFormComponent } from './shared/forms/customerhardwareform/customerhardware-form/customerhardware-form.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { ProgressFormComponent } from './shared/forms/progressform/progress-form
     DeviceFormComponent,
     FailureFormComponent,
     TaskFormComponent,
-    ProgressFormComponent
+    ProgressFormComponent,
+    CustomerhardwareFormComponent
   ],
   imports: [
     BrowserModule,

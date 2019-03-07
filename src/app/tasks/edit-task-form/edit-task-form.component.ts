@@ -19,6 +19,7 @@ import { DeviceFormService } from '../../services/forms/deviceformservice/device
 import { FailureFormService } from '../../services/forms/failureformservice/failure-form.service';
 import { ProgressFormService } from '../../services/forms/progressformservice/progress-form.service';
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
+import { CustomerhardwareFormService } from '../../services/forms/customerhardwareformservice/customerhardware-form.service';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 
 @Component({
@@ -57,6 +58,9 @@ export class EditTaskFormComponent implements OnInit {
   get taskGroup(): FormGroup {
     return this.taskFormService.taskGroup;
   }
+  get hardwareGroup(): FormGroup {
+    return this.customerhardwareFormService.hardwareGroup;
+  }
 
   @Input() taskID: string;
   filteredOptions: Observable<Delivery[]>;
@@ -84,7 +88,8 @@ export class EditTaskFormComponent implements OnInit {
               private deviceFormService: DeviceFormService,
               private failureFormService: FailureFormService,
               private progressFormService: ProgressFormService,
-              private taskFormService: TaskFormService) {
+              private taskFormService: TaskFormService,
+              private customerhardwareFormService: CustomerhardwareFormService) {
     this.ATDForm = fb.group({
       task: this.taskGroup,
       customer: this.customerGroup,
@@ -92,7 +97,8 @@ export class EditTaskFormComponent implements OnInit {
       failure: this.failureGroup,
       delivery: this.deliveryGroup,
       progress: this.progressGroup,
-      assembly: this.assemblyGroup
+      assembly: this.assemblyGroup,
+      hardware: this.hardwareGroup
     });
   }
 

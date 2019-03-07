@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import { MatSnackBar } from '@angular/material';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,7 @@ export class TasksService {
     this.taskFiltered.next([filter, value]);
   }
 
+  // Delivery
   initDelivery(moncode: string, monnom: string, monprix: string, fb: FormBuilder) {
     console.log(monnom + ' ' + monprix + ' ' + moncode);
     // initialize our Prestation
@@ -101,6 +103,48 @@ export class TasksService {
     for (let i = 0; i < control.length; i++) {
       const prestation = control.get([i]);
       prestation.disable();
+    }
+  }
+
+  // Hardware
+  addHardware(form: FormGroup, fb: FormBuilder) {
+    console.log(form.get('hardware').get('hardwareAdd').value);
+    // add Prestation to the list
+    if (form.get('hardware').get('hardwareAdd').value) {
+      const control = <FormArray>form.get('hardware').get('hardwareArray');
+      control.push(form.get('hardware').get('hardwareAdd').value);
+      form.get('hardware').get('hardwareAdd').setValue('');
+      const value = form.get('hardware').get('hardwareAdd').value.split('   /   ');
+    }
+  }
+
+  removeHardware(i: number, form: FormGroup) {
+    // remove address from the list
+    const control = <FormArray>form.get('hardware').get('hardwareArray');
+    control.removeAt(i);
+  }
+
+  cleanHardware(form: FormGroup) {
+    // remove address from the list
+    const control = <FormArray>form.get('hardware').get('hardwareArray');
+    for (let i = 0; i < control.length; i++) {
+      control.removeAt(i);
+    }
+  }
+
+  enableHardware(form: FormGroup) {
+    const control = <FormArray>form.get('hardware').get('hardwareArray');
+    for (let i = 0; i < control.length; i++) {
+      const hardware = control.get([i]);
+      hardware.enable();
+    }
+  }
+
+  disableHardware(form: FormGroup) {
+    const control = <FormArray>form.get('hardware').get('hardwareArray');
+    for (let i = 0; i < control.length; i++) {
+      const hardware = control.get([i]);
+      hardware.disable();
     }
   }
 

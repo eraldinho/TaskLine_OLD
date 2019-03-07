@@ -1,0 +1,22 @@
+<div [formGroup]="hardwareGroup">
+    <section class="example-section">
+        <mat-form-field style="width:100%">
+            <textarea matInput formControlName="hardwareAdd"></textarea>
+        </mat-form-field>
+        <mat-icon (click)="addHardware()">add_circle_outlined</mat-icon>
+    </section>
+    <div  formArrayName="hardwareArray">
+      <mat-card *ngFor="let hardware of hardwareGroup.controls.hardwareArray.controls; let i=index">
+        <div [formGroupName]="i">
+          <mat-card-content>
+            <div>
+              <mat-form-field style="width:100%">
+                <textarea matInput formControlName="hardware"></textarea>
+              </mat-form-field>
+            </div>
+            <mat-icon (click)="onRemoveHardware(i)">delete</mat-icon>
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </div>
+</div>

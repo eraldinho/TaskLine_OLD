@@ -15,6 +15,15 @@ export class DeviceFormService {
       deviceDisplay: [null, Validators.required],
       deviceOsStart: [null, Validators.required],
       deviceReset: [null, Validators.required],
+      deviceScreen: [null, Validators.required],
+      deviceScrew: [null, Validators.required],
+      deviceKeyboard: [null, Validators.required],
+      deviceBattery: [null, Validators.required],
+      deviceGraphicCard: [null, Validators.required],
+      deviceCharger: [null, Validators.required],
+      deviceBoards: [null, Validators.required],
+      deviceHDD: [null, Validators.required],
+      deviceSSD: [null, Validators.required],
       deviceDescription: [null, Validators.required]
     });
    }

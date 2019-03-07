@@ -86,8 +86,8 @@ export class TaskListPipe implements PipeTransform {
   cleanFind(items, value) {
     for (let i = 0; i < items.length; i++) {
       console.log(items[i]);
-      let mustSplice: boolean = true;
-      //customerName
+      let mustSplice = true;
+      // customerName
       if (items[i].customer.customerName) {
         if (items[i].customer.customerName
           .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -95,7 +95,7 @@ export class TaskListPipe implements PipeTransform {
             mustSplice = false;
         }
       }
-      //customerFirstName
+      // customerFirstName
       if (items[i].customer.customerFirstName) {
         if (items[i].customer.customerFirstName
           .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -103,7 +103,7 @@ export class TaskListPipe implements PipeTransform {
             mustSplice = false;
         }
       }
-      //customerMail
+      // customerMail
       if (items[i].customer.customerMail) {
         if (items[i].customer.customerMail
           .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -111,7 +111,7 @@ export class TaskListPipe implements PipeTransform {
             mustSplice = false;
         }
       }
-      //customerPhone
+      // customerPhone
       if (items[i].customer.customerPhone) {
         if (items[i].customer.customerPhone
           .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -119,11 +119,18 @@ export class TaskListPipe implements PipeTransform {
             mustSplice = false;
         }
       }
-      //taskName
+      // taskName
       if (items[i].task.taskName) {
         if (items[i].task.taskName
           .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
           .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      if (items[i].task.location) {
+        if (items[i].task.location
+          .toLowerCase().normalize('NFD')
+          .indexOf(value.toLowerCase().normalize('NFD')) !== -1) {
             mustSplice = false;
         }
       }
