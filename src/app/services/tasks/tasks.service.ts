@@ -107,7 +107,29 @@ export class TasksService {
   }
 
   // Hardware
+  initHardware(myHardware , fb: FormBuilder) {
+    // initialize our Hardware
+    return fb.group({
+        hardware: [myHardware]
+    });
+  }
+
+  addEmptyHardware(form: FormGroup, fb: FormBuilder) {
+    // add  empty Hardware to the list
+    const control = <FormArray>form.get('hardware').get('hardwareArray');
+    control.push(this.initHardware('', fb));
+    form.get('hardware').get('hardwareArray').disable();
+  }
+
   addHardware(form: FormGroup, fb: FormBuilder) {
+    if (form.get('hardware').get('hardwareAdd').enabled) {
+      if (form.get('hardware').get('hardwareAdd').value) {
+          const control = <FormArray>form.get('hardware').get('hardwareArray');
+          control.push(this.initHardware(form.get('hardware').get('hardwareAdd').value, fb));
+          form.get('hardware').get('hardwareAdd').setValue('');
+          form.get('hardware').get('hardwareArray').disable();
+      }
+    }
     console.log(form.get('hardware').get('hardwareAdd').value);
     // add Prestation to the list
     if (form.get('hardware').get('hardwareAdd').value) {

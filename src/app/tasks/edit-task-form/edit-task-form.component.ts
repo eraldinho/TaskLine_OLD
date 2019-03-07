@@ -105,6 +105,7 @@ export class EditTaskFormComponent implements OnInit {
   ngOnInit() {
     const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
     const control2 = <FormArray>this.ATDForm.get('progress').get('progressArray');
+    const control3 = <FormArray>this.ATDForm.get('hardware').get('hardwareArray');
     this.tasksService.cleanDelivery(this.ATDForm);
     this.cleaninProgress();
     this.ATDForm.disable();
@@ -126,6 +127,15 @@ export class EditTaskFormComponent implements OnInit {
           for (let i = 0; i < val.progress.progressArray.length; i++ ) {
             console.log(i);
             this.addEmptyProgress();
+          }
+        }
+      }
+      if (val.hardware.hardwareArray) {
+        console.log('hardware' + '***' + val.hardware.hardwareArray.length + '@@@' + control.length);
+        if (val.progress.progressArray.length > 0 && val.progress.progressArray.length > control3.length) {
+          for (let i = 0; i < val.hardware.hardwareArray.length; i++ ) {
+            console.log(i);
+            this.tasksService.addEmptyHardware(this.ATDForm, this.fb);
           }
         }
       }
