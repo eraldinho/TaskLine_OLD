@@ -6,6 +6,7 @@ import { SavComponent } from './sav/sav.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import {AuthGuard} from './auth.guard';
+import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/print-task-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/tasks(toolbar:navbar)', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard]},
   { path: 'atelier', component: AtelierComponent, canActivate: [AuthGuard] },
   { path: 'sav', component: SavComponent, canActivate: [AuthGuard] },
-  {path: 'navbar', component: NavbarComponent, outlet: 'toolbar', canActivate: [AuthGuard]}
+  { path: 'navbar', component: NavbarComponent, outlet: 'toolbar', canActivate: [AuthGuard]},
+  { path: 'print', component: PrintTaskFormComponent }
 ];
 
 @NgModule({

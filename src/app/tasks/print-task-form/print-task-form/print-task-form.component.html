@@ -1,0 +1,15 @@
+<form [formGroup]="ATDForm">
+    <mat-card>
+      <mat-card-content>
+          <mat-card-header>
+            <mat-icon (click)="navBack()">keyboard_arrow_left</mat-icon>
+            <mat-icon (click)="setFormValue()">cloud_download</mat-icon>
+          </mat-card-header>
+          <app-task-form [taskGroup]="ATDForm.get('task')" [Types]="Types"></app-task-form>
+          <app-customer-form [customerGroup]="ATDForm.get('customer')"></app-customer-form>
+          <app-device-form [deviceGroup]="ATDForm.get('device')"></app-device-form>
+          <app-failure-form [failureGroup]="ATDForm.get('failure')"></app-failure-form>
+          <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')"></app-delivery-form>
+      </mat-card-content>
+    </mat-card>
+</form>

@@ -14,12 +14,14 @@ export class TasksService {
               private snackBar: MatSnackBar) { }
   // Observable string sources
   private tasksEdited = new Subject<string[]>();
+  private tasksPrinted = new Subject<string>();
   private taskNameChanged = new Subject<string[]>();
   private taskTabClosed = new Subject<string>();
   private taskFiltered = new Subject<string[]>();
 
   // Observable string streams
   tasksEdited$ = this.tasksEdited.asObservable();
+  tasksPrinted$ = this.tasksPrinted.asObservable();
   taskNameChanged$ = this.taskNameChanged.asObservable();
   taskTabClosed$ = this.taskTabClosed.asObservable();
   taskFiltered$ = this.taskFiltered.asObservable();
@@ -28,6 +30,11 @@ export class TasksService {
   // task = [taskId, taskName, taskType]
   editTask(task: string[]) {
     this.tasksEdited.next(task);
+  }
+
+  printTask(task: string) {
+    console.log('printTask');
+    this.tasksPrinted.next(task);
   }
 
   changeTaskName(taskNames: string[]) {

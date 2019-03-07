@@ -1,11 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
+import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar, MatAccordion} from '@angular/material';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as moment from 'moment';
+import printJS from 'print-js';
 
 import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
 import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
@@ -37,6 +38,7 @@ import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
  ]
 })
 export class EditTaskFormComponent implements OnInit {
+  @ViewChild('taskAccordion') taskAccordion: MatAccordion;
   get assemblyGroup(): FormGroup {
     return this.assemblyFormService.assemblyGroup;
   }
@@ -132,7 +134,7 @@ export class EditTaskFormComponent implements OnInit {
       }
       if (val.hardware.hardwareArray) {
         console.log('hardware' + '***' + val.hardware.hardwareArray.length + '@@@' + control.length);
-        if (val.progress.progressArray.length > 0 && val.progress.progressArray.length > control3.length) {
+        if (val.hardware.hardwareArray.length > 0 && val.hardware.hardwareArray.length > control3.length) {
           for (let i = 0; i < val.hardware.hardwareArray.length; i++ ) {
             console.log(i);
             this.tasksService.addEmptyHardware(this.ATDForm, this.fb);
@@ -194,11 +196,14 @@ export class EditTaskFormComponent implements OnInit {
           const control = <FormArray>this.ATDForm.get('progress').get('progressArray');
           const mydate = new Date ();
           const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).format('dddd, MMMM Do YYYY, h:mm:ss a');
-          control.push(this.initProgress(this.ATDForm.get('progress').get('progressAdd').value, myDisplayString));
+          const progress = this.ATDForm.get('progress').get('progressAdd').value;
+          control.push(this.initProgress(progress, myDisplayString));
+          this.ATDForm.get('task').get('status').setValue('encours');
           this.ATDForm.get('progress').get('progressAdd').setValue('');
           this.ATDForm.get('progress').get('progressArray').disable();
           this.logIt(false, this.ATDForm.controls['task'].get['status'], 'avancement atelier',
-           this.ATDForm.get('progress').get('progressAdd').value);
+            this.ATDForm.get('progress').get('progressAdd').value);
+          console.log(this.ATDForm.value);
           this.unlock();
       }
     }
@@ -276,7 +281,7 @@ export class EditTaskFormComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result === 1) {
           const myUpdate = this.ATDForm.get('task').value;
-          myUpdate.status = 'terminee';
+          myUpdate.status = 'attenteretclient';
           myUpdate.taskDueDate = Date.parse(myUpdate.taskDueDate);
           this.scrudService.UpdateDocument('tasks', taskId, {task: myUpdate})
           .then(val => {
@@ -295,6 +300,21 @@ export class EditTaskFormComponent implements OnInit {
     }
   }
 
+  deviceTaken(taskId) {
+    const myUpdate = this.ATDForm.get('task').value;
+    myUpdate.status = 'terminee';
+    myUpdate.taskDueDate = Date.parse(myUpdate.taskDueDate);
+    this.scrudService.UpdateDocument('tasks', taskId, {task: myUpdate})
+    .then(val => {
+      let action: string;
+      val === 1 ?  (action = 'Succès') : action = 'Echec';
+      this.snackBar.open('Validation Tâche', action, {
+      duration: 3000,
+      });
+      this.tasksService.closeTaskTab(this.taskID);
+    });
+  }
+
   logIt(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
     if (!this.ATDForm.get('assembly').disabled) {
       console.log('hola: ' + valuectrl);
@@ -303,7 +323,8 @@ export class EditTaskFormComponent implements OnInit {
       const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).locale('fr').format('LLLL');
       formctrl.setValue(myDisplayString);
     }
-    const myActionString = myaction + ' => value: ' + valuectrl.value;
+    const myActionString = myaction + ' => value: ' + valuectrl;
+    console.log(myActionString);
     this.scrudService.AddDoc2Collection('logs',
       {Date: mydate,
       Familly: 'Tasks',
@@ -341,4 +362,5 @@ export class EditTaskFormComponent implements OnInit {
       }
     });
   }
+
 }

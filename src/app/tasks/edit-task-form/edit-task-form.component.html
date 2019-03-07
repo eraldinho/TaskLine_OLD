@@ -6,7 +6,7 @@
             <mat-icon *ngIf="!taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="lock()">lock</mat-icon>
           </mat-card-header>
           <app-task-form [taskGroup]="ATDForm.get('task')" [Types]="Types" [LocationsAvailable]="LocationsAvailable" (LocationSet)="tasksService.LocationSet(ATDForm, $event, taskID)"></app-task-form>
-          <mat-accordion class="taskFormAccordion">
+          <mat-accordion class="taskFormAccordion" #taskAccordion="matAccordion">
             <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="customerGroup">
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -84,7 +84,8 @@
           </mat-accordion>
       </mat-card-content>
       <mat-card-actions>
-          <div *ngIf = "ATDForm.get('task').get('status').value != 'terminee'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Tâche terminée</button></div>
+          <div *ngIf = "ATDForm.get('task').get('status').value != 'terminee' && ATDForm.get('task').get('status').value != 'attenteretclient'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Prestations effectuées</button></div>
+          <div *ngIf = "ATDForm.get('task').get('status').value == 'attenteretclient'"><button type="button" mat-raised-button (click)= deviceTaken(taskID)>Matériel retiré par le client</button></div>
       </mat-card-actions>
     </mat-card>
 </form>

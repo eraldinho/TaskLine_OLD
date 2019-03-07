@@ -4,6 +4,8 @@ import { TasksService } from '../../services/tasks/tasks.service';
 import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
 import { DelayDialogComponent } from './delay-dialog/delay-dialog.component';
 import { DoneDialogComponent} from './done-dialog/done-dialog.component';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -14,7 +16,8 @@ export class TaskListComponent implements OnInit {
   constructor(private scrudService: ScrudService,
               private tasksService: TasksService,
               private dialog: MatDialog,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private router: Router) {
     tasksService.taskFiltered$.subscribe(
       myfilter => {
         this.filterTask(myfilter);
@@ -62,6 +65,11 @@ export class TaskListComponent implements OnInit {
   edit(taskId, taskName, taskType) {
     const task = [taskId, taskName, taskType];
     this.tasksService.editTask(task);
+  }
+
+  printTask(taskId) {
+    this.router.navigateByUrl('/print');
+    this.tasksService.printTask(taskId);
   }
 
   doneDialog(taskId, taskName, taskType) {

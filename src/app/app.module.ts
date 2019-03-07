@@ -70,6 +70,7 @@ import { FailureFormComponent } from './shared/forms/failureform/failure-form/fa
 import { TaskFormComponent } from './shared/forms/taskform/task-form/task-form.component';
 import { ProgressFormComponent } from './shared/forms/progressform/progress-form/progress-form.component';
 import { CustomerhardwareFormComponent } from './shared/forms/customerhardwareform/customerhardware-form/customerhardware-form.component';
+import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/print-task-form.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { CustomerhardwareFormComponent } from './shared/forms/customerhardwarefo
     FailureFormComponent,
     TaskFormComponent,
     ProgressFormComponent,
-    CustomerhardwareFormComponent
+    CustomerhardwareFormComponent,
+    PrintTaskFormComponent,
   ],
   imports: [
     BrowserModule,

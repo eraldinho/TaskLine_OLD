@@ -16,9 +16,6 @@ export class TaskFormComponent implements OnInit {
   constructor(private scrudService: ScrudService) { }
 
   ngOnInit() {
-    console.log('app-task-form');
-    console.log(this.Types);
-    console.log(this.LocationsAvailable);
   }
 
   onLocationUsed() {

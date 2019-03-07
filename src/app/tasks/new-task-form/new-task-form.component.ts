@@ -4,6 +4,7 @@ import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
+import printJS from 'print-js';
 
 import { AssemblyFormService } from '../../services/forms/assemblyformservice/assembly-form.service';
 import { CustomerFormService } from '../../services/forms/customerformservice/customer-form.service';
@@ -155,7 +156,4 @@ export class NewTaskFormComponent implements OnInit {
     });
   }
 
-  consolLog() {
-    console.log('ok');
-  }
 }

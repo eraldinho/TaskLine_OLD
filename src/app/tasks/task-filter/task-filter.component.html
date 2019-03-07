@@ -20,10 +20,10 @@
         <mat-form-field>
             <mat-select formControlName="status" (selectionChange)="filter('status',TFForm.get('status').value)">
               <mat-option value=""></mat-option>
-              <mat-option value="afaire">à faire</mat-option>
               <mat-option value="encours">en cours</mat-option>
+              <mat-option value="attenterepclient">attente réponse client</mat-option>
+              <mat-option value="attenteretclient">attente retrait client</mat-option>
               <mat-option value="terminee">terminée</mat-option>
-              <mat-option value="attenteclient">attente client</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
