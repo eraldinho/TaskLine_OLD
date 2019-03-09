@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { AssemblyFormService } from '../../../services/forms/assemblyformservice/assembly-form.service';
 import { CustomerFormService } from '../../../services/forms/customerformservice/customer-form.service';
@@ -12,8 +12,8 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ScrudService } from 'src/app/services/scrud/scrud.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-print-task-form',
@@ -29,7 +29,7 @@ import { Router } from '@angular/router';
     TaskFormService
  ]
 })
-export class PrintTaskFormComponent implements OnInit {
+export class PrintTaskFormComponent implements OnInit, OnDestroy {
   get assemblyGroup(): FormGroup {
     return this.assemblyFormService.assemblyGroup;
   }
@@ -56,13 +56,15 @@ export class PrintTaskFormComponent implements OnInit {
   }
 
   ATDForm: FormGroup;
-  mytask: Observable<any>;
-  taskName: string;
-  formval;
+  private taskIdSub: Subscription;
+  mytask;
+  taskName;
+  taskID;
 
   constructor(private fb: FormBuilder,
     private afAuth: AngularFireAuth,
     private router: Router,
+    private route: ActivatedRoute,
     private assemblyFormService: AssemblyFormService,
     private customerFormService: CustomerFormService,
     private deliveryFormService: DeliveryFormService,
@@ -86,50 +88,50 @@ export class PrintTaskFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tasksService.tasksPrinted$.subscribe(task => {
-      console.log('print : ' + task);
-      const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
-      const control3 = <FormArray>this.ATDForm.get('hardware').get('hardwareArray');
-      this.tasksService.cleanDelivery(this.ATDForm);
-      this.ATDForm.disable();
-      this.mytask = this.scrudService.RetrieveDocument('tasks/' + task);
-      this.mytask.subscribe(val => {
-        console.log(val);
-        this.formval = val;
-        console.log(this.formval);
-
-        if (val.delivery.deliveryArray) {
-          if (val.delivery.deliveryArray.length > 0 && val.delivery.deliveryArray.length > control.length) {
-            for (let i = 0; i < val.delivery.deliveryArray.length; i++ ) {
-              console.log(i);
-              this.tasksService.addEmptyDelivery(this.ATDForm, this.fb);
-            }
+    console.log('fackYa');
+    const taskID: string = this.route.snapshot.queryParamMap.get('task');
+    console.log(taskID);
+    const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
+    const control3 = <FormArray>this.ATDForm.get('hardware').get('hardwareArray');
+    this.tasksService.cleanDelivery(this.ATDForm);
+    this.ATDForm.disable();
+    this.mytask = this.scrudService.RetrieveDocument('tasks/' + taskID);
+    this.mytask.subscribe(val => {
+      console.log(val);
+      if (val.delivery.deliveryArray) {
+        if (val.delivery.deliveryArray.length > 0 && val.delivery.deliveryArray.length > control.length) {
+          for (let i = 0; i < val.delivery.deliveryArray.length; i++ ) {
+            this.tasksService.addEmptyDelivery(this.ATDForm, this.fb);
           }
         }
-        if (val.hardware.hardwareArray) {
-          if (val.hardware.hardwareArray.length > 0 && val.hardware.hardwareArray.length > control3.length) {
-            for (let i = 0; i < val.hardware.hardwareArray.length; i++ ) {
-              console.log(i);
-              this.tasksService.addEmptyHardware(this.ATDForm, this.fb);
-            }
+      }
+      if (val.hardware.hardwareArray) {
+        if (val.hardware.hardwareArray.length > 0 && val.hardware.hardwareArray.length > control3.length) {
+          for (let i = 0; i < val.hardware.hardwareArray.length; i++ ) {
+            this.tasksService.addEmptyHardware(this.ATDForm, this.fb);
           }
         }
-        this.ATDForm.setValue(val);
-        console.log(this.ATDForm.value);
-        console.log('suite');
-        console.log(val);
-        const mydate = new Date(this.ATDForm.get('task').get('taskDueDate').value);
-        this.ATDForm.get('task').get('taskDueDate').setValue(mydate);
-        this.taskName = this.ATDForm.get('task').get('taskName').value;
-      });
+      }
+      val.progress.progressArray = [];
+      console.log(val);
+      console.log(this.ATDForm.value);
+      this.ATDForm.setValue(val);
+      console.log(this.ATDForm.value);
+      console.log('suite');
+      console.log(val);
+      const mydate = new Date(this.ATDForm.get('task').get('taskDueDate').value);
+      this.ATDForm.get('task').get('taskDueDate').setValue(mydate);
+      this.taskName = this.ATDForm.get('task').get('taskName').value;
     });
   }
 
-  navBack() {
-    this.router.navigateByUrl('/tasks(toolbar:navbar)');
+  ngOnDestroy(): void {
+    this.taskIdSub.unsubscribe();
   }
-  setFormValue() {
-    console.log(this.taskName);
+
+  navBack() {
+    console.log(this.taskID);
+    this.router.navigateByUrl('/tasks(toolbar:navbar)');
   }
 
 }

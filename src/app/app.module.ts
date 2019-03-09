@@ -41,6 +41,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatBadgeModule} from '@angular/material/badge';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 // Customs components
@@ -133,7 +135,9 @@ import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/
     MatCheckboxModule,
     MatAutocompleteModule,
     MatTabsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatBadgeModule
   ],
   entryComponents: [DelayDialogComponent,
     DoneDialogComponent,

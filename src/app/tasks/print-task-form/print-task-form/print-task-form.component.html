@@ -3,7 +3,6 @@
       <mat-card-content>
           <mat-card-header>
             <mat-icon (click)="navBack()">keyboard_arrow_left</mat-icon>
-            <mat-icon (click)="setFormValue()">cloud_download</mat-icon>
           </mat-card-header>
           <app-task-form [taskGroup]="ATDForm.get('task')" [Types]="Types"></app-task-form>
           <app-customer-form [customerGroup]="ATDForm.get('customer')"></app-customer-form>

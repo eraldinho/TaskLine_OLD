@@ -1,13 +1,13 @@
-<form (ngSubmit)="register()" [formGroup]="ATDForm">
+<form (ngSubmit)="register()" [formGroup]="ETForm">
     <mat-card>
       <mat-card-content>
           <mat-card-header>
             <mat-icon *ngIf="taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
             <mat-icon *ngIf="!taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="lock()">lock</mat-icon>
           </mat-card-header>
-          <app-task-form [taskGroup]="ATDForm.get('task')" [Types]="Types" [LocationsAvailable]="LocationsAvailable" (LocationSet)="tasksService.LocationSet(ATDForm, $event, taskID)"></app-task-form>
+          <app-task-form [taskGroup]="ETForm.get('task')" [Types]="Types" [LocationsAvailable]="LocationsAvailable" (LocationSet)="tasksService.LocationSet(ETForm, $event, taskID)"></app-task-form>
           <mat-accordion class="taskFormAccordion" #taskAccordion="matAccordion">
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' || ATDForm.get('task').get('taskType').value == 'client'" [formGroup]="customerGroup">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'atelier' || ETForm.get('task').get('taskType').value == 'client'" [formGroup]="customerGroup">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Client
@@ -16,9 +16,9 @@
                   Coordonnées du client
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <app-customer-form [customerGroup]="ATDForm.get('customer')"></app-customer-form>
+              <app-customer-form [customerGroup]="ETForm.get('customer')"></app-customer-form>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'montage'" [formGroup]="hardwareGroup">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'montage'" [formGroup]="hardwareGroup">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Composants du client
@@ -27,9 +27,9 @@
                     Liste des Composants fournis par le client
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-customerhardware-form [hardwareGroup]="ATDForm.get('hardware')" (hardwareAdded)="tasksService.addHardware(ATDForm,fb)" (hardwareRemoved)="tasksService.removeHardware($event, ATDForm)"></app-customerhardware-form>
+                <app-customerhardware-form [hardwareGroup]="ETForm.get('hardware')" (hardwareAdded)="tasksService.addHardware(ETForm,fb)" (hardwareRemoved)="tasksService.removeHardware($event, ETForm)"></app-customerhardware-form>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'atelier'" [formGroup]="deviceGroup">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Matériel
@@ -38,9 +38,9 @@
                   Description du matériel
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <app-device-form [deviceGroup]="ATDForm.get('device')"></app-device-form>
+              <app-device-form [deviceGroup]="ETForm.get('device')"></app-device-form>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'atelier'">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Panne
@@ -49,9 +49,9 @@
                   Description de la panne
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <app-failure-form [failureGroup]="ATDForm.get('failure')"></app-failure-form>
+              <app-failure-form [failureGroup]="ETForm.get('failure')"></app-failure-form>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'atelier'">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Prestations
@@ -60,9 +60,9 @@
                   Liste des prestations à effectuer
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')" [filteredDelivery]="filteredOptions" (deliveryAdded)="tasksService.addDelivery(ATDForm,fb)" (deliveryRemoved)="tasksService.removeDelivery($event, ATDForm)"></app-delivery-form>
+              <app-delivery-form [deliveryGroup]="ETForm.get('delivery')" [filteredDelivery]="filteredOptions" (deliveryAdded)="tasksService.addDelivery(ETForm,fb)" (deliveryRemoved)="tasksService.removeDelivery($event, ETForm)"></app-delivery-form>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'atelier'">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Avancement
@@ -71,21 +71,21 @@
                     Liste actions réalisées
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-progress-form [progressGroup]="ATDForm.get('progress')" (progressAdded)="addProgress()"></app-progress-form> 
+                <app-progress-form [progressGroup]="ETForm.get('progress')" (progressAdded)="addProgress()"></app-progress-form> 
               </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'montage'" [formGroup]="assemblyGroup">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'montage'" [formGroup]="assemblyGroup">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Montage
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <app-assembly-form [assemblyGroup]="ATDForm.get('assembly')" (needLog)="logIt($event.needdisplay,$event.wheretoLog,$event.whattoLog,$event.value)"></app-assembly-form>
+                <app-assembly-form [assemblyGroup]="ETForm.get('assembly')" (needLog)="logIt($event.needdisplay,$event.wheretoLog,$event.whattoLog,$event.value)"></app-assembly-form>
               </mat-expansion-panel>
           </mat-accordion>
       </mat-card-content>
       <mat-card-actions>
-          <div *ngIf = "ATDForm.get('task').get('status').value != 'terminee' && ATDForm.get('task').get('status').value != 'attenteretclient'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Prestations effectuées</button></div>
-          <div *ngIf = "ATDForm.get('task').get('status').value == 'attenteretclient'"><button type="button" mat-raised-button (click)= deviceTaken(taskID)>Matériel retiré par le client</button></div>
+          <div *ngIf = "ETForm.get('task').get('status').value != 'terminee' && ETForm.get('task').get('status').value != 'attenteretclient'"><button type="button" mat-raised-button (click)= taskDone(taskID)>Prestations effectuées</button></div>
+          <div *ngIf = "ETForm.get('task').get('status').value == 'attenteretclient'"><button type="button" mat-raised-button (click)= deviceTaken(taskID)>Matériel retiré par le client</button></div>
       </mat-card-actions>
     </mat-card>
 </form>

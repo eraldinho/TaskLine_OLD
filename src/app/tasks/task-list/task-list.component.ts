@@ -68,7 +68,7 @@ export class TaskListComponent implements OnInit {
   }
 
   printTask(taskId) {
-    this.router.navigateByUrl('/print');
+    this.router.navigate(['/print'], {queryParams: {task: taskId}});
     this.tasksService.printTask(taskId);
   }
 
