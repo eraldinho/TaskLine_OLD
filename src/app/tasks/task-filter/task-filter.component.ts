@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { TasksService } from '../../services/tasks/tasks.service';
+import { ScrudService } from '../../services/scrud/scrud.service';
+
 
 @Component({
   selector: 'app-task-filter',
@@ -17,7 +19,15 @@ export class TaskFilterComponent implements OnInit {
   oUserCtrl: FormControl;
   dUserCtrl: FormControl;
   wFCAnswerCtrl: FormControl;
-  isChecked: boolean;
+  isaChecked: boolean;
+  iscChecked: boolean;
+  iseChecked: boolean;
+  ismChecked: boolean;
+  isclChecked: boolean;
+  isenChecked: boolean;
+  isapChecked: boolean;
+  isarChecked: boolean;
+  istChecked: boolean;
   nbAtelier: number;
   nbCompta: number;
   nbExpedition: number;
@@ -28,7 +38,7 @@ export class TaskFilterComponent implements OnInit {
   nbAttenteretclient: number;
   nbTerminee: number;
 
-  constructor(private fb: FormBuilder, private tasksService: TasksService) {
+  constructor(private fb: FormBuilder, private tasksService: TasksService, private scrudService: ScrudService) {
     this.TFForm = fb.group({
       find: this.findCtrl,
       type: this.typeCtrl,
@@ -42,6 +52,42 @@ export class TaskFilterComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'atelier')
+    .subscribe((res) => {
+      this.nbAtelier = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'compta')
+    .subscribe((res) => {
+      this.nbCompta = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'expedition')
+    .subscribe((res) => {
+      this.nbExpedition = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'client')
+    .subscribe((res) => {
+      this.nbClient = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'montage')
+    .subscribe((res) => {
+      this.nbMontage = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'encours')
+    .subscribe((res) => {
+      this.nbEncours = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenterepclient')
+    .subscribe((res) => {
+      this.nbAttenterepclient = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenteretclient')
+    .subscribe((res) => {
+      this.nbAttenteretclient = res.length;
+    });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'terminee')
+    .subscribe((res) => {
+      this.nbTerminee = res.length;
+    });
   }
 
   filter(filter: string, value: string) {
@@ -57,7 +103,17 @@ export class TaskFilterComponent implements OnInit {
   }
 
   clean(filter: string, value: string) {
-    this.isChecked =false;
+    console.log(filter);
+    console.log(value);
+    this.isaChecked = false;
+    this.iscChecked = false;
+    this.iseChecked = false;
+    this.ismChecked = false;
+    this.isclChecked = false;
+    this.isenChecked = false;
+    this.isapChecked = false;
+    this.isarChecked = false;
+    this.istChecked = false;
     this.filter(filter, value);
   }
 

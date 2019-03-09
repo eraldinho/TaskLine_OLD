@@ -55,7 +55,7 @@ export class PrintTaskFormComponent implements OnInit, OnDestroy {
     return this.customerhardwareFormService.hardwareGroup;
   }
 
-  ATDForm: FormGroup;
+  PTForm: FormGroup;
   private taskIdSub: Subscription;
   mytask;
   taskName;
@@ -75,7 +75,7 @@ export class PrintTaskFormComponent implements OnInit, OnDestroy {
     private customerhardwareFormService: CustomerhardwareFormService,
     private tasksService: TasksService,
     private scrudService: ScrudService) {
-      this.ATDForm = fb.group({
+      this.PTForm = fb.group({
         task: this.taskGroup,
         customer: this.customerGroup,
         device: this.deviceGroup,
@@ -91,37 +91,37 @@ export class PrintTaskFormComponent implements OnInit, OnDestroy {
     console.log('fackYa');
     const taskID: string = this.route.snapshot.queryParamMap.get('task');
     console.log(taskID);
-    const control = <FormArray>this.ATDForm.get('delivery').get('deliveryArray');
-    const control3 = <FormArray>this.ATDForm.get('hardware').get('hardwareArray');
-    this.tasksService.cleanDelivery(this.ATDForm);
-    this.ATDForm.disable();
+    const control = <FormArray>this.PTForm.get('delivery').get('deliveryArray');
+    const control3 = <FormArray>this.PTForm.get('hardware').get('hardwareArray');
+    this.tasksService.cleanDelivery(this.PTForm);
+    this.PTForm.disable();
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + taskID);
-    this.mytask.subscribe(val => {
+    this.taskIdSub = this.mytask.subscribe(val => {
       console.log(val);
       if (val.delivery.deliveryArray) {
         if (val.delivery.deliveryArray.length > 0 && val.delivery.deliveryArray.length > control.length) {
           for (let i = 0; i < val.delivery.deliveryArray.length; i++ ) {
-            this.tasksService.addEmptyDelivery(this.ATDForm, this.fb);
+            this.tasksService.addEmptyDelivery(this.PTForm, this.fb);
           }
         }
       }
       if (val.hardware.hardwareArray) {
         if (val.hardware.hardwareArray.length > 0 && val.hardware.hardwareArray.length > control3.length) {
           for (let i = 0; i < val.hardware.hardwareArray.length; i++ ) {
-            this.tasksService.addEmptyHardware(this.ATDForm, this.fb);
+            this.tasksService.addEmptyHardware(this.PTForm, this.fb);
           }
         }
       }
       val.progress.progressArray = [];
       console.log(val);
-      console.log(this.ATDForm.value);
-      this.ATDForm.setValue(val);
-      console.log(this.ATDForm.value);
+      console.log(this.PTForm.value);
+      this.PTForm.setValue(val);
+      console.log(this.PTForm.value);
       console.log('suite');
       console.log(val);
-      const mydate = new Date(this.ATDForm.get('task').get('taskDueDate').value);
-      this.ATDForm.get('task').get('taskDueDate').setValue(mydate);
-      this.taskName = this.ATDForm.get('task').get('taskName').value;
+      const mydate = new Date(this.PTForm.get('task').get('taskDueDate').value);
+      this.PTForm.get('task').get('taskDueDate').setValue(mydate);
+      this.taskName = this.PTForm.get('task').get('taskName').value;
     });
   }
 

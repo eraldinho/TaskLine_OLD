@@ -50,7 +50,7 @@ export class QuickTaskFormComponent implements OnInit {
     return this.taskFormService.taskGroup;
   }
 
-  ATDForm: FormGroup;
+  PTForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -63,7 +63,7 @@ export class QuickTaskFormComponent implements OnInit {
     private failureFormService: FailureFormService,
     private progressFormService: ProgressFormService,
     private taskFormService: TaskFormService) {
-      this.ATDForm = fb.group({
+      this.PTForm = fb.group({
         task: this.taskGroup,
         customer: this.customerGroup,
         device: this.deviceGroup,
@@ -75,19 +75,19 @@ export class QuickTaskFormComponent implements OnInit {
 }
 
   register() {
-    console.log(this.ATDForm.value);
+    console.log(this.PTForm.value);
   }
 
   AddTask(type: string, delai: number, complementNom: string= '') {
-    if (this.ATDForm.value.task.taskName) {
+    if (this.PTForm.value.task.taskName) {
       const today = moment().startOf('day').add(delai, 'day').unix() * 1000;
-      this.ATDForm.value.task.taskName = complementNom + this.ATDForm.value.task.taskName;
-      this.ATDForm.value.task.taskType = type;
-      this.ATDForm.value.task.taskDueDate = today;
-      this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
+      this.PTForm.value.task.taskName = complementNom + this.PTForm.value.task.taskName;
+      this.PTForm.value.task.taskType = type;
+      this.PTForm.value.task.taskDueDate = today;
+      this.scrudService.AddDoc2Collection('tasks', this.PTForm.value)
       .then((result) => {
         let action: string;
-        result === 1 ?  (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
+        result === 1 ?  (this.PTForm.reset() , action = 'Succès') : action = 'Echec';
         this.snackBar.open('Ajout ' +  type, action, {
           duration: 3000,
         });

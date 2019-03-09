@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Operator } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   AngularFirestore,
@@ -17,6 +17,10 @@ export class ScrudService {
 
   RetrieveCollection(collectionName: string): Observable<any> {
     return this.afs.collection(collectionName).valueChanges();
+  }
+
+  RetrieveCollectionWhere(collectionName: string, condition1, operator, condition2): Observable<any> {
+    return this.afs.collection(collectionName, ref => ref.where(condition1 , operator, condition2)).valueChanges();
   }
 
   RetrieveCollectionWithID (collectionName: string): Observable<any> {
