@@ -242,6 +242,16 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  changeStatusCall() {
+    if (this.ETForm.get('progress').enabled) {
+      if (this.ETForm.get('task').get('status').value === 'attenterepclient') {
+        this.ETForm.get('task').get('status').setValue('encours');
+      } else {
+        this.ETForm.get('task').get('status').setValue('attenterepclient');
+      }
+    }
+  }
+
   //the next 3 functions are used to lock and unlock the ETForm by responding to event sent by App-Task-Form
   isLocked(state: boolean) {
     console.log('isLocked');

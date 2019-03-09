@@ -69,6 +69,7 @@
                   </mat-panel-title>
                   <mat-panel-description>
                     Liste actions réalisées
+                    <mat-icon (click)="changeStatusCall()" [ngStyle]="{'background-color':ETForm.get('task').get('status').value == 'attenterepclient' ? 'green' : 'grey'}">call</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <app-progress-form [progressGroup]="ETForm.get('progress')" (progressAdded)="addProgress()"></app-progress-form> 
@@ -78,6 +79,10 @@
                   <mat-panel-title>
                     Montage
                   </mat-panel-title>
+                  <mat-panel-description>
+                    Liste des points à vérifier
+                    <mat-icon (click)="changeStatusCall()" [ngStyle]="{'background-color':ETForm.get('task').get('status').value == 'attenterepclient' ? 'green' : 'grey'}">call</mat-icon>
+                  </mat-panel-description>
                 </mat-expansion-panel-header>
                 <app-assembly-form [assemblyGroup]="ETForm.get('assembly')" (needLog)="logIt($event.needdisplay,$event.wheretoLog,$event.whattoLog,$event.value,true)"></app-assembly-form>
               </mat-expansion-panel>
