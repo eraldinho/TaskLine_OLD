@@ -70,7 +70,6 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   private locationSub: Subscription;
   private prestationSub: Subscription;
   private userSub: Subscription;
-  private 
   filteredOptions: Observable<Delivery[]>;
   Locations;
   LocationsAvailable;
@@ -212,7 +211,11 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
           const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).format('dddd, MMMM Do YYYY, h:mm:ss a');
           const progress = this.ETForm.get('progress').get('progressAdd').value;
           control.push(this.initProgress(progress, myDisplayString));
-          this.ETForm.get('task').get('status').setValue('encours');
+          if (this.ETForm.get('task').get('status').value !== 'terminee'
+              && this.ETForm.get('task').get('status').value !== 'attenterepclient'
+              && this.ETForm.get('task').get('status').value !== 'attenteretclient') {
+                this.ETForm.get('task').get('status').setValue('encours');
+          }
           this.ETForm.get('progress').get('progressAdd').setValue('');
           this.ETForm.get('progress').get('progressArray').disable();
           this.logIt(false, this.ETForm.controls['task'].get['status'], 'avancement atelier',
@@ -330,7 +333,14 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  logIt(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
+  logIt(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl, ACStatus?: boolean) {
+    if (ACStatus) {
+      if (this.ETForm.get('task').get('status').value !== 'terminee'
+          && this.ETForm.get('task').get('status').value !== 'attenterepclient'
+          && this.ETForm.get('task').get('status').value !== 'attenteretclient') {
+            this.ETForm.get('task').get('status').setValue('encours');
+      }
+    }
     if (!this.ETForm.get('assembly').disabled) {
       console.log('hola: ' + valuectrl);
     const mydate = new Date();

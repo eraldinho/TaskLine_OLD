@@ -54,7 +54,7 @@ export class TaskFilterComponent implements OnInit {
   ngOnInit() {
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'atelier')
     .subscribe((res) => {
-      this.nbAtelier = res.length;
+      this.nbAtelier = res.filter(val => val.task.status !== 'terminee').length;
     });
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'compta')
     .subscribe((res) => {
@@ -100,6 +100,16 @@ export class TaskFilterComponent implements OnInit {
       this.tasksService.filterTask('dateF', value);
     }
     this.tasksService.filterTask(filter, value);
+  }
+
+  buttonToggle(filter: string, value: string, isChecked: boolean) {
+    if (isChecked) {
+      isChecked = false;
+      this.filter(filter, '');
+    } else {
+      isChecked = true;
+      this.filter(filter, value);
+    }
   }
 
   clean(filter: string, value: string) {
