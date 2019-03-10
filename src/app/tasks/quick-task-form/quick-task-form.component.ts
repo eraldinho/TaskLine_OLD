@@ -87,7 +87,7 @@ export class QuickTaskFormComponent implements OnInit {
       this.scrudService.AddDoc2Collection('tasks', this.PTForm.value)
       .then((result) => {
         let action: string;
-        result === 1 ?  (this.PTForm.reset() , action = 'Succès') : action = 'Echec';
+        result !== 0 ?  (this.PTForm.reset() , action = 'Succès') : action = 'Echec';
         this.snackBar.open('Ajout ' +  type, action, {
           duration: 3000,
         });

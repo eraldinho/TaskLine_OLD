@@ -58,19 +58,19 @@ export class TaskFilterComponent implements OnInit {
     });
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'compta')
     .subscribe((res) => {
-      this.nbCompta = res.length;
+      this.nbCompta = res.filter(val => val.task.status !== 'terminee').length;
     });
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'expedition')
     .subscribe((res) => {
-      this.nbExpedition = res.length;
+      this.nbExpedition = res.filter(val => val.task.status !== 'terminee').length;
     });
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'client')
     .subscribe((res) => {
-      this.nbClient = res.length;
+      this.nbClient = res.filter(val => val.task.status !== 'terminee').length;
     });
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'montage')
     .subscribe((res) => {
-      this.nbMontage = res.length;
+      this.nbMontage = res.filter(val => val.task.status !== 'terminee').length;
     });
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'encours')
     .subscribe((res) => {
