@@ -14,6 +14,7 @@
     </div>
     <div style="margin-top: 10px">
         <mat-button-toggle-group Name="status" #statusgroup="matButtonToggleGroup" (change)="filter('status', statusgroup.value)">
+                <mat-button-toggle (click)="isafChecked=true;filter('status', 'afaire')" [checked]=isafChecked><mat-icon matBadge={{nbAfaire}} matBadgeColor="accent">slideshow</mat-icon></mat-button-toggle>
             <mat-button-toggle (click)="isenChecked=true;filter('status', 'encours')" [checked]=isenChecked><mat-icon matBadge={{nbEncours}} matBadgeColor="accent">play_arrow</mat-icon></mat-button-toggle>
             <mat-button-toggle (click)="isapChecked=true;filter('status', 'attenterepclient')" [checked]=isapChecked><mat-icon matBadge={{nbAttenterepclient}} matBadgeColor="accent">call</mat-icon></mat-button-toggle>
             <mat-button-toggle (click)="isarChecked=true;filter('status', 'attenteretclient')" [checked]=isarChecked><mat-icon matBadge={{nbAttenteretclient}} matBadgeColor="accent">shoping_cart</mat-icon></mat-button-toggle>

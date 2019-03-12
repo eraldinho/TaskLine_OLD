@@ -84,6 +84,7 @@ export class QuickTaskFormComponent implements OnInit {
       this.PTForm.value.task.taskName = complementNom + this.PTForm.value.task.taskName;
       this.PTForm.value.task.taskType = type;
       this.PTForm.value.task.taskDueDate = today;
+      this.PTForm.value.task.status = 'afaire';
       this.scrudService.AddDoc2Collection('tasks', this.PTForm.value)
       .then((result) => {
         let action: string;

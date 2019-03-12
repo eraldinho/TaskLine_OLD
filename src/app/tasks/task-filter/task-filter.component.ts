@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { TasksService } from '../../services/tasks/tasks.service';
 import { ScrudService } from '../../services/scrud/scrud.service';
+import { Subscriber, Subscription } from 'rxjs';
 
 
 @Component({
@@ -19,11 +20,13 @@ export class TaskFilterComponent implements OnInit {
   oUserCtrl: FormControl;
   dUserCtrl: FormControl;
   wFCAnswerCtrl: FormControl;
+  typeSelected = '';
   isaChecked: boolean;
   iscChecked: boolean;
   iseChecked: boolean;
   ismChecked: boolean;
   isclChecked: boolean;
+  isafChecked: boolean;
   isenChecked: boolean;
   isapChecked: boolean;
   isarChecked: boolean;
@@ -33,10 +36,16 @@ export class TaskFilterComponent implements OnInit {
   nbExpedition: number;
   nbMontage: number;
   nbClient: number;
+  nbAfaire: number;
   nbEncours: number;
   nbAttenterepclient: number;
   nbAttenteretclient: number;
   nbTerminee: number;
+  nbAfaireSub: Subscription;
+  nbEncoursSub: Subscription;
+  nbAttenterepclientSub: Subscription;
+  nbAttenteretclientSub: Subscription;
+  nbTermineeSub: Subscription;
 
   constructor(private fb: FormBuilder, private tasksService: TasksService, private scrudService: ScrudService) {
     this.TFForm = fb.group({
@@ -52,6 +61,10 @@ export class TaskFilterComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.initStream();
+  }
+
+  initStream() {
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'atelier')
     .subscribe((res) => {
       this.nbAtelier = res.filter(val => val.task.status !== 'terminee').length;
@@ -72,59 +85,171 @@ export class TaskFilterComponent implements OnInit {
     .subscribe((res) => {
       this.nbMontage = res.filter(val => val.task.status !== 'terminee').length;
     });
-    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'encours')
+    this.nbAfaireSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'afaire')
+    .subscribe((res) => {
+      this.nbAfaire = res.length;
+    });
+    this.nbEncoursSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'encours')
     .subscribe((res) => {
       this.nbEncours = res.length;
-    });
-    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenterepclient')
+      });
+    this.nbAttenterepclientSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenterepclient')
     .subscribe((res) => {
       this.nbAttenterepclient = res.length;
     });
-    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenteretclient')
+    this.nbAttenteretclientSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenteretclient')
     .subscribe((res) => {
       this.nbAttenteretclient = res.length;
     });
-    this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'terminee')
+    this.nbTermineeSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'terminee')
     .subscribe((res) => {
       this.nbTerminee = res.length;
     });
   }
 
-  filter(filter: string, value: string) {
-    console.log('filter : ' + filter + ' => ' + value);
+  filter(myfilter: string, value: string) {
+    console.log('filter : ' + myfilter + ' => ' + value);
     // si datefin n'est pas saisi
-    if (filter === 'dateD' && this.TFForm.get('date2').pristine) {
+    if (myfilter === 'dateD' && this.TFForm.get('date2').pristine) {
       // on filtre uniquement sur date1
       // on affiche uniquement les taches dont la date d'echeance
       // est égale à la date saisi dans le champs date
       this.tasksService.filterTask('dateF', value);
     }
-    this.tasksService.filterTask(filter, value);
+    this.tasksService.filterTask(myfilter, value);
+    if (myfilter = 'type') {
+      this.nbAfaireSub.unsubscribe();
+      this.nbEncoursSub.unsubscribe();
+      this.nbAttenterepclientSub.unsubscribe();
+      this.nbAttenteretclientSub.unsubscribe();
+      this.nbTermineeSub.unsubscribe();
+      switch (value) {
+        case 'atelier':
+        console.log('type: atelier');
+        this.typeSelected = 'atelier';
+        this.iscChecked = false;
+        this.iseChecked = false;
+        this.ismChecked = false;
+        this.isclChecked = false;
+        break;
+        case 'compta':
+        this.typeSelected = 'compta';
+        this.isaChecked = false;
+        this.iseChecked = false;
+        this.ismChecked = false;
+        this.isclChecked = false;
+        break;
+        case 'expedition':
+        this.typeSelected = 'expedition';
+        this.isaChecked = false;
+        this.iscChecked = false;
+        this.ismChecked = false;
+        this.isclChecked = false;
+        break;
+        case 'montage':
+        this.typeSelected = 'montage';
+        this.isaChecked = false;
+        this.iscChecked = false;
+        this.iseChecked = false;
+        this.isclChecked = false;
+        break;
+        case 'client':
+        this.typeSelected = 'client';
+        this.isaChecked = false;
+        this.iscChecked = false;
+        this.iseChecked = false;
+        this.ismChecked = false;
+        break;
+      }
+      this.nbAfaireSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'afaire')
+      .subscribe((res) => {
+        this.nbAfaire = res.filter(val => val.task.taskType === this.typeSelected).length;
+      });
+      this.nbEncoursSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'encours')
+      .subscribe((res) => {
+        this.nbEncours = res.filter(val => val.task.taskType === this.typeSelected).length;
+      });
+      this.nbAttenterepclientSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenterepclient')
+      .subscribe((res) => {
+        this.nbAttenterepclient = res.filter(val => val.task.taskType === this.typeSelected).length;
+      });
+      this.nbAttenteretclientSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenteretclient')
+      .subscribe((res) => {
+      this.nbAttenteretclient = res.filter(val => val.task.taskType === this.typeSelected).length;
+      });
+      this.nbTermineeSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'terminee')
+      .subscribe((res) => {
+        this.nbTerminee = res.filter(val => val.task.taskType === this.typeSelected).length;
+      });
+    }
+    if (myfilter = 'status') {
+      switch (value) {
+        case 'afaire':
+        this.isenChecked = false;
+        this.isapChecked = false;
+        this.isarChecked = false;
+        this.istChecked = false;
+        break;
+        case 'encours':
+        this.isafChecked = false;
+        this.isapChecked = false;
+        this.isarChecked = false;
+        this.istChecked = false;
+        break;
+        case 'attenterepclient':
+        this.isafChecked = false;
+        this.isenChecked = false;
+        this.isarChecked = false;
+        this.istChecked = false;
+        break;
+        case 'attenteretclient':
+        this.isafChecked = false;
+        this.isenChecked = false;
+        this.isapChecked = false;
+        this.istChecked = false;
+        break;
+        case 'terminee':
+        this.isafChecked = false;
+        this.isenChecked = false;
+        this.isapChecked = false;
+        this.isarChecked = false;
+        break;
+      }
+    }
+    
   }
 
-  buttonToggle(filter: string, value: string, isChecked: boolean) {
+  buttonToggle(myfilter: string, value: string, isChecked: boolean) {
     if (isChecked) {
       isChecked = false;
-      this.filter(filter, '');
+      this.filter(myfilter, '');
     } else {
       isChecked = true;
-      this.filter(filter, value);
+      this.filter(myfilter, value);
     }
   }
 
-  clean(filter: string, value: string) {
-    console.log(filter);
+  clean(myfilter: string, value: string) {
+    console.log(myfilter);
     console.log(value);
+    this.typeSelected = '';
     this.isaChecked = false;
     this.iscChecked = false;
     this.iseChecked = false;
     this.ismChecked = false;
     this.isclChecked = false;
+    this.isafChecked = false;
     this.isenChecked = false;
     this.isapChecked = false;
     this.isarChecked = false;
     this.istChecked = false;
-    this.filter(filter, value);
+    this.filter(myfilter, value);
+    this.nbAfaireSub.unsubscribe();
+    this.nbEncoursSub.unsubscribe();
+    this.nbAttenterepclientSub.unsubscribe();
+    this.nbAttenteretclientSub.unsubscribe();
+    this.nbTermineeSub.unsubscribe();
+    this.initStream();
   }
 
 }

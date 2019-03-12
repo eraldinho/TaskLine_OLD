@@ -151,7 +151,6 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanStatus(items, value) {
-    console.log(value);
     if (value === '') {// si il n'y a pas de filtre sur le status
       console.log('nonterminee');
       for (let i = 0; i < items.length; i++) {// on affiche que les taches non terminées

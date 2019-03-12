@@ -119,6 +119,7 @@ export class NewTaskFormComponent implements OnInit {
     this.ATDForm.enable();
     this.ATDForm.get('delivery').get('deliveryArray').enable();
     this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
+    this.ATDForm.get('task').get('status').setValue('afaire');
     console.log(this.ATDForm.value);
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
     if (this.docRef) {
