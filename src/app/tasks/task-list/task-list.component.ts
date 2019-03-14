@@ -42,6 +42,9 @@ export class TaskListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
+        console.log(result);
+        console.log(result);
+        mytask.taskDueDate = Date.parse(result.newDueDate);
         this.scrudService.UpdateDocument('tasks', taskId, {task: mytask})
           .then(val => {
             let action: string;

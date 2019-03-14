@@ -287,7 +287,8 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     this.ETForm.enable();
     this.ETForm.get('delivery').get('deliveryArray').enable();
     // si taskDueDate est une date on transforme en timestamp
-    if (Object.prototype.toString.call(this.ETForm.value.task.taskDueDate) !== '[object Date]') {
+    if (Object.prototype.toString.call(this.ETForm.value.task.taskDueDate) !== '[object Moment]') {
+      console.log('moment papillon');
       this.ETForm.get('task').get('taskDueDate').setValue(Date.parse(this.ETForm.value.task.taskDueDate));
     }
     this.scrudService.SetDocument('tasks', this.taskID, this.ETForm.value)
