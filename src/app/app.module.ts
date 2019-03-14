@@ -74,7 +74,6 @@ import { ProgressFormComponent } from './shared/forms/progressform/progress-form
 import { CustomerhardwareFormComponent } from './shared/forms/customerhardwareform/customerhardware-form/customerhardware-form.component';
 import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/print-task-form.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

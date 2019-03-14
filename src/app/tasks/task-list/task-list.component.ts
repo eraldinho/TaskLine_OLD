@@ -5,6 +5,7 @@ import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/ma
 import { DelayDialogComponent } from './delay-dialog/delay-dialog.component';
 import { DoneDialogComponent} from './done-dialog/done-dialog.component';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
@@ -25,7 +26,7 @@ export class TaskListComponent implements OnInit {
     );
   }
 
-  Tasks;
+  Tasks: Observable<any>;
   filters = ['', '', '', '', '', '', '', ''];
 
   ngOnInit() {

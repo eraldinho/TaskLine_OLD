@@ -6,7 +6,6 @@ import {map, startWith} from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar, MatAccordion} from '@angular/material';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as moment from 'moment';
-import printJS from 'print-js';
 
 import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
 import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
@@ -274,11 +273,11 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     this.register();
   }
 
-  register(type?: number) {
+  register() {
     this.ETForm.get('delivery').get('deliveryAdd').setValue('');
     this.ETForm.enable();
     this.ETForm.get('delivery').get('deliveryArray').enable();
-    this.ETForm.value.task.taskDueDate = Date.parse(this.ETForm.value.task.taskDueDate);
+    this.ETForm.get('task').get('taskDueDate').setValue(Date.parse(this.ETForm.value.task.taskDueDate));
     this.scrudService.SetDocument('tasks', this.taskID, this.ETForm.value)
     .then((result) => {
       let action: string;

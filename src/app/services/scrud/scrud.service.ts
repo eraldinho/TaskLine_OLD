@@ -39,6 +39,8 @@ export class ScrudService {
   }
 
   AddDoc2Collection(collectionName: string, data): Promise<any> {
+    console.log('AddDoc2Collection : ' + data);
+    console.log(data);
     const collection = this.afs.collection(collectionName);
     return new Promise<any>(function (resolve, reject) {
       collection.add(data)
@@ -53,6 +55,8 @@ export class ScrudService {
   }
 
   SetDocument(collectionName: string, documentName: string, data): Promise<number> {
+    console.log('SetDocument: ' + data);
+    console.log(data);
     const doc = this.afs.doc(collectionName + '/' + documentName);
     return new Promise<number>(function (resolve, reject) {
       doc.set(data)

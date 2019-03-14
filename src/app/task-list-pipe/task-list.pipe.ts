@@ -20,7 +20,7 @@ export class TaskListPipe implements PipeTransform {
           break;
           case 2: this.cleanStatus(items, args[i]);
           break;
-          case 3: if (args[i] !== '') { this.cleanDateD(items, args[i]); }
+          case 3: this.cleanDateD(items, args[i]);
           break;
           case 4: if (args[i] !== '') { this.cleanDateF(items, args[i]); }
           break;
@@ -170,10 +170,21 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanDateD(items, value) {
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].task.taskDueDate < Date.parse(value)) {
-        items.splice(i, 1);
-        i = i - 1;
+    if (value === '') { //si il n'y a pas de filtre sur dateD
+      // on limite l'affichage à un mois en arriere
+      console.log('limite date');
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].task.taskDueDate < (Date.now() - 2678400000)) {
+          items.splice(i, 1);
+          i = i - 1;
+        }
+      }
+    } else {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].task.taskDueDate < Date.parse(value)) {
+          items.splice(i, 1);
+          i = i - 1;
+        }
       }
     }
   }

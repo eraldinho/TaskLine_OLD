@@ -200,7 +200,7 @@ export class TasksService {
       form.get('delivery').get('deliveryAdd').setValue('');
       form.enable();
       form.get('delivery').get('deliveryArray').enable();
-      form.value.task.taskDueDate = Date.parse(form.value.task.taskDueDate);
+      form.get('task').get('taskDueDate').setValue(Date.parse(form.value.task.taskDueDate));
       if (docRef) {
         that.scrudService.SetDocument('tasks', docRef, form.value)
         .then((result) => {

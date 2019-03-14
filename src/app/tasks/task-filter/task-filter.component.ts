@@ -216,7 +216,6 @@ export class TaskFilterComponent implements OnInit {
         break;
       }
     }
-    
   }
 
   buttonToggle(myfilter: string, value: string, isChecked: boolean) {

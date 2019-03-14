@@ -6,6 +6,7 @@
         <mat-chip *ngIf="task.task.taskType == 'expedition'"><mat-icon>local_shipping</mat-icon></mat-chip>
         <mat-chip *ngIf="task.task.taskType == 'client'"><mat-icon>face</mat-icon></mat-chip>
         <mat-chip *ngIf="task.task.taskType == 'boutique'"><mat-icon>store</mat-icon></mat-chip>
+        <mat-chip *ngIf="task.task.status == 'afaire'"><mat-icon>slideshow</mat-icon></mat-chip>
         <mat-chip *ngIf="task.task.status == 'encours'"><mat-icon>play_arrow</mat-icon></mat-chip>
         <mat-chip *ngIf="task.task.status == 'attenterepclient'"><mat-icon>call</mat-icon></mat-chip>
         <mat-chip *ngIf="task.task.status == 'attenteretclient'"><mat-icon>shoping_cart</mat-icon></mat-chip>
