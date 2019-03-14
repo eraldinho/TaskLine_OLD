@@ -65,6 +65,7 @@ export class TaskFilterComponent implements OnInit {
   }
 
   initStream() {
+    console.log('iniStream()');
     this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'atelier')
     .subscribe((res) => {
       this.nbAtelier = res.filter(val => val.task.status !== 'terminee').length;
@@ -117,15 +118,15 @@ export class TaskFilterComponent implements OnInit {
       this.tasksService.filterTask('dateF', value);
     }
     this.tasksService.filterTask(myfilter, value);
-    if (myfilter = 'type') {
-      this.nbAfaireSub.unsubscribe();
-      this.nbEncoursSub.unsubscribe();
-      this.nbAttenterepclientSub.unsubscribe();
-      this.nbAttenteretclientSub.unsubscribe();
-      this.nbTermineeSub.unsubscribe();
+    this.nbAfaireSub.unsubscribe();
+    this.nbEncoursSub.unsubscribe();
+    this.nbAttenterepclientSub.unsubscribe();
+    this.nbAttenteretclientSub.unsubscribe();
+    this.nbTermineeSub.unsubscribe();
+    if (myfilter === 'type') {
+      console.log('type Filter');
       switch (value) {
         case 'atelier':
-        console.log('type: atelier');
         this.typeSelected = 'atelier';
         this.iscChecked = false;
         this.iseChecked = false;
@@ -182,7 +183,7 @@ export class TaskFilterComponent implements OnInit {
         this.nbTerminee = res.filter(val => val.task.taskType === this.typeSelected).length;
       });
     }
-    if (myfilter = 'status') {
+    if (myfilter === 'status') {
       switch (value) {
         case 'afaire':
         this.isenChecked = false;
@@ -215,16 +216,11 @@ export class TaskFilterComponent implements OnInit {
         this.isarChecked = false;
         break;
       }
-    }
-  }
-
-  buttonToggle(myfilter: string, value: string, isChecked: boolean) {
-    if (isChecked) {
-      isChecked = false;
-      this.filter(myfilter, '');
-    } else {
-      isChecked = true;
-      this.filter(myfilter, value);
+      // si aucun filtre sur le type n'est selectionné
+      if (!this.isaChecked && !this.iscChecked && ! this.isclChecked && !this.iseChecked && !this.ismChecked) {
+        // on initialise les observables
+        this.initStream();
+      }
     }
   }
 
