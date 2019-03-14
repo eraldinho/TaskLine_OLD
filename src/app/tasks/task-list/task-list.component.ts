@@ -33,25 +33,16 @@ export class TaskListComponent implements OnInit {
     this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
   }
 
-  delayDialog(taskId, taskName, taskDueDate, taskCreationDate, taskOperator, taskType): void {
+  delayDialog(taskId, mytask): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.width = '100%';
-    dialogConfig.data = {
-      taskID: taskId,
-      taskname: taskName,
-      taskduedate: taskDueDate,
-      tasktype: taskType
-    };
+    dialogConfig.data = { taskID: taskId, task: mytask };
     const dialogRef = this.dialog.open(DelayDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
-        this.scrudService.UpdateDocument('tasks', taskId, {task: {taskCreationDate: taskCreationDate,
-          taskDueDate: Date.parse(result.newDueDate),
-          taskName: taskName,
-          taskOperator: taskOperator,
-          taskType: taskType}})
+        this.scrudService.UpdateDocument('tasks', taskId, {task: mytask})
           .then(val => {
             let action: string;
             val === 1 ?  (action = 'Succès') : action = 'Echec';

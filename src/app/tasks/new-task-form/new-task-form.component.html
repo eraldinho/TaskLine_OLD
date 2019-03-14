@@ -58,6 +58,17 @@
               </mat-expansion-panel-header>
               <app-failure-form [failureGroup]="ATDForm.get('failure')"></app-failure-form>
             </mat-expansion-panel>
+            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="datastobesavedGroup">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Données à sauvegarder
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    liste précise des données du client à sauvegarder
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-datastobesaved-form [datastobesavedGroup]="ATDForm.get('datastobesaved')"></app-datastobesaved-form>
+            </mat-expansion-panel>
             <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'">
               <mat-expansion-panel-header>
                 <mat-panel-title>

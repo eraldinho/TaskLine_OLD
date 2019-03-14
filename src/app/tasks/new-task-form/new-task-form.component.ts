@@ -15,6 +15,7 @@ import { ProgressFormService } from '../../services/forms/progressformservice/pr
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
 import { CustomerhardwareFormService } from '../../services/forms/customerhardwareformservice/customerhardware-form.service';
 import { CustomerrequestFormService } from '../../services/forms/customerrequestformservice/customerrequest-form.service';
+import { DatastobesavedFormService } from '../../services/forms/datastobesavedformservice/datastobesaved-form.service';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
 
@@ -29,7 +30,10 @@ import { TasksService } from 'src/app/services/tasks/tasks.service';
     DeviceFormService,
     FailureFormService,
     ProgressFormService,
-    TaskFormService
+    TaskFormService,
+    CustomerhardwareFormService,
+    CustomerrequestFormService,
+    DatastobesavedFormService
  ]
 })
 export class NewTaskFormComponent implements OnInit {
@@ -60,6 +64,9 @@ export class NewTaskFormComponent implements OnInit {
   get customerrequestGroup(): FormGroup {
     return this.customerrequestFormService.customerrequestGroup;
   }
+  get datastobesavedGroup(): FormGroup {
+    return this.datastobesavedFormService.datastobesavedGroup;
+  }
 
   filteredOptions: Observable<Delivery[]>;
   Locations;
@@ -84,7 +91,8 @@ export class NewTaskFormComponent implements OnInit {
               private progressFormService: ProgressFormService,
               private taskFormService: TaskFormService,
               private customerhardwareFormService: CustomerhardwareFormService,
-              private customerrequestFormService: CustomerrequestFormService) {
+              private customerrequestFormService: CustomerrequestFormService,
+              private datastobesavedFormService: DatastobesavedFormService) {
       this.ATDForm = fb.group({
         task: this.taskGroup,
         customer: this.customerGroup,
@@ -94,7 +102,8 @@ export class NewTaskFormComponent implements OnInit {
         progress: this.progressGroup,
         assembly: this.assemblyGroup,
         hardware: this.hardwareGroup,
-        customerrequest: this.customerrequestGroup
+        customerrequest: this.customerrequestGroup,
+        datastobesaved: this.datastobesavedGroup
       });
   }
 

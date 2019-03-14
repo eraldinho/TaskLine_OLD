@@ -24,9 +24,9 @@ export class DelayDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<TaskListComponent>,
     @Inject(MAT_DIALOG_DATA) data) {
       this.taskId = data.taskID;
-      this.taskName = data.taskname;
-      this.taskDueDate = data.taskduedate;
-      this.taskType = data.tasktype;
+      this.taskName = data.task.taskname;
+      this.taskDueDate = data.task.taskduedate;
+      this.taskType = data.task.tasktype;
       this.DForm = fb.group({
         newDueDate: this.newDueDateCtrl,
         comment: this.commentCtrl,

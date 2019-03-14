@@ -10,8 +10,6 @@ import * as moment from 'moment';
 import { TaskDoneDialogComponent } from './task-done-dialog/task-done-dialog.component';
 import { TaskNotDoneDialogComponent } from './task-not-done-dialog/task-not-done-dialog.component';
 
-import { TasksService } from '../../services/tasks/tasks.service';
-
 import { AssemblyFormService } from '../../services/forms/assemblyformservice/assembly-form.service';
 import { CustomerFormService } from '../../services/forms/customerformservice/customer-form.service';
 import { DeliveryFormService } from '../../services/forms/deliveryformservice/delivery-form.service';
@@ -21,7 +19,9 @@ import { ProgressFormService } from '../../services/forms/progressformservice/pr
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
 import { CustomerhardwareFormService } from '../../services/forms/customerhardwareformservice/customerhardware-form.service';
 import { CustomerrequestFormService } from '../../services/forms/customerrequestformservice/customerrequest-form.service';
+import { DatastobesavedFormService } from '../../services/forms/datastobesavedformservice/datastobesaved-form.service';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
+import { TasksService } from 'src/app/services/tasks/tasks.service';
 
 @Component({
   selector: 'app-edit-task-form',
@@ -34,7 +34,10 @@ import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
     DeviceFormService,
     FailureFormService,
     ProgressFormService,
-    TaskFormService
+    TaskFormService,
+    CustomerhardwareFormService,
+    CustomerrequestFormService,
+    DatastobesavedFormService
  ]
 })
 export class EditTaskFormComponent implements OnInit, OnDestroy {
@@ -65,6 +68,9 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   }
   get customerrequestGroup(): FormGroup {
     return this.customerrequestFormService.customerrequestGroup;
+  }
+  get datastobesavedGroup(): FormGroup {
+    return this.datastobesavedFormService.datastobesavedGroup;
   }
 
   @Input() taskID: string;
@@ -100,7 +106,8 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
               private progressFormService: ProgressFormService,
               private taskFormService: TaskFormService,
               private customerhardwareFormService: CustomerhardwareFormService,
-              private customerrequestFormService: CustomerrequestFormService) {
+              private customerrequestFormService: CustomerrequestFormService,
+              private datastobesavedFormService: DatastobesavedFormService) {
     this.ETForm = fb.group({
       task: this.taskGroup,
       customer: this.customerGroup,
@@ -110,7 +117,8 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
       progress: this.progressGroup,
       assembly: this.assemblyGroup,
       hardware: this.hardwareGroup,
-      customerrequest: this.customerrequestGroup
+      customerrequest: this.customerrequestGroup,
+      datastobesaved: this.datastobesavedGroup
     });
   }
 

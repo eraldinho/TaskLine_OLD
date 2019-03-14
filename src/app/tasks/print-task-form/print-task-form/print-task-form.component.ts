@@ -8,6 +8,8 @@ import { FailureFormService } from '../../../services/forms/failureformservice/f
 import { ProgressFormService } from '../../../services/forms/progressformservice/progress-form.service';
 import { TaskFormService } from '../../../services/forms/taskformservice/task-form.service';
 import { CustomerhardwareFormService } from '../../../services/forms/customerhardwareformservice/customerhardware-form.service';
+import { CustomerrequestFormService } from '../../../services/forms/customerrequestformservice/customerrequest-form.service';
+import { DatastobesavedFormService } from '../../../services/forms/datastobesavedformservice/datastobesaved-form.service';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ScrudService } from 'src/app/services/scrud/scrud.service';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -26,7 +28,10 @@ import { Router, ActivatedRoute } from '@angular/router';
     DeviceFormService,
     FailureFormService,
     ProgressFormService,
-    TaskFormService
+    TaskFormService,
+    CustomerhardwareFormService,
+    CustomerrequestFormService,
+    DatastobesavedFormService
  ]
 })
 export class PrintTaskFormComponent implements OnInit, OnDestroy {
@@ -54,6 +59,12 @@ export class PrintTaskFormComponent implements OnInit, OnDestroy {
   get hardwareGroup(): FormGroup {
     return this.customerhardwareFormService.hardwareGroup;
   }
+  get customerrequestGroup(): FormGroup {
+    return this.customerrequestFormService.customerrequestGroup;
+  }
+  get datastobesavedGroup(): FormGroup {
+    return this.datastobesavedFormService.datastobesavedGroup;
+  }
 
   PTForm: FormGroup;
   private taskIdSub: Subscription;
@@ -73,6 +84,8 @@ export class PrintTaskFormComponent implements OnInit, OnDestroy {
     private progressFormService: ProgressFormService,
     private taskFormService: TaskFormService,
     private customerhardwareFormService: CustomerhardwareFormService,
+    private customerrequestFormService: CustomerrequestFormService,
+    private datastobesavedFormService: DatastobesavedFormService,
     private tasksService: TasksService,
     private scrudService: ScrudService) {
       this.PTForm = fb.group({
@@ -83,7 +96,9 @@ export class PrintTaskFormComponent implements OnInit, OnDestroy {
         delivery: this.deliveryGroup,
         progress: this.progressGroup,
         assembly: this.assemblyGroup,
-        hardware: this.hardwareGroup
+        hardware: this.hardwareGroup,
+        customerrequest: this.customerrequestGroup,
+        datastobesaved: this.datastobesavedGroup
       });
   }
 
