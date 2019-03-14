@@ -20,6 +20,7 @@ import { FailureFormService } from '../../services/forms/failureformservice/fail
 import { ProgressFormService } from '../../services/forms/progressformservice/progress-form.service';
 import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
 import { CustomerhardwareFormService } from '../../services/forms/customerhardwareformservice/customerhardware-form.service';
+import { CustomerrequestFormService } from '../../services/forms/customerrequestformservice/customerrequest-form.service';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 
 @Component({
@@ -62,6 +63,9 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   get hardwareGroup(): FormGroup {
     return this.customerhardwareFormService.hardwareGroup;
   }
+  get customerrequestGroup(): FormGroup {
+    return this.customerrequestFormService.customerrequestGroup;
+  }
 
   @Input() taskID: string;
   private taskSub: Subscription;
@@ -95,7 +99,8 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
               private failureFormService: FailureFormService,
               private progressFormService: ProgressFormService,
               private taskFormService: TaskFormService,
-              private customerhardwareFormService: CustomerhardwareFormService) {
+              private customerhardwareFormService: CustomerhardwareFormService,
+              private customerrequestFormService: CustomerrequestFormService) {
     this.ETForm = fb.group({
       task: this.taskGroup,
       customer: this.customerGroup,
@@ -104,7 +109,8 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
       delivery: this.deliveryGroup,
       progress: this.progressGroup,
       assembly: this.assemblyGroup,
-      hardware: this.hardwareGroup
+      hardware: this.hardwareGroup,
+      customerrequest: this.customerrequestGroup
     });
   }
 
@@ -251,18 +257,13 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  //the next 3 functions are used to lock and unlock the ETForm by responding to event sent by App-Task-Form
-  isLocked(state: boolean) {
-    console.log('isLocked');
-    state ? this.lock() : this.unlock();
-  }
-
   unlock() {
     this.ETForm.enable();
     this.tasksService.enableDelivery(this.ETForm);
     this.ETForm.get('progress').get('progressArray').disable();
     this.ETForm.get('task').get('taskType').disable();
     this.ETForm.get('task').get('location').disable();
+    this.ETForm.get('task').get('taskDueDate').disable();
     this.disableLogInput(this.assemblyGroup);
   }
 
@@ -277,7 +278,10 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     this.ETForm.get('delivery').get('deliveryAdd').setValue('');
     this.ETForm.enable();
     this.ETForm.get('delivery').get('deliveryArray').enable();
-    this.ETForm.get('task').get('taskDueDate').setValue(Date.parse(this.ETForm.value.task.taskDueDate));
+    // si taskDueDate est une date on transforme en timestamp
+    if (Object.prototype.toString.call(this.ETForm.value.task.taskDueDate) !== '[object Date]') {
+      this.ETForm.get('task').get('taskDueDate').setValue(Date.parse(this.ETForm.value.task.taskDueDate));
+    }
     this.scrudService.SetDocument('tasks', this.taskID, this.ETForm.value)
     .then((result) => {
       let action: string;

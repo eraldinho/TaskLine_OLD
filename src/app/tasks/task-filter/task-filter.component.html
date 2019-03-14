@@ -68,9 +68,6 @@
         </mat-form-field>
     </div>-->
     <div style="margin-top: 10px">
-        <mat-checkbox formControlName="wFCAnswer" (change)="filter('attenteRC',TFForm.get('wFCAnswer').value)">Attente réponse client</mat-checkbox>
-    </div>
-    <div style="margin-top: 10px">
         <button type="button" mat-raised-button (click)="clean('all','clean');TFForm.reset()">Vider les filtres</button>
     </div>
 </form>

@@ -19,7 +19,6 @@ export class TaskFilterComponent implements OnInit {
   date2Ctrl: FormControl;
   oUserCtrl: FormControl;
   dUserCtrl: FormControl;
-  wFCAnswerCtrl: FormControl;
   typeSelected = '';
   isaChecked: boolean;
   iscChecked: boolean;
@@ -56,7 +55,6 @@ export class TaskFilterComponent implements OnInit {
       date2: this.date2Ctrl,
       oUser: this.oUserCtrl,
       dUser: this.dUserCtrl,
-      wFCAnswer: this.wFCAnswerCtrl
     });
    }
 

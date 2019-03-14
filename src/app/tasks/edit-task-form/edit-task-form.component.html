@@ -18,6 +18,17 @@
               </mat-expansion-panel-header>
               <app-customer-form [customerGroup]="ETForm.get('customer')"></app-customer-form>
             </mat-expansion-panel>
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'montage'" [formGroup]="customerrequestGroup">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Demande(s) spécifique(s) du client
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Descriptif de la demande client
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-customerrequest-form [customerrequestGroup]="ETForm.get('customerrequest')"></app-customerrequest-form>
+            </mat-expansion-panel>
             <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'montage'" [formGroup]="hardwareGroup">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
