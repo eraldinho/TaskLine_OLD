@@ -58,7 +58,7 @@
               </mat-expansion-panel-header>
               <app-failure-form [failureGroup]="ATDForm.get('failure')"></app-failure-form>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier'" [formGroup]="datastobesavedGroup">
+            <mat-expansion-panel *ngIf = "ATDForm.get('task').get('taskType').value == 'atelier' && datatosaveService.mustSave(ATDForm.get('delivery').get('deliveryArray'))" [formGroup]="datastobesavedGroup">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Données à sauvegarder

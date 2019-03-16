@@ -21,7 +21,9 @@ import { CustomerhardwareFormService } from '../../services/forms/customerhardwa
 import { CustomerrequestFormService } from '../../services/forms/customerrequestformservice/customerrequest-form.service';
 import { DatastobesavedFormService } from '../../services/forms/datastobesavedformservice/datastobesaved-form.service';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
+
 import { TasksService } from 'src/app/services/tasks/tasks.service';
+import { DatatosaveService } from 'src/app/services/datatosave/datatosave.service';
 
 @Component({
   selector: 'app-edit-task-form',
@@ -37,7 +39,8 @@ import { TasksService } from 'src/app/services/tasks/tasks.service';
     TaskFormService,
     CustomerhardwareFormService,
     CustomerrequestFormService,
-    DatastobesavedFormService
+    DatastobesavedFormService,
+    DatatosaveService
  ]
 })
 export class EditTaskFormComponent implements OnInit, OnDestroy {
@@ -95,7 +98,8 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private scrudService: ScrudService,
               public snackBar: MatSnackBar,
-              private tasksService: TasksService,
+              public tasksService: TasksService,
+              public datatosaveService: DatatosaveService,
               private dialog: MatDialog,
               private afAuth: AngularFireAuth,
               private assemblyFormService: AssemblyFormService,

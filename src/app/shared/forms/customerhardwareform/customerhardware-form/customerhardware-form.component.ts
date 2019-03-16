@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-customerhardware-form',
@@ -11,6 +11,8 @@ export class CustomerhardwareFormComponent implements OnInit {
 
   @Output() hardwareAdded = new EventEmitter();
   @Output() hardwareRemoved = new EventEmitter<number>();
+
+  get formArray() { return <FormArray>this.hardwareGroup.get('hardwareArray'); }
 
   constructor() { }
 

@@ -2,8 +2,8 @@
     <mat-card>
       <mat-card-content>
           <mat-card-header>
-            <mat-icon *ngIf="taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="unlock()">lock_open</mat-icon>
-            <mat-icon *ngIf="!taskGroup.disabled && taskGroup.status.value != 'terminee'" (click)="lock()">lock</mat-icon>
+            <mat-icon *ngIf="taskGroup.disabled && taskGroup.status != 'terminee'" (click)="unlock()">lock_open</mat-icon>
+            <mat-icon *ngIf="!taskGroup.disabled && taskGroup.status != 'terminee'" (click)="lock()">lock</mat-icon>
           </mat-card-header>
           <app-task-form [taskGroup]="ETForm.get('task')" [Types]="Types" [LocationsAvailable]="LocationsAvailable" (LocationSet)="tasksService.LocationSet(ETForm, $event, taskID)"></app-task-form>
           <mat-accordion class="taskFormAccordion" #taskAccordion="matAccordion">
@@ -62,7 +62,7 @@
               </mat-expansion-panel-header>
               <app-failure-form [failureGroup]="ETForm.get('failure')"></app-failure-form>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'atelier'" [formGroup]="datastobesavedGroup">
+            <mat-expansion-panel *ngIf = "ETForm.get('task').get('taskType').value == 'atelier' && datatosaveService.mustSave(ETForm.get('delivery').get('deliveryArray'))" [formGroup]="datastobesavedGroup">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Données à sauvegarder

@@ -16,7 +16,7 @@ export class AssemblyFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onAssembly(display: boolean, formctrl: FormControl, myaction: string, valuectrl: FormControl) {
+  onAssembly(display: boolean, formctrl, myaction: string, valuectrl) {
     this.needLog.emit({needdisplay: display, wheretoLog: formctrl, whattoLog: myaction, value: valuectrl});
   }
 

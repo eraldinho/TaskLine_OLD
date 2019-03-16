@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 
@@ -14,6 +14,8 @@ export class DeliveryFormComponent implements OnInit {
 
 @Output() deliveryAdded = new EventEmitter();
 @Output() deliveryRemoved = new EventEmitter<number>();
+
+get formArray() { return <FormArray>this.deliveryGroup.get('deliveryArray'); }
 
   constructor() { }
 

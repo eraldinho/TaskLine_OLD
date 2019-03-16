@@ -6,7 +6,7 @@
         <mat-icon (click)="addHardware()">add_circle_outlined</mat-icon>
     </section>
     <div  formArrayName="hardwareArray">
-      <mat-card *ngFor="let hardware of hardwareGroup.controls.hardwareArray.controls; let i=index">
+      <mat-card *ngFor="let hardware of formArray.controls; let i=index">
         <div [formGroupName]="i">
           <mat-card-content>
             <div>

@@ -5,9 +5,9 @@ import { ScrudService } from '../../services/scrud/scrud.service';
 import { MatSnackBar } from '@angular/material';
 import * as moment from 'moment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable(
+  { providedIn: 'root' }
+)
 export class TasksService {
 
   constructor(private scrudService: ScrudService,

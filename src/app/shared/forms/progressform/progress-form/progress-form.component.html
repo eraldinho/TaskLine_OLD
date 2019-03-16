@@ -6,7 +6,7 @@
         <mat-icon (click)="addProgress()">add_circle_outlined</mat-icon>
     </section>
     <div  formArrayName="progressArray">
-      <mat-card *ngFor="let progress of progressGroup.controls.progressArray.controls; let i=index">
+      <mat-card *ngFor="let progress of formArray.controls; let i=index">
         <div [formGroupName]="i">
           <mat-card-content>
             <div>

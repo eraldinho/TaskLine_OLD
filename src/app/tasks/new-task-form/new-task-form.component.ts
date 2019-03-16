@@ -18,6 +18,7 @@ import { CustomerrequestFormService } from '../../services/forms/customerrequest
 import { DatastobesavedFormService } from '../../services/forms/datastobesavedformservice/datastobesaved-form.service';
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
+import { DatatosaveService } from 'src/app/services/datatosave/datatosave.service';
 
 @Component({
   selector: 'app-new-task-form',
@@ -33,7 +34,8 @@ import { TasksService } from 'src/app/services/tasks/tasks.service';
     TaskFormService,
     CustomerhardwareFormService,
     CustomerrequestFormService,
-    DatastobesavedFormService
+    DatastobesavedFormService,
+    DatatosaveService
  ]
 })
 export class NewTaskFormComponent implements OnInit {
@@ -82,7 +84,8 @@ export class NewTaskFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private scrudService: ScrudService,
               public snackBar: MatSnackBar,
-              private tasksService: TasksService,
+              public tasksService: TasksService,
+              public datatosaveService: DatatosaveService,
               private assemblyFormService: AssemblyFormService,
               private customerFormService: CustomerFormService,
               private deliveryFormService: DeliveryFormService,

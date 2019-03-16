@@ -11,7 +11,7 @@
         <mat-icon (click)="onAddDelivery()">add_circle_outlined</mat-icon>
     </section>
     <div formArrayName="deliveryArray">
-      <div *ngFor="let presta of deliveryGroup.controls.deliveryArray.controls; let i=index">
+      <div *ngFor="let presta of formArray.controls; let i=index">
         <div [formGroupName]="i">
             <section class="example-section">
                 <mat-form-field style="width:100%">

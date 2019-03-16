@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-progress-form',
@@ -11,6 +11,8 @@ export class ProgressFormComponent implements OnInit {
 
   @Output() progressAdded = new EventEmitter();
   @Output() progressRemoved = new EventEmitter<number>();
+
+  get formArray() { return <FormArray>this.progressGroup.get('progressArray'); }
 
   constructor() { }
 
