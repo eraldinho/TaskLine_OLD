@@ -127,6 +127,7 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.tasksService.locationsControl();
     const control = <FormArray>this.ETForm.get('delivery').get('deliveryArray');
     const control2 = <FormArray>this.ETForm.get('progress').get('progressArray');
     const control3 = <FormArray>this.ETForm.get('hardware').get('hardwareArray');

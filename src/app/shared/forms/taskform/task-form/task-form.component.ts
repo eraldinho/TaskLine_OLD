@@ -22,7 +22,7 @@ export class TaskFormComponent implements OnInit {
     console.log('onLocationUsed');
     console.log('location: ' + this.taskGroup.get('location').value);
     console.log('locationAdd :' + this.taskGroup.get('locationAdd').value);
-    this.scrudService.UpdateDocument('locations', this.taskGroup.get('location').value, {used: false})
+    this.scrudService.UpdateDocument('locations', this.taskGroup.get('location').value, {used: false, task: ''})
     .then(val => {
       this.taskGroup.get('location').setValue(this.taskGroup.get('locationAdd').value);
       this.LocationSet.emit(this.taskGroup.get('location').value);

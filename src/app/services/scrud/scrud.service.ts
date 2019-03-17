@@ -81,9 +81,10 @@ export class ScrudService {
       }
       doc.update(data)
       .then(() => {
-        console.log('success');
+        console.log('Update success');
         resolve(1);
       }).catch(err => {
+        console.log('Update failed');
         reject(0);
       });
     });
