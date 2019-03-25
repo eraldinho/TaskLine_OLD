@@ -1,0 +1,14 @@
+<form [formGroup]="PTForm">
+    <mat-card>
+      <mat-card-content>
+          <mat-card-header>
+            <mat-icon (click)="navBack()">keyboard_arrow_left</mat-icon>
+          </mat-card-header>
+          <app-task-form [taskGroup]="PTForm.get('task')"></app-task-form>
+          <app-customer-form [customerGroup]="PTForm.get('customer')"></app-customer-form>
+          <app-device-form [deviceGroup]="PTForm.get('device')"></app-device-form>
+          <app-failure-form [failureGroup]="PTForm.get('failure')"></app-failure-form>
+          <app-delivery-form [deliveryGroup]="PTForm.get('delivery')"></app-delivery-form>
+      </mat-card-content>
+    </mat-card>
+</form>

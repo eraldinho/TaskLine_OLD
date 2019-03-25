@@ -4,6 +4,9 @@ import { TasksService } from '../../services/tasks/tasks.service';
 import {MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar} from '@angular/material';
 import { DelayDialogComponent } from './delay-dialog/delay-dialog.component';
 import { DoneDialogComponent} from './done-dialog/done-dialog.component';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -14,7 +17,8 @@ export class TaskListComponent implements OnInit {
   constructor(private scrudService: ScrudService,
               private tasksService: TasksService,
               private dialog: MatDialog,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private router: Router) {
     tasksService.taskFiltered$.subscribe(
       myfilter => {
         this.filterTask(myfilter);
@@ -22,32 +26,26 @@ export class TaskListComponent implements OnInit {
     );
   }
 
-  Tasks;
+  Tasks: Observable<any>;
   filters = ['', '', '', '', '', '', '', ''];
 
   ngOnInit() {
     this.Tasks = this.scrudService.RetrieveCollectionWithID('tasks');
   }
 
-  delayDialog(taskId, taskName, taskDueDate, taskCreationDate, taskOperator, taskType): void {
+  delayDialog(taskId, mytask): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.width = '100%';
-    dialogConfig.data = {
-      taskID: taskId,
-      taskname: taskName,
-      taskduedate: taskDueDate,
-      tasktype: taskType
-    };
+    dialogConfig.data = { taskID: taskId, task: mytask };
     const dialogRef = this.dialog.open(DelayDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
-        this.scrudService.UpdateDocument('tasks', taskId, {task: {taskCreationDate: taskCreationDate,
-          taskDueDate: Date.parse(result.newDueDate),
-          taskName: taskName,
-          taskOperator: taskOperator,
-          taskType: taskType}})
+        console.log(result);
+        console.log(result);
+        mytask.taskDueDate = Date.parse(result.newDueDate);
+        this.scrudService.UpdateDocument('tasks', taskId, {task: mytask})
           .then(val => {
             let action: string;
             val === 1 ?  (action = 'Succès') : action = 'Echec';
@@ -64,6 +62,11 @@ export class TaskListComponent implements OnInit {
     this.tasksService.editTask(task);
   }
 
+  printTask(taskId) {
+    this.router.navigate(['/print'], {queryParams: {task: taskId}});
+    this.tasksService.printTask(taskId);
+  }
+
   doneDialog(taskId, taskName, taskType) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -77,12 +80,17 @@ export class TaskListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== 0) {
-        this.scrudService.UpdateDocument('tasks', taskId, {status: 'terminee'})
-        .then(val => {
-          let action: string;
-          val === 1 ?  (action = 'Succès') : action = 'Echec';
-          this.snackBar.open('Validation Tâche', action, {
-          duration: 3000,
+        const mytask = this.scrudService.RetrieveDocument('tasks/' + taskId);
+        mytask.subscribe(Task => {
+          const myUpdate = Task.task;
+          myUpdate.status = 'terminee';
+          this.scrudService.UpdateDocument('tasks', taskId, {task: myUpdate})
+          .then(val => {
+            let action: string;
+            val === 1 ?  (action = 'Succès') : action = 'Echec';
+            this.snackBar.open('Validation Tâche', action, {
+            duration: 3000,
+            });
           });
         });
       }

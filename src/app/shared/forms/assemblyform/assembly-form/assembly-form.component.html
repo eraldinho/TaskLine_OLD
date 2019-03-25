@@ -1,3 +1,184 @@
-<p>
-  assembly-form works!
-</p>
+          <div [formGroup]="assemblyGroup">
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="checkComponent" (change) = "onAssembly(true, assemblyGroup.get('checkComponentLog'), 'vérification des composants', assemblyGroup.get('checkComponent'))">Liste des composant vérifiée</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="checkComponentLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="assembly" (change) = "onAssembly(true, assemblyGroup.get('assemblyLog'), 'vérification des composants', assemblyGroup.get('assembly'))">Montage réalisé</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="assemblyLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="cableConnection" (change) = "onAssembly(true, assemblyGroup.get('cableConnectionLog'), 'vérification des composants', assemblyGroup.get('cableConnection'))">Câbles vérifiés</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="cableConnectionLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Mise à jour BIOS</span>
+                  <mat-radio-group formControlName="BIOSUpdate" (change) = "onAssembly(true, assemblyGroup.get('BIOSUpdateLog'), 'vérification des composants', assemblyGroup.get('BIOSUpdate'))">
+                    <mat-radio-button class="input-margin" value="1">Réalisée</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="BIOSUpdateLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="BIOSSetUp" (change) = "onAssembly(true, assemblyGroup.get('BIOSSetUpLog'), 'vérification des composants', assemblyGroup.get('BIOSSetUp'))">BIOS paramétré</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="BIOSSetUpLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Version de Windows vérifiée</span>
+                  <mat-radio-group formControlName="OSVersion" (change) = "onAssembly(true, assemblyGroup.get('OSVersionLog'), 'vérification des composants', assemblyGroup.get('OSVersion'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSVersionLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Etiquette de licence collée</span>
+                  <mat-radio-group formControlName="LicenceSticker" (change) = "onAssembly(true, assemblyGroup.get('LicenceStickerLog'), 'vérification des composants', assemblyGroup.get('LicenceSticker'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="LicenceStickerLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>OS installé</span>
+                  <mat-radio-group formControlName="OSInstallation" (change) = "onAssembly(true, assemblyGroup.get('OSInstallationLog'), 'vérification des composants', assemblyGroup.get('OSInstallation'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSInstallationLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>OS mis à jour</span>
+                  <mat-radio-group formControlName="OSUpdate" (change) = "onAssembly(true, assemblyGroup.get('OSUpdateLog'), 'vérification des composants', assemblyGroup.get('OSUpdate'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSUpdateLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Pilotes installés</span>
+                  <mat-radio-group formControlName="drivers" (change) = "onAssembly(true, assemblyGroup.get('driversLog'), 'vérification des composants', assemblyGroup.get('drivers'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="driversLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="drives" (change) = "onAssembly(true, assemblyGroup.get('drivesLog'), 'vérification des composants', assemblyGroup.get('drives'))">Disque(s) dur(s) controlé(s)</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="drivesLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>OS activé</span>
+                  <mat-radio-group formControlName="OSActivation" (change) = "onAssembly(true, assemblyGroup.get('OSActivationLog'), 'vérification des composants', assemblyGroup.get('OSActivation'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="OSActivationLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="fan" (change) = "onAssembly(true, assemblyGroup.get('fanLog'), 'vérification des composants', assemblyGroup.get('fan'))">Ventilateur(s) controllé(s)</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="fanLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="USB" (change) = "onAssembly(true, assemblyGroup.get('USBLog'), 'vérification des composants', assemblyGroup.get('USB'))">Ports USB controllés</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="USBLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="jack" (change) = "onAssembly(true, assemblyGroup.get('jackLog'), 'vérification des composants', assemblyGroup.get('jack'))">Prises Jack controllées</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="jackLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Lecteur(s) optique(s) controllé(s)</span>
+                  <mat-radio-group formControlName="opticalDrive" (change) = "onAssembly(true, assemblyGroup.get('opticalDriveLog'), 'vérification des composants', assemblyGroup.get('opticalDrive'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="opticalDriveLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <span>Lecteur(s) de cartes controllé(s)</span>
+                  <mat-radio-group formControlName="cardReader" (change) = "onAssembly(true, assemblyGroup.get('cardReaderLog'), 'vérification des composants', assemblyGroup.get('cardReader'))">
+                    <mat-radio-button class="input-margin" value="1">Oui</mat-radio-button>
+                    <mat-radio-button class="input-margin" value="2">Pas nécéssaire</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="cardReaderLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                <mat-checkbox formControlName="shutDown" (change) = "onAssembly(true, assemblyGroup.get('shutDownLog'), 'vérification des composants', assemblyGroup.get('shutDown'))">PC eteint</mat-checkbox>
+                <mat-form-field class="input-full-width">
+                    <input formControlName="shutDownLog" matInput>
+                </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <mat-checkbox formControlName="packaging" (change) = "onAssembly(true, assemblyGroup.get('packagingLog'), 'vérification des composants', assemblyGroup.get('packaging'))">PC emballé</mat-checkbox>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="packagingLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <section class="montage-form">
+                  <mat-checkbox formControlName="softwareValidation" (change) = "onAssembly(true, assemblyGroup.get('softwareValidationLog'), 'vérification des composants', assemblyGroup.get('softwareValidation'))">Validation CEBO effectuée</mat-checkbox>
+                  <mat-form-field class="input-full-width">
+                      <input formControlName="softwareValidationLog" matInput>
+                  </mat-form-field>
+              </section>
+              <mat-divider></mat-divider>
+              <div>
+                  <mat-form-field style="width:100%">
+                    <textarea formControlName="assemblyComment" matInput placeholder="Commentaires"></textarea>
+                  </mat-form-field>
+              </div>
+          </div>

@@ -1,3 +1,17 @@
-<p>
-  customer-form works!
-</p>
+<div [formGroup]="customerGroup">
+    <mat-form-field class="input-margin">
+        <input formControlName="customerName" matInput placeholder="Nom">
+      </mat-form-field>
+      <mat-form-field class="input-margin">
+        <input formControlName="customerFirstName" matInput placeholder="Prénom">
+      </mat-form-field>
+      <mat-form-field class="input-margin">
+        <input formControlName="customerNumber" matInput placeholder="Numéro Client">
+      </mat-form-field>
+      <mat-form-field class="input-margin">
+        <input formControlName="customerMail" matInput placeholder="Mail">
+      </mat-form-field>
+      <mat-form-field class="input-margin">
+        <input formControlName="customerPhone" matInput placeholder="Téléphone">
+      </mat-form-field>
+</div>

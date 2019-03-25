@@ -41,6 +41,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatBadgeModule} from '@angular/material/badge';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 // Customs components
@@ -68,7 +70,11 @@ import { DeliveryFormComponent } from './shared/forms/deliveryform/delivery-form
 import { DeviceFormComponent } from './shared/forms/deviceform/device-form/device-form.component';
 import { FailureFormComponent } from './shared/forms/failureform/failure-form/failure-form.component';
 import { TaskFormComponent } from './shared/forms/taskform/task-form/task-form.component';
-
+import { ProgressFormComponent } from './shared/forms/progressform/progress-form/progress-form.component';
+import { CustomerhardwareFormComponent } from './shared/forms/customerhardwareform/customerhardware-form/customerhardware-form.component';
+import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/print-task-form.component';
+import { CustomerrequestFormComponent } from './shared/forms/customerrequest/customerrequest-form/customerrequest-form.component';
+import { DatastobesavedFormComponent } from './shared/forms/datastobesavedform/datastobesaved-form/datastobesaved-form.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +102,12 @@ import { TaskFormComponent } from './shared/forms/taskform/task-form/task-form.c
     DeliveryFormComponent,
     DeviceFormComponent,
     FailureFormComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    ProgressFormComponent,
+    CustomerhardwareFormComponent,
+    PrintTaskFormComponent,
+    CustomerrequestFormComponent,
+    DatastobesavedFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,7 +138,9 @@ import { TaskFormComponent } from './shared/forms/taskform/task-form/task-form.c
     MatCheckboxModule,
     MatAutocompleteModule,
     MatTabsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatBadgeModule
   ],
   entryComponents: [DelayDialogComponent,
     DoneDialogComponent,

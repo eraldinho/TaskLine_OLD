@@ -4,351 +4,179 @@ import { ScrudService } from '../../services/scrud/scrud.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
+import * as moment from 'moment';
 
-export interface Prestation {
-  nom: string;
-  prix: number;
-  code: string;
-}
+import { AssemblyFormService } from '../../services/forms/assemblyformservice/assembly-form.service';
+import { CustomerFormService } from '../../services/forms/customerformservice/customer-form.service';
+import { DeliveryFormService } from '../../services/forms/deliveryformservice/delivery-form.service';
+import { DeviceFormService } from '../../services/forms/deviceformservice/device-form.service';
+import { FailureFormService } from '../../services/forms/failureformservice/failure-form.service';
+import { ProgressFormService } from '../../services/forms/progressformservice/progress-form.service';
+import { TaskFormService } from '../../services/forms/taskformservice/task-form.service';
+import { CustomerhardwareFormService } from '../../services/forms/customerhardwareformservice/customerhardware-form.service';
+import { CustomerrequestFormService } from '../../services/forms/customerrequestformservice/customerrequest-form.service';
+import { DatastobesavedFormService } from '../../services/forms/datastobesavedformservice/datastobesaved-form.service';
+import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
+import { TasksService } from 'src/app/services/tasks/tasks.service';
+import { DatatosaveService } from 'src/app/services/datatosave/datatosave.service';
 
 @Component({
   selector: 'app-new-task-form',
   templateUrl: './new-task-form.component.html',
-  styleUrls: ['./new-task-form.component.scss']
+  styleUrls: ['./new-task-form.component.scss'],
+  providers:  [
+    AssemblyFormService,
+    CustomerFormService,
+    DeliveryFormService,
+    DeviceFormService,
+    FailureFormService,
+    ProgressFormService,
+    TaskFormService,
+    CustomerhardwareFormService,
+    CustomerrequestFormService,
+    DatastobesavedFormService,
+    DatatosaveService
+ ]
 })
 export class NewTaskFormComponent implements OnInit {
+  get assemblyGroup(): FormGroup {
+    return this.assemblyFormService.assemblyGroup;
+  }
+  get customerGroup(): FormGroup {
+    return this.customerFormService.customerGroup;
+  }
+  get deliveryGroup(): FormGroup {
+    return this.deliveryFormService.deliveryGroup;
+  }
+  get deviceGroup(): FormGroup {
+    return this.deviceFormService.deviceGroup;
+  }
+  get failureGroup(): FormGroup {
+    return this.failureFormService.failureGroup;
+  }
+  get progressGroup(): FormGroup {
+    return this.progressFormService.progressGroup;
+  }
+  get taskGroup(): FormGroup {
+    return this.taskFormService.taskGroup;
+  }
+  get hardwareGroup(): FormGroup {
+    return this.customerhardwareFormService.hardwareGroup;
+  }
+  get customerrequestGroup(): FormGroup {
+    return this.customerrequestFormService.customerrequestGroup;
+  }
+  get datastobesavedGroup(): FormGroup {
+    return this.datastobesavedFormService.datastobesavedGroup;
+  }
 
-  filteredOptions: Observable<Prestation[]>;
+  filteredOptions: Observable<Delivery[]>;
+  Locations;
+  LocationsAvailable;
   taskTypes;
   Types;
   Prestations;
   myPrestations;
+  docRef;
   ATDForm: FormGroup;
-  commentCtrl: FormControl;
-  originUserCtrl: FormControl;
-  destinationUserCtrl: FormControl;
-  statusCtrl: FormControl;
-  WCACtrl: FormControl;
-  CMPCtrl: FormControl;
-  // tache
-  taskGroup: FormGroup;
-  taskNameCtrl: FormControl;
-  taskCreationDateCtrl: FormControl;
-  taskDueDateCtrl: FormControl;
-  taskOperatorCtrl: FormControl;
-  taskTypeCtrl: FormControl;
-  // client
-  clientGroup: FormGroup;
-  clientNameCtrl: FormControl;
-  clientFirstNameCtrl: FormControl;
-  clientNumberCtrl: FormControl;
-  clientMailCtrl: FormControl;
-  clientPhoneCtrl: FormControl;
-  // materiel
-  deviceGroup: FormGroup;
-  deviceTypeCtrl: FormControl;
-  deviceBrandCtrl: FormControl;
-  deviceStartCtrl: FormControl;
-  deviceDisplayCtrl: FormControl;
-  deviceOsStartCtrl: FormControl;
-  deviceResetCtrl: FormControl;
-  deviceDescriptionCtrl: FormControl;
-  // Panne
-  panneGroup: FormGroup;
-  panneDescriptionCtrl: FormControl;
-  // Prestations
-  prestationsArray: FormArray;
-  prestationAddCtrl: FormControl;
-  // avancement
-  inProgressArray: FormArray;
-  progressAddCtrl: FormControl;
-  // montage
-  assemblyGroup: FormGroup;
-  checkComponentCtrl: FormControl;
-  checkComponentLogCtrl: FormControl;
-  assemblyCtrl: FormControl;
-  assemblyLogCtrl: FormControl;
-  cableConnectionCtrl: FormControl;
-  cableConnectionLogCtrl: FormControl;
-  BIOSUpdateCtrl: FormControl;
-  BIOSUpdateLogCtrl: FormControl;
-  BIOSSetUpCtrl: FormControl;
-  BIOSSetUpLogCtrl: FormControl;
-  LicenceStickerCtrl: FormControl;
-  LicenceStickerLogCtrl: FormControl;
-  OSVersionCtrl: FormControl;
-  OSVersionLogCtrl: FormControl;
-  OSInstallationCtrl: FormControl;
-  OSInstallationLogCtrl: FormControl;
-  OSUpdateCtrl: FormControl;
-  OSUpdateLogCtrl: FormControl;
-  driversCtrl: FormControl;
-  driversLogCtrl: FormControl;
-  drivesCtrl: FormControl;
-  drivesLogCtrl: FormControl;
-  OSActivationCtrl: FormControl;
-  OSActivationLogCtrl: FormControl;
-  fanCtrl: FormControl;
-  fanLogCtrl: FormControl;
-  USBCtrl: FormControl;
-  USBLogCtrl: FormControl;
-  jackCtrl: FormControl;
-  jackLogCtrl: FormControl;
-  opticalDriveCtrl: FormControl;
-  opticalDriveLogCtrl: FormControl;
-  cardReaderCtrl: FormControl;
-  cardReaderLogCtrl: FormControl;
-  shutDownCtrl: FormControl;
-  shutDownLogCtrl: FormControl;
-  packagingCtrl: FormControl;
-  packagingLogCtrl: FormControl;
-  softwareValidationCtrl: FormControl;
-  softwareValidationLogCtrl: FormControl;
-  assemblyCommentCtrl: FormControl;
 
 
   constructor(private fb: FormBuilder,
-    private scrudService: ScrudService, public snackBar: MatSnackBar) {
-// task
-this.taskNameCtrl = fb.control('');
-this.taskTypeCtrl = fb.control('');
-this.taskCreationDateCtrl = fb.control('');
-this.taskDueDateCtrl = fb.control('');
-this.taskOperatorCtrl = fb.control('');
-// client
-this.clientNameCtrl = fb.control('');
-this.clientFirstNameCtrl = fb.control('');
-this.clientNumberCtrl = fb.control('');
-this.clientMailCtrl = fb.control('');
-this.clientPhoneCtrl = fb.control('');
-// device
-this.deviceTypeCtrl = fb.control('');
-this.deviceBrandCtrl = fb.control('');
-this.deviceStartCtrl = fb.control('');
-this.deviceDisplayCtrl = fb.control('');
-this.deviceOsStartCtrl = fb.control('');
-this.deviceResetCtrl = fb.control('');
-this.deviceDescriptionCtrl = fb.control('');
-// panne
-this.panneDescriptionCtrl = fb.control('');
-// montage
-this.checkComponentCtrl = fb.control('');
-this.assemblyCtrl = fb.control('');
-this.cableConnectionCtrl = fb.control('');
-this.BIOSUpdateCtrl = fb.control('');
-this.BIOSSetUpCtrl = fb.control('');
-this.LicenceStickerCtrl = fb.control('');
-this.OSVersionCtrl = fb.control('');
-this.OSInstallationCtrl = fb.control('');
-this.OSUpdateCtrl = fb.control('');
-this.driversCtrl = fb.control('');
-this.drivesCtrl = fb.control('');
-this.OSActivationCtrl = fb.control('');
-this.fanCtrl = fb.control('');
-this.USBCtrl = fb.control('');
-this.jackCtrl = fb.control('');
-this.opticalDriveCtrl = fb.control('');
-this.cardReaderCtrl = fb.control('');
-this.shutDownCtrl = fb.control('');
-this.packagingCtrl = fb.control('');
-this.softwareValidationCtrl = fb.control('');
-this.checkComponentLogCtrl = fb.control('');
-this.assemblyLogCtrl = fb.control('');
-this.cableConnectionLogCtrl = fb.control('');
-this.BIOSUpdateLogCtrl = fb.control('');
-this.BIOSSetUpLogCtrl = fb.control('');
-this.LicenceStickerLogCtrl = fb.control('');
-this.OSVersionLogCtrl = fb.control('');
-this.OSInstallationLogCtrl = fb.control('');
-this.OSUpdateLogCtrl = fb.control('');
-this.driversLogCtrl = fb.control('');
-this.drivesLogCtrl = fb.control('');
-this.OSActivationLogCtrl = fb.control('');
-this.fanLogCtrl = fb.control('');
-this.USBLogCtrl = fb.control('');
-this.jackLogCtrl = fb.control('');
-this.opticalDriveLogCtrl = fb.control('');
-this.cardReaderLogCtrl = fb.control('');
-this.shutDownLogCtrl = fb.control('');
-this.packagingLogCtrl = fb.control('');
-this.softwareValidationLogCtrl = fb.control('');
-this.assemblyCommentCtrl = fb.control('');
-// ATDForm
-this.prestationAddCtrl = fb.control('');
-this.progressAddCtrl = fb.control('');
-this.commentCtrl = fb.control('');
-this.originUserCtrl = fb.control('');
-this.destinationUserCtrl = fb.control('');
-this.statusCtrl = fb.control('');
-this.WCACtrl = fb.control('');
-this.CMPCtrl = fb.control('');
-this.taskGroup = fb.group({
-taskName: this.taskNameCtrl,
-taskType: this.taskTypeCtrl,
-taskCreationDate: this.taskCreationDateCtrl,
-taskDueDate: this.taskDueDateCtrl,
-taskOperator: this.taskOperatorCtrl
-});
-this.clientGroup = fb.group({
-clientName: this.clientNameCtrl,
-clientFirstName: this.clientFirstNameCtrl,
-clientNumber: this.clientNumberCtrl,
-clientMail: this.clientMailCtrl,
-clientPhone: this.clientPhoneCtrl
-});
-this.deviceGroup = fb.group({
-deviceType: this.deviceTypeCtrl,
-deviceBrand: this.deviceBrandCtrl,
-deviceStart: this.deviceStartCtrl,
-deviceDisplay: this.deviceDisplayCtrl,
-deviceOsStart: this.deviceOsStartCtrl,
-deviceReset: this.deviceResetCtrl,
-deviceDescription: this.deviceDescriptionCtrl
-});
-this.panneGroup = fb.group({
-panneDescription: this.panneDescriptionCtrl
-});
-this.prestationsArray = fb.array([]);
-this.inProgressArray = fb.array([]);
-this.assemblyGroup = fb.group({
-checkComponent: this.checkComponentCtrl,
-assembly: this.assemblyCtrl,
-cableConnection: this.cableConnectionCtrl,
-BIOSUpdate: this.BIOSUpdateCtrl,
-BIOSSetUp: this.BIOSSetUpCtrl,
-LicenceSticker: this.LicenceStickerCtrl,
-OSVersion: this.OSVersionCtrl,
-OSInstallation: this.OSInstallationCtrl,
-OSUpdate: this.OSUpdateCtrl,
-drivers: this.driversCtrl,
-drives: this.drivesCtrl,
-OSActivation: this.OSActivationCtrl,
-fan: this.fanCtrl,
-USB: this.USBCtrl,
-jack: this.jackCtrl,
-opticalDrive: this.opticalDriveCtrl,
-cardReader: this.cardReaderCtrl,
-shutDown: this.shutDownCtrl,
-packaging: this.packagingCtrl,
-softwareValidation: this.softwareValidationCtrl,
-checkComponentLog: this.checkComponentLogCtrl,
-assemblyLog: this.assemblyLogCtrl,
-cableConnectionLog: this.cableConnectionLogCtrl,
-BIOSUpdateLog: this.BIOSUpdateLogCtrl,
-BIOSSetUpLog: this.BIOSSetUpCtrl,
-LicenceStickerLog: this.LicenceStickerLogCtrl,
-OSVersionLog: this.OSVersionLogCtrl,
-OSInstallationLog: this.OSInstallationLogCtrl,
-OSUpdateLog: this.OSUpdateLogCtrl,
-driversLog: this.driversLogCtrl,
-drivesLog: this.drivesLogCtrl,
-OSActivationLog: this.OSActivationLogCtrl,
-fanLog: this.fanLogCtrl,
-USBLog: this.USBLogCtrl,
-jackLog: this.jackLogCtrl,
-opticalDriveLog: this.opticalDriveLogCtrl,
-cardReaderLog: this.cardReaderLogCtrl,
-shutDownLog: this.shutDownLogCtrl,
-packagingLog: this.packagingLogCtrl,
-softwareValidationLog: this.softwareValidationLogCtrl,
-assemblyComment: this.assemblyCommentCtrl
-});
-this.ATDForm = fb.group({
-task: this.taskGroup,
-client: this.clientGroup,
-device: this.deviceGroup,
-panne: this.panneGroup,
-prestationAdd: this.prestationAddCtrl,
-prestations: this.prestationsArray,
-comment: this.commentCtrl,
-progressAdd: this.progressAddCtrl,
-inProgress: this.inProgressArray,
-assemblygroup: this.assemblyGroup,
-originUser: this.originUserCtrl,
-destinationUser: this.destinationUserCtrl,
-status: this.statusCtrl,
-WCA: this.WCACtrl,
-CMP: this.CMPCtrl
-});
-}
+              private scrudService: ScrudService,
+              public snackBar: MatSnackBar,
+              public tasksService: TasksService,
+              public datatosaveService: DatatosaveService,
+              private assemblyFormService: AssemblyFormService,
+              private customerFormService: CustomerFormService,
+              private deliveryFormService: DeliveryFormService,
+              private deviceFormService: DeviceFormService,
+              private failureFormService: FailureFormService,
+              private progressFormService: ProgressFormService,
+              private taskFormService: TaskFormService,
+              private customerhardwareFormService: CustomerhardwareFormService,
+              private customerrequestFormService: CustomerrequestFormService,
+              private datastobesavedFormService: DatastobesavedFormService) {
+      this.ATDForm = fb.group({
+        task: this.taskGroup,
+        customer: this.customerGroup,
+        device: this.deviceGroup,
+        failure: this.failureGroup,
+        delivery: this.deliveryGroup,
+        progress: this.progressGroup,
+        assembly: this.assemblyGroup,
+        hardware: this.hardwareGroup,
+        customerrequest: this.customerrequestGroup,
+        datastobesaved: this.datastobesavedGroup
+      });
+  }
 
   ngOnInit() {
+    this.tasksService.locationsControl();
+    this.ATDForm.get('task').get('location').disable();
+    this.Locations = this.scrudService.RetrieveCollection('locations');
+    this.Locations.subscribe(val => this.LocationsAvailable = val.filter(aLocation => aLocation.used === false)
+      .sort(function(a, b) {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      }));
     this.taskTypes = this.scrudService.RetrieveDocument('config/task');
     this.taskTypes.subscribe(val => this.Types = val.types);
     this.Prestations = this.scrudService.RetrieveCollection('prestations');
     this.Prestations.subscribe(val => this.myPrestations = val);
-    this.filteredOptions = this.ATDForm.get('prestationAdd').valueChanges.pipe(
-      map(nom => this._filter(nom))
+    this.filteredOptions = this.ATDForm.get('delivery').get('deliveryAdd').valueChanges.pipe(
+      map(nom => this.tasksService.filter(nom, this.myPrestations))
     );
   }
 
-  initPrestation(monnom, monprix, moncode) {
-    // initialize our Prestation
-    return this.fb.group({
-        nom: [monnom],
-        prix: [monprix],
-        code: [moncode]
-    });
-  }
-
-  addPrestation() {
-    // add Prestation to the list
-    if (this.ATDForm.get('prestationAdd').value) {
-      const value = this.ATDForm.get('prestationAdd').value.split('   /   ');
-      if (value.length === 3) {
-        const control = <FormArray>this.ATDForm.controls['prestations'];
-        control.push(this.initPrestation(value[0], value[1], value[2]));
-        this.ATDForm.get('prestationAdd').setValue('');
-      }
-    }
-  }
-
-  removePrestation(i: number) {
-    // remove address from the list
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    control.removeAt(i);
-  }
-
-  cleanPrestation() {
-    // remove address from the list
-    const control = <FormArray>this.ATDForm.controls['prestations'];
-    for (let i = 0; i < control.length; i++) {
-      control.removeAt(i);
-    }
-  }
-
-  private _filter(value) {
-    if (value) {
-      const filterValue = value.toLowerCase();
-      if (filterValue !== '') {
-        return this.myPrestations.filter(option => option.nom.toLowerCase().includes(filterValue)
-        || option.code_CEBO.toLowerCase().includes(filterValue));
-      }
-    } else {
-      return;
-    }
-  }
-
   register() {
-    this.ATDForm.get('prestationAdd').setValue('');
+    this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
     this.ATDForm.enable();
-    this.ATDForm.controls['prestations'].enable();
-    this.ATDForm.value.task.taskDueDate = Date.parse(this.ATDForm.value.task.taskDueDate);
-    console.log(this.ATDForm.value);
+    this.ATDForm.get('delivery').get('deliveryArray').enable();
+    this.ATDForm.get('task').get('taskDueDate').setValue(Date.parse(this.ATDForm.value.task.taskDueDate));
+    this.ATDForm.get('task').get('status').setValue('afaire');
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
-    this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
-    .then((result) => {
+    if (this.docRef && this.docRef !== '') {
+      this.scrudService.SetDocument('tasks', this.docRef, this.ATDForm.value)
+      .then((result) => {
+        let action: string;
+        result === 1 ?  (this.ATDForm.reset() , action = 'Succès', this.docRef = '') : action = 'Echec';
+        this.snackBar.open('Modification Tâche', action, {
+          duration: 500,
+        });
+      });
+    } else {
+      this.scrudService.AddDoc2Collection('tasks', this.ATDForm.value)
+      .then((result) => {
+      this.ATDForm.get('delivery').get('deliveryArray').disable();
       let action: string;
-      result === 1 ?  (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
+      result !== 0 ? (this.ATDForm.reset() , action = 'Succès') : action = 'Echec';
       this.snackBar.open('Ajout Tâche', action, {
         duration: 3000,
       });
     });
+    }
   }
 
   cancel() {
     this.ATDForm.reset();
-    this.cleanPrestation();
+    this.tasksService.cleanDelivery(this.ATDForm);
+  }
+
+  LocationSet(location) {
+    console.log(this.ATDForm.get('task').get('taskDueDate').value);
+    if (!this.ATDForm.get('task').get('status').value) {
+      this.ATDForm.get('task').get('status').setValue('afaire');
+    }
+    this.tasksService.LocationSet(this.ATDForm, location, this.docRef).
+    then(res => {
+      this.docRef = res;
+      console.log('fin : ' + this.docRef);
+    });
   }
 
 }

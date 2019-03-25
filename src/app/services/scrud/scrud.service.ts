@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Operator } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   AngularFirestore,
@@ -19,6 +19,10 @@ export class ScrudService {
     return this.afs.collection(collectionName).valueChanges();
   }
 
+  RetrieveCollectionWhere(collectionName: string, condition1, operator, condition2): Observable<any> {
+    return this.afs.collection(collectionName, ref => ref.where(condition1 , operator, condition2)).valueChanges();
+  }
+
   RetrieveCollectionWithID (collectionName: string): Observable<any> {
     return this.afs.collection(collectionName).snapshotChanges().pipe(
       map(arr => {
@@ -34,13 +38,15 @@ export class ScrudService {
     return this.afs.doc(documentName).valueChanges();
   }
 
-  AddDoc2Collection(collectionName: string, data): Promise<number> {
+  AddDoc2Collection(collectionName: string, data): Promise<any> {
+    console.log('AddDoc2Collection : ' + data);
+    console.log(data);
     const collection = this.afs.collection(collectionName);
-    return new Promise<number>(function (resolve, reject) {
+    return new Promise<any>(function (resolve, reject) {
       collection.add(data)
-      .then(() => {
+      .then((docRef) => {
         console.log('success');
-        resolve(1);
+        resolve(docRef);
       } ) .catch(err => {
         console.log(err);
         reject(0);
@@ -49,6 +55,8 @@ export class ScrudService {
   }
 
   SetDocument(collectionName: string, documentName: string, data): Promise<number> {
+    console.log('SetDocument: ' + data);
+    console.log(data);
     const doc = this.afs.doc(collectionName + '/' + documentName);
     return new Promise<number>(function (resolve, reject) {
       doc.set(data)
@@ -66,14 +74,20 @@ export class ScrudService {
     const doc = this.afs.doc(collectionName + '/' + documentName);
     return new Promise<number>(function (resolve, reject) {
       console.log(data);
+      console.log(doc.ref.id);
+      if (doc.ref.id === 'null') {
+        console.log('resolve');
+        resolve(-1);
+      }
       doc.update(data)
       .then(() => {
-        console.log('success');
+        console.log('Update success');
         resolve(1);
-      } ) .catch(err => {
-        console.log(err);
+      }).catch(err => {
+        console.log('Update failed');
         reject(0);
       });
     });
   }
+
 }

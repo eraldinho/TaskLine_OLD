@@ -1,3 +1,5 @@
-<p>
-  failure-form works!
-</p>
+<div [formGroup]="failureGroup">
+    <mat-form-field style="width:100%">
+      <textarea formControlName="failureDescription" matInput placeholder="Description de la panne"></textarea>
+    </mat-form-field>
+</div>

@@ -20,7 +20,7 @@ export class TaskListPipe implements PipeTransform {
           break;
           case 2: this.cleanStatus(items, args[i]);
           break;
-          case 3: if (args[i] !== '') { this.cleanDateD(items, args[i]); }
+          case 3: this.cleanDateD(items, args[i]);
           break;
           case 4: if (args[i] !== '') { this.cleanDateF(items, args[i]); }
           break;
@@ -85,9 +85,56 @@ export class TaskListPipe implements PipeTransform {
 
   cleanFind(items, value) {
     for (let i = 0; i < items.length; i++) {
-      if (items[i].task.taskName
-        .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) === -1) {
+      console.log(items[i]);
+      let mustSplice = true;
+      // customerName
+      if (items[i].customer.customerName) {
+        if (items[i].customer.customerName
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      // customerFirstName
+      if (items[i].customer.customerFirstName) {
+        if (items[i].customer.customerFirstName
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      // customerMail
+      if (items[i].customer.customerMail) {
+        if (items[i].customer.customerMail
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      // customerPhone
+      if (items[i].customer.customerPhone) {
+        if (items[i].customer.customerPhone
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      // taskName
+      if (items[i].task.taskName) {
+        if (items[i].task.taskName
+          .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .indexOf(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      if (items[i].task.location) {
+        if (items[i].task.location
+          .toLowerCase().normalize('NFD')
+          .indexOf(value.toLowerCase().normalize('NFD')) !== -1) {
+            mustSplice = false;
+        }
+      }
+      if (mustSplice) {
         items.splice(i, 1);
         i = i - 1;
       }
@@ -104,18 +151,17 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanStatus(items, value) {
-    console.log(value);
     if (value === '') {// si il n'y a pas de filtre sur le status
       console.log('nonterminee');
       for (let i = 0; i < items.length; i++) {// on affiche que les taches non terminées
-        if (items[i].status === 'terminee') {// c.a.d on supprime les taches terminées
+        if (items[i].task.status === 'terminee') {// c.a.d on supprime les taches terminées
           items.splice(i, 1);
           i = i - 1;
         }
       }
     } else {
       for (let i = 0; i < items.length; i++) {
-        if (items[i].status !== value) {
+        if (items[i].task.status !== value) {
           items.splice(i, 1);
           i = i - 1;
         }
@@ -124,10 +170,21 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanDateD(items, value) {
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].task.taskDueDate < Date.parse(value)) {
-        items.splice(i, 1);
-        i = i - 1;
+    if (value === '') { //si il n'y a pas de filtre sur dateD
+      // on limite l'affichage à un mois en arriere
+      console.log('limite date');
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].task.taskDueDate < (Date.now() - 2678400000)) {
+          items.splice(i, 1);
+          i = i - 1;
+        }
+      }
+    } else {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].task.taskDueDate < Date.parse(value)) {
+          items.splice(i, 1);
+          i = i - 1;
+        }
       }
     }
   }
