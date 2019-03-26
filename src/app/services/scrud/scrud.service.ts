@@ -71,6 +71,7 @@ export class ScrudService {
   }
 
   UpdateDocument(collectionName: string, documentName: string, data): Promise<number> {
+    console.log('UpdateDocument');
     const doc = this.afs.doc(collectionName + '/' + documentName);
     return new Promise<number>(function (resolve, reject) {
       console.log(data);

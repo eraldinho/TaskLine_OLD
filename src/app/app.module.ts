@@ -44,6 +44,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatBadgeModule} from '@angular/material/badge';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 // Customs components
 import { NewTaskFormComponent } from './tasks/new-task-form/new-task-form.component';
@@ -140,7 +141,8 @@ import { DatastobesavedFormComponent } from './shared/forms/datastobesavedform/d
     MatTabsModule,
     MatRadioModule,
     MatButtonToggleModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatTooltipModule
   ],
   entryComponents: [DelayDialogComponent,
     DoneDialogComponent,

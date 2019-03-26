@@ -192,7 +192,7 @@ export class TasksService {
   LocationSet(form: FormGroup, location: string, docRef?: string): Promise<string> {
     const that = this;
     return new Promise<string>(function (resolve, reject) {
-      console.log('LocationSet' + location + '---' + docRef);
+      console.log('LocationSet' + '---' + location + '---' + docRef);
       form.get('task').get('location').setValue(location);
       form.disable();
       that.disableDelivery(form);
@@ -201,28 +201,29 @@ export class TasksService {
       form.enable();
       form.get('delivery').get('deliveryArray').enable();
       form.get('task').get('taskDueDate').setValue(Date.parse(form.value.task.taskDueDate));
-      if (docRef) {
+      // si la tache existe deja (docRef = id tache)
+      if (docRef) { // on modifie la tache existante
         that.scrudService.SetDocument('tasks', docRef, form.value)
         .then((result) => {
           let action: string;
-          result === 1 ?  (action = 'Succès', that.scrudService.UpdateDocument('locations', location, {task: docRef})) : action = 'Echec';
+          result === 1 ?  (action = 'Succès', that.scrudService.UpdateDocument('locations', location, {task: docRef, used: true}))
+          : action = 'Echec';
           that.snackBar.open('Modification Tâche', action, {
             duration: 500,
           });
           resolve(docRef);
         });
-      } else {
+      } else { // sinon on créé une nouvelle tache
         that.scrudService.AddDoc2Collection('tasks', form.value)
         .then((result) => {
           console.log('aa : ' + result.id);
           form.get('delivery').get('deliveryArray').disable();
           let action: string;
-          result !== 0 ? (docRef = result.id, that.scrudService.UpdateDocument('locations', location, {task: result.id}), action = 'Succès')
-          : action = 'Echec';
+          result !== 0 ? (docRef = result.id, that.scrudService.UpdateDocument('locations', location, {task: result.id, used: true}),
+          action = 'Succès') : action = 'Echec';
           that.snackBar.open('Ajout Tâche', action, {
             duration: 3000,
           });
-          that.scrudService.UpdateDocument('locations', location, {task: docRef});
           const mydate = new Date(form.get('task').get('taskDueDate').value);
           form.get('task').get('taskDueDate').setValue(mydate);
           console.log('LocationSet docRef :' + docRef);
@@ -235,13 +236,30 @@ export class TasksService {
   // fonction qui vérifie que les emplacement utilisés sont bien liés à une tache
   // si ce n'est pas le cas l'emplacement est libéré
   locationsControl() {
-    const myLocations = this.scrudService.RetrieveCollectionWhere('locations', 'used', '==', true)
-    .subscribe((locationsList) => {
-      for (const location of locationsList) {
-        if (!location.task || location.task === '') {
-          this.scrudService.UpdateDocument('locations', location.name, {used: false});
+    const myTasksSub = this.scrudService.RetrieveCollectionWithID('tasks')
+    .subscribe((data) => {
+      const myLocationsSub = this.scrudService.RetrieveCollectionWhere('locations', 'used', '==', true)
+      .subscribe((locationsList) => {
+        for (const location of locationsList) {
+          if (!location.task || location.task === '') {
+            this.scrudService.UpdateDocument('locations', location.name, {used: false});
+          } else {
+            let unUse = true;
+            for (const mytask of data) {
+              console.log('unUse   ' + mytask.id + '---' + mytask.task.status);
+              if (mytask.id === location.task) {
+                if (!mytask.task.status || mytask.task.status !== 'terminee') {
+                  unUse = false;
+                }
+              }
+            }
+            if (unUse === true) {
+              console.log('unUse === true  ' + location.task);
+              this.scrudService.UpdateDocument('locations', location.name, {task: '', used: false});
+            }
+          }
         }
-      }
+      });
     });
   }
 

@@ -5,20 +5,20 @@
     </div>
     <div style="margin-top: 10px">
         <mat-button-toggle-group Name="type" #typegroup="matButtonToggleGroup" (change)="filter('type', typegroup.value)">
-            <mat-button-toggle (click)="isaChecked=true;filter('type', 'atelier')" [checked]=isaChecked><mat-icon matBadge={{nbAtelier}} matBadgeColor="accent">build</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="iscChecked=true;filter('type', 'compta')"  [checked]=iscChecked><mat-icon matBadge={{nbCompta}} matBadgeColor="accent">euro_symbol</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="iseChecked=true;filter('type', 'expedition')" [checked]=iseChecked><mat-icon matBadge={{nbExpedition}} matBadgeColor="accent">local_shipping</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="ismChecked=true;filter('type', 'montage')" [checked]=ismChecked><mat-icon matBadge={{nbMontage}} matBadgeColor="accent">computer</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="isclChecked=true;filter('type', 'client')" [checked]=isclChecked><mat-icon matBadge={{nbClient}} matBadgeColor="accent">face</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Atelier" (click)="isaChecked=true;filter('type', 'atelier')" [checked]=isaChecked><mat-icon matBadge={{nbAtelier}} matBadgeColor="accent">build</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Compta" (click)="iscChecked=true;filter('type', 'compta')"  [checked]=iscChecked><mat-icon matBadge={{nbCompta}} matBadgeColor="accent">euro_symbol</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Expédition" (click)="iseChecked=true;filter('type', 'expedition')" [checked]=iseChecked><mat-icon matBadge={{nbExpedition}} matBadgeColor="accent">local_shipping</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Montage" (click)="ismChecked=true;filter('type', 'montage')" [checked]=ismChecked><mat-icon matBadge={{nbMontage}} matBadgeColor="accent">computer</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Client" (click)="isclChecked=true;filter('type', 'client')" [checked]=isclChecked><mat-icon matBadge={{nbClient}} matBadgeColor="accent">face</mat-icon></mat-button-toggle>
         </mat-button-toggle-group>
     </div>
     <div style="margin-top: 10px">
         <mat-button-toggle-group Name="status" #statusgroup="matButtonToggleGroup" (change)="filter('status', statusgroup.value)">
-                <mat-button-toggle (click)="isafChecked=true;filter('status', 'afaire')" [checked]=isafChecked><mat-icon matBadge={{nbAfaire}} matBadgeColor="accent">slideshow</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="isenChecked=true;filter('status', 'encours')" [checked]=isenChecked><mat-icon matBadge={{nbEncours}} matBadgeColor="accent">play_arrow</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="isapChecked=true;filter('status', 'attenterepclient')" [checked]=isapChecked><mat-icon matBadge={{nbAttenterepclient}} matBadgeColor="accent">call</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="isarChecked=true;filter('status', 'attenteretclient')" [checked]=isarChecked><mat-icon matBadge={{nbAttenteretclient}} matBadgeColor="accent">shoping_cart</mat-icon></mat-button-toggle>
-            <mat-button-toggle (click)="istChecked=true;filter('status', 'terminee')" [checked]=istChecked><mat-icon matBadge={{nbTerminee}} matBadgeColor="accent">done</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="A faire" (click)="isafChecked=true;filter('status', 'afaire')" [checked]=isafChecked><mat-icon matBadge={{nbAfaire}} matBadgeColor="accent">slideshow</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="En cours" (click)="isenChecked=true;filter('status', 'encours')" [checked]=isenChecked><mat-icon matBadge={{nbEncours}} matBadgeColor="accent">play_arrow</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Attente réponse client" (click)="isapChecked=true;filter('status', 'attenterepclient')" [checked]=isapChecked><mat-icon matBadge={{nbAttenterepclient}} matBadgeColor="accent">call</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Attente retrait client" (click)="isarChecked=true;filter('status', 'attenteretclient')" [checked]=isarChecked><mat-icon matBadge={{nbAttenteretclient}} matBadgeColor="accent">shoping_cart</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Terminée" (click)="istChecked=true;filter('status', 'terminee')" [checked]=istChecked><mat-icon matBadge={{nbTerminee}} matBadgeColor="accent">done</mat-icon></mat-button-toggle>
         </mat-button-toggle-group>
         <!--<span>Status: </span>
         <mat-form-field>

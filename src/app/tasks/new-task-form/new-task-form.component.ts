@@ -111,7 +111,6 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tasksService.locationsControl();
     this.ATDForm.get('task').get('location').disable();
     this.Locations = this.scrudService.RetrieveCollection('locations');
     this.Locations.subscribe(val => this.LocationsAvailable = val.filter(aLocation => aLocation.used === false)

@@ -127,7 +127,6 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tasksService.locationsControl();
     const control = <FormArray>this.ETForm.get('delivery').get('deliveryArray');
     const control2 = <FormArray>this.ETForm.get('progress').get('progressArray');
     const control3 = <FormArray>this.ETForm.get('hardware').get('hardwareArray');
@@ -136,30 +135,23 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     this.ETForm.disable();
     this.mytask = this.scrudService.RetrieveDocument('tasks/' + this.taskID);
     this.taskSub = this.mytask.subscribe(val => {
-      console.log(val);
       if (val.delivery.deliveryArray) {
-        console.log('prestations' + '***' + val.delivery.deliveryArray.length + '@@@' + control.length);
         if (val.delivery.deliveryArray.length > 0 && val.delivery.deliveryArray.length > control.length) {
           for (let i = 0; i < val.delivery.deliveryArray.length; i++ ) {
-            console.log(i);
             this.tasksService.addEmptyDelivery(this.ETForm, this.fb);
           }
         }
       }
       if (val.progress.progressArray) {
-        console.log('inProgress' + '***' + val.progress.progressArray.length + '@@@' + control2.length);
         if (val.progress.progressArray.length > 0 && val.progress.progressArray.length > control2.length) {
           for (let i = 0; i < val.progress.progressArray.length; i++ ) {
-            console.log(i);
             this.addEmptyProgress();
           }
         }
       }
       if (val.hardware.hardwareArray) {
-        console.log('hardware' + '***' + val.hardware.hardwareArray.length + '@@@' + control.length);
         if (val.hardware.hardwareArray.length > 0 && val.hardware.hardwareArray.length > control3.length) {
           for (let i = 0; i < val.hardware.hardwareArray.length; i++ ) {
-            console.log(i);
             this.tasksService.addEmptyHardware(this.ETForm, this.fb);
           }
         }
@@ -238,7 +230,6 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
           this.ETForm.get('progress').get('progressArray').disable();
           this.logIt(false, this.ETForm.controls['task'].get['status'], 'avancement atelier',
             this.ETForm.get('progress').get('progressAdd').value);
-          console.log(this.ETForm.value);
           this.unlock();
       }
     }
@@ -288,12 +279,12 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   }
 
   register() {
+    console.log('register edit task');
     this.ETForm.get('delivery').get('deliveryAdd').setValue('');
     this.ETForm.enable();
     this.ETForm.get('delivery').get('deliveryArray').enable();
     // si taskDueDate est une date on transforme en timestamp
     if (Object.prototype.toString.call(this.ETForm.value.task.taskDueDate) !== '[object Moment]') {
-      console.log('moment papillon');
       this.ETForm.get('task').get('taskDueDate').setValue(Date.parse(this.ETForm.value.task.taskDueDate));
     }
     this.scrudService.SetDocument('tasks', this.taskID, this.ETForm.value)
@@ -313,7 +304,6 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
 
   taskDone(taskId) {
     console.log('taskDOne');
-    console.log(this.isAllChecked(this.assemblyGroup));
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.width = '100%';
@@ -369,14 +359,12 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
       }
     }
     if (!this.ETForm.get('assembly').disabled) {
-      console.log('hola: ' + valuectrl);
     const mydate = new Date();
     if (display) {
       const myDisplayString = '(' + this.currentUser + ' - ' + moment(mydate).locale('fr').format('LLLL');
       formctrl.setValue(myDisplayString);
     }
     const myActionString = myaction + ' => value: ' + valuectrl;
-    console.log(myActionString);
     this.scrudService.AddDoc2Collection('logs',
       {Date: mydate,
       Familly: 'Tasks',
