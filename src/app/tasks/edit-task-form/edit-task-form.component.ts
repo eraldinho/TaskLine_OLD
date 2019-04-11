@@ -156,7 +156,7 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
           }
         }
       }
-      this.ETForm.setValue(val);
+      this.ETForm.patchValue(val);
       const mydate = new Date(this.ETForm.get('task').get('taskDueDate').value);
       this.ETForm.get('task').get('taskDueDate').setValue(mydate);
       this.taskName = this.ETForm.get('task').get('taskName').value;
@@ -280,7 +280,15 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
 
   register() {
     console.log('register edit task');
-    this.ETForm.get('delivery').get('deliveryAdd').setValue('');
+    this.tasksService.saveTask(this.ETForm, this.taskID)
+    .then ((res) => {
+      this.ETForm.get('delivery').get('deliveryArray').disable();
+      this.ETForm.disable();
+      if (this.taskName !== this.ETForm.get('task').get('taskName').value) {
+        this.tasksService.changeTaskName([this.taskName, this.taskName = this.ETForm.get('task').get('taskName').value]);
+      }
+    });
+    /*this.ETForm.get('delivery').get('deliveryAdd').setValue('');
     this.ETForm.enable();
     this.ETForm.get('delivery').get('deliveryArray').enable();
     // si taskDueDate est une date on transforme en timestamp
@@ -299,7 +307,7 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     this.ETForm.disable();
     if (this.taskName !== this.ETForm.get('task').get('taskName').value) {
       this.tasksService.changeTaskName([this.taskName, this.taskName = this.ETForm.get('task').get('taskName').value]);
-    }
+    }*/
   }
 
   taskDone(taskId) {

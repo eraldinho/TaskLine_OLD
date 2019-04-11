@@ -133,11 +133,18 @@ export class NewTaskFormComponent implements OnInit {
   }
 
   register() {
-    this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
+    this.ATDForm.get('task').get('status').setValue('afaire');
+    this.tasksService.saveTask(this.ATDForm, this.docRef)
+    .then ((res) => {
+      this.ATDForm.reset();
+      if (res === 'update') {
+        this.docRef = '';
+      }
+    });
+    /*this.ATDForm.get('delivery').get('deliveryAdd').setValue('');
     this.ATDForm.enable();
     this.ATDForm.get('delivery').get('deliveryArray').enable();
     this.ATDForm.get('task').get('taskDueDate').setValue(Date.parse(this.ATDForm.value.task.taskDueDate));
-    this.ATDForm.get('task').get('status').setValue('afaire');
     // console.log(Date.parse(this.ATDForm.value.task.taskDueDate));
     if (this.docRef && this.docRef !== '') {
       this.scrudService.SetDocument('tasks', this.docRef, this.ATDForm.value)
@@ -158,7 +165,7 @@ export class NewTaskFormComponent implements OnInit {
         duration: 3000,
       });
     });
-    }
+    }*/
   }
 
   cancel() {
@@ -179,3 +186,4 @@ export class NewTaskFormComponent implements OnInit {
   }
 
 }
+

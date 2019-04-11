@@ -263,4 +263,40 @@ export class TasksService {
     });
   }
 
+  saveTask(form: FormGroup, docRef: string): Promise<string> {
+    return new Promise<string>((resolve) => {
+      form.get('delivery').get('deliveryAdd').setValue('');
+      form.enable();
+      form.get('delivery').get('deliveryArray').enable();
+      // si taskDueDate est une date on transforme en timestamp
+      if (Object.prototype.toString.call(form.value.task.taskDueDate) !== '[object Moment]') {
+        form.get('task').get('taskDueDate').setValue(Date.parse(form.value.task.taskDueDate));
+      }
+      // si il y a un taskID c'est une maj
+      if (docRef && docRef !== '') {
+        this.scrudService.SetDocument('tasks', docRef, form.value)
+        .then((result) => {
+          let action: string;
+          result === 1 ?  action = 'Succès' : action = 'Echec';
+          this.snackBar.open('Modification Tâche', action, {
+          duration: 500,
+          });
+          resolve('update');
+        });
+        // sinon c'est une création de tache
+      } else {
+        this.scrudService.AddDoc2Collection('tasks', form.value)
+        .then((result) => {
+          form.get('delivery').get('deliveryArray').disable();
+          let action: string;
+          result !== 0 ? action = 'Succès' : action = 'Echec';
+          this.snackBar.open('Ajout Tâche', action, {
+            duration: 3000,
+          });
+          resolve('create');
+        });
+      }
+    });
+  }
+
 }

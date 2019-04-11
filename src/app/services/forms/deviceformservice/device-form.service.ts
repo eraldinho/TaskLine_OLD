@@ -11,6 +11,8 @@ export class DeviceFormService {
     this.deviceGroup = fb.group({
       deviceType: [null, Validators.required],
       deviceBrand: [null, Validators.required],
+      deviceOS: [null, Validators.required],
+      devicePassword: [null, Validators.required],
       deviceStart: [null, Validators.required],
       deviceDisplay: [null, Validators.required],
       deviceOsStart: [null, Validators.required],
