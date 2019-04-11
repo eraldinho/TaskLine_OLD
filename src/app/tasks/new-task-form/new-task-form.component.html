@@ -80,6 +80,14 @@
               </mat-expansion-panel-header>
               <app-delivery-form [deliveryGroup]="ATDForm.get('delivery')" [filteredDelivery]="filteredOptions" (deliveryAdded)="tasksService.addDelivery(ATDForm,fb)" (deliveryRemoved)="tasksService.removeDelivery($event, ATDForm)"></app-delivery-form>
             </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Informations Complémentaires
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <app-additionalinformations-form [additionalinformationsGroup]="ATDForm.get('additionalinformations')"></app-additionalinformations-form>
+            </mat-expansion-panel>
           </mat-accordion>
       </mat-card-content>
       <mat-card-actions>

@@ -16,6 +16,8 @@ import { TaskFormService } from '../../services/forms/taskformservice/task-form.
 import { CustomerhardwareFormService } from '../../services/forms/customerhardwareformservice/customerhardware-form.service';
 import { CustomerrequestFormService } from '../../services/forms/customerrequestformservice/customerrequest-form.service';
 import { DatastobesavedFormService } from '../../services/forms/datastobesavedformservice/datastobesaved-form.service';
+import { AdditionalinformationsFormService } from '../../services/forms/additionalinformationsformservice/additionalinformations-form.service';
+
 import { Delivery } from 'src/app/shared/interfaces/delivery/delivery';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
 import { DatatosaveService } from 'src/app/services/datatosave/datatosave.service';
@@ -35,7 +37,8 @@ import { DatatosaveService } from 'src/app/services/datatosave/datatosave.servic
     CustomerhardwareFormService,
     CustomerrequestFormService,
     DatastobesavedFormService,
-    DatatosaveService
+    DatatosaveService,
+    AdditionalinformationsFormService
  ]
 })
 export class NewTaskFormComponent implements OnInit {
@@ -69,6 +72,9 @@ export class NewTaskFormComponent implements OnInit {
   get datastobesavedGroup(): FormGroup {
     return this.datastobesavedFormService.datastobesavedGroup;
   }
+  get additionalinformationsGroup(): FormGroup {
+    return this.additionalinformationsFormService.additionalinformationsGroup;
+  }
 
   filteredOptions: Observable<Delivery[]>;
   Locations;
@@ -95,7 +101,8 @@ export class NewTaskFormComponent implements OnInit {
               private taskFormService: TaskFormService,
               private customerhardwareFormService: CustomerhardwareFormService,
               private customerrequestFormService: CustomerrequestFormService,
-              private datastobesavedFormService: DatastobesavedFormService) {
+              private datastobesavedFormService: DatastobesavedFormService,
+              private additionalinformationsFormService: AdditionalinformationsFormService) {
       this.ATDForm = fb.group({
         task: this.taskGroup,
         customer: this.customerGroup,
@@ -106,7 +113,8 @@ export class NewTaskFormComponent implements OnInit {
         assembly: this.assemblyGroup,
         hardware: this.hardwareGroup,
         customerrequest: this.customerrequestGroup,
-        datastobesaved: this.datastobesavedGroup
+        datastobesaved: this.datastobesavedGroup,
+        additionalinformations: this.additionalinformationsGroup
       });
   }
 

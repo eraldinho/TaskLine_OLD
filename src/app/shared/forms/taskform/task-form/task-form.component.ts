@@ -18,10 +18,12 @@ export class TaskFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  // lorsqu'on selectionne un emplacement
   onLocationUsed() {
     console.log('onLocationUsed');
     console.log('location: ' + this.taskGroup.get('location').value);
     console.log('locationAdd :' + this.taskGroup.get('locationAdd').value);
+    // on libère l'emplacement actuel (si il y en a un)
     this.scrudService.UpdateDocument('locations', this.taskGroup.get('location').value, {used: false, task: ''})
     .then(val => {
       this.taskGroup.get('location').setValue(this.taskGroup.get('locationAdd').value);

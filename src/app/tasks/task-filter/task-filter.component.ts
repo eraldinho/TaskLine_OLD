@@ -25,6 +25,7 @@ export class TaskFilterComponent implements OnInit {
   iseChecked: boolean;
   ismChecked: boolean;
   isclChecked: boolean;
+  isboChecked: boolean;
   isafChecked: boolean;
   isenChecked: boolean;
   isapChecked: boolean;
@@ -35,6 +36,7 @@ export class TaskFilterComponent implements OnInit {
   nbExpedition: number;
   nbMontage: number;
   nbClient: number;
+  nbBoutique: number;
   nbAfaire: number;
   nbEncours: number;
   nbAttenterepclient: number;
@@ -84,6 +86,10 @@ export class TaskFilterComponent implements OnInit {
     .subscribe((res) => {
       this.nbMontage = res.filter(val => val.task.status !== 'terminee').length;
     });
+    this.scrudService.RetrieveCollectionWhere('tasks', 'task.taskType', '==', 'boutique')
+    .subscribe((res) => {
+      this.nbBoutique = res.filter(val => val.task.status !== 'terminee').length;
+    });
     this.nbAfaireSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'afaire')
     .subscribe((res) => {
       this.nbAfaire = res.length;
@@ -130,6 +136,7 @@ export class TaskFilterComponent implements OnInit {
         this.iseChecked = false;
         this.ismChecked = false;
         this.isclChecked = false;
+        this.isboChecked = false;
         break;
         case 'compta':
         this.typeSelected = 'compta';
@@ -137,6 +144,7 @@ export class TaskFilterComponent implements OnInit {
         this.iseChecked = false;
         this.ismChecked = false;
         this.isclChecked = false;
+        this.isboChecked = false;
         break;
         case 'expedition':
         this.typeSelected = 'expedition';
@@ -144,6 +152,7 @@ export class TaskFilterComponent implements OnInit {
         this.iscChecked = false;
         this.ismChecked = false;
         this.isclChecked = false;
+        this.isboChecked = false;
         break;
         case 'montage':
         this.typeSelected = 'montage';
@@ -151,6 +160,7 @@ export class TaskFilterComponent implements OnInit {
         this.iscChecked = false;
         this.iseChecked = false;
         this.isclChecked = false;
+        this.isboChecked = false;
         break;
         case 'client':
         this.typeSelected = 'client';
@@ -158,6 +168,15 @@ export class TaskFilterComponent implements OnInit {
         this.iscChecked = false;
         this.iseChecked = false;
         this.ismChecked = false;
+        this.isboChecked = false;
+        break;
+        case 'boutique':
+        this.typeSelected = 'boutique';
+        this.isaChecked = false;
+        this.iscChecked = false;
+        this.iseChecked = false;
+        this.ismChecked = false;
+        this.isclChecked = false;
         break;
       }
       this.nbAfaireSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'afaire')

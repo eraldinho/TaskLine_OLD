@@ -76,6 +76,7 @@ import { CustomerhardwareFormComponent } from './shared/forms/customerhardwarefo
 import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/print-task-form.component';
 import { CustomerrequestFormComponent } from './shared/forms/customerrequest/customerrequest-form/customerrequest-form.component';
 import { DatastobesavedFormComponent } from './shared/forms/datastobesavedform/datastobesaved-form/datastobesaved-form.component';
+import { AdditionalinformationsFormComponent } from './shared/forms/additionalinformationsform/additionalinformations-form/additionalinformations-form.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { DatastobesavedFormComponent } from './shared/forms/datastobesavedform/d
     PrintTaskFormComponent,
     CustomerrequestFormComponent,
     DatastobesavedFormComponent,
+    AdditionalinformationsFormComponent,
   ],
   imports: [
     BrowserModule,
