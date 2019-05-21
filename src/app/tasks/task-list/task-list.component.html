@@ -6,11 +6,12 @@
         <mat-chip color="accent" selected matTooltip="Expédition" *ngIf="task.task.taskType == 'expedition'"><mat-icon>local_shipping</mat-icon></mat-chip>
         <mat-chip color="accent" selected matTooltip="Client" *ngIf="task.task.taskType == 'client'"><mat-icon>face</mat-icon></mat-chip>
         <mat-chip color="accent" selected matTooltip="Boutique" *ngIf="task.task.taskType == 'boutique'"><mat-icon>store</mat-icon></mat-chip>
-        <mat-chip color="warn" selected matTooltip="A faire" *ngIf="task.task.status == 'afaire'"><mat-icon>slideshow</mat-icon></mat-chip>
-        <mat-chip color="warn" selected matTooltip="En cours" *ngIf="task.task.status == 'encours'"><mat-icon>play_arrow</mat-icon></mat-chip>
-        <mat-chip color="warn" selected matTooltip="Attente réponse client" *ngIf="task.task.status == 'attenterepclient'"><mat-icon>call</mat-icon></mat-chip>
-        <mat-chip color="warn" selected matTooltip="Attente retrait client" *ngIf="task.task.status == 'attenteretclient'"><mat-icon>shoping_cart</mat-icon></mat-chip>
-        <mat-chip color="warn" selected matTooltip="Terminée" *ngIf="task.task.status == 'terminee'"><mat-icon>done</mat-icon></mat-chip>
+        <mat-chip color="primary" selected matTooltip="A faire" *ngIf="task.task.status == 'afaire'"><mat-icon>slideshow</mat-icon></mat-chip>
+        <mat-chip color="primary" selected matTooltip="En cours" *ngIf="task.task.status == 'encours'"><mat-icon>play_arrow</mat-icon></mat-chip>
+        <mat-chip color="primary" selected matTooltip="Attente réponse client" *ngIf="task.task.status == 'attenterepclient'"><mat-icon>call</mat-icon></mat-chip>
+        <mat-chip color="primary" selected matTooltip="attente de pièce fournisseur" *ngIf="task.task.status == 'attentepiecefour'"><mat-icon>hourglass_empty</mat-icon></mat-chip>
+        <mat-chip color="primary" selected matTooltip="Attente retrait client" *ngIf="task.task.status == 'attenteretclient'"><mat-icon>shoping_cart</mat-icon></mat-chip>
+        <mat-chip color="primary" selected matTooltip="Terminée" *ngIf="task.task.status == 'terminee'"><mat-icon>done</mat-icon></mat-chip>
         <mat-chip>
             <a>{{ task.task.taskName }}</a>
         </mat-chip>

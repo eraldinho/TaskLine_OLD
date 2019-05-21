@@ -1,3 +1,4 @@
+import { PrintLayoutComponent } from './print/print-layout/print-layout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TasksComponent } from './tasks/tasks.component';
@@ -6,7 +7,6 @@ import { SavComponent } from './sav/sav.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import {AuthGuard} from './auth.guard';
-import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/print-task-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/tasks(toolbar:navbar)', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -15,7 +15,14 @@ const routes: Routes = [
   { path: 'atelier', component: AtelierComponent, canActivate: [AuthGuard] },
   { path: 'sav', component: SavComponent, canActivate: [AuthGuard] },
   { path: 'navbar', component: NavbarComponent, outlet: 'toolbar', canActivate: [AuthGuard]},
-  { path: 'print', component: PrintTaskFormComponent }
+  { path: 'print',
+    outlet: 'print',
+    component: PrintLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'atelier/:id', component: AtelierComponent }
+    ]
+  }
 ];
 
 @NgModule({

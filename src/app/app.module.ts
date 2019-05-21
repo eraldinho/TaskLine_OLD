@@ -77,6 +77,7 @@ import { PrintTaskFormComponent } from './tasks/print-task-form/print-task-form/
 import { CustomerrequestFormComponent } from './shared/forms/customerrequest/customerrequest-form/customerrequest-form.component';
 import { DatastobesavedFormComponent } from './shared/forms/datastobesavedform/datastobesaved-form/datastobesaved-form.component';
 import { AdditionalinformationsFormComponent } from './shared/forms/additionalinformationsform/additionalinformations-form/additionalinformations-form.component';
+import { PrintLayoutComponent } from './print/print-layout/print-layout.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { AdditionalinformationsFormComponent } from './shared/forms/additionalin
     CustomerrequestFormComponent,
     DatastobesavedFormComponent,
     AdditionalinformationsFormComponent,
+    PrintLayoutComponent,
   ],
   imports: [
     BrowserModule,

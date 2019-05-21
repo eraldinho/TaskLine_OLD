@@ -170,11 +170,11 @@ export class TaskListPipe implements PipeTransform {
   }
 
   cleanDateD(items, value) {
-    if (value === '') { //si il n'y a pas de filtre sur dateD
-      // on limite l'affichage à un mois en arriere
+    if (value === '') { // si il n'y a pas de filtre sur dateD
+      // on limite l'affichage à 3 mois en arriere
       console.log('limite date');
       for (let i = 0; i < items.length; i++) {
-        if (items[i].task.taskDueDate < (Date.now() - 2678400000)) {
+        if (items[i].task.taskDueDate < (Date.now() - 8035200000)) {
           items.splice(i, 1);
           i = i - 1;
         }

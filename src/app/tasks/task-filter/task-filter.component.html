@@ -30,6 +30,7 @@
         </div>
         <div>
             <mat-button-toggle-group Name="status" #statusgroup="matButtonToggleGroup" (change)="filter('status', statusgroup.value)">
+                <mat-button-toggle matTooltip="Attente de pièce fournisseur" (click)="isapiChecked=true;filter('status', 'attentepiecefour')" [checked]=isapiChecked><mat-icon matBadge={{nbAttentePieceFour}} matBadgeColor="primary">hourglass_empty</mat-icon></mat-button-toggle>
                 <mat-button-toggle matTooltip="Attente retrait client" (click)="isarChecked=true;filter('status', 'attenteretclient')" [checked]=isarChecked><mat-icon matBadge={{nbAttenteretclient}} matBadgeColor="primary">shoping_cart</mat-icon></mat-button-toggle>
                 <mat-button-toggle matTooltip="Terminée" (click)="istChecked=true;filter('status', 'terminee')" [checked]=istChecked><mat-icon matBadge={{nbTerminee}} matBadgeColor="primary">done</mat-icon></mat-button-toggle>
             </mat-button-toggle-group>

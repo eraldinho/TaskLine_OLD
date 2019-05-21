@@ -268,6 +268,16 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  changeStatusOrder() {
+    if (this.ETForm.get('progress').enabled) {
+      if (this.ETForm.get('task').get('status').value === 'attentepiecefour') {
+        this.ETForm.get('task').get('status').setValue('encours');
+      } else {
+        this.ETForm.get('task').get('status').setValue('attentepiecefour');
+      }
+    }
+  }
+
   unlock() {
     this.ETForm.enable();
     this.tasksService.enableDelivery(this.ETForm);

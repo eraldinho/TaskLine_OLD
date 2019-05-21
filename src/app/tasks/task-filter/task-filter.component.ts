@@ -29,6 +29,7 @@ export class TaskFilterComponent implements OnInit {
   isafChecked: boolean;
   isenChecked: boolean;
   isapChecked: boolean;
+  isapiChecked: boolean;
   isarChecked: boolean;
   istChecked: boolean;
   nbAtelier: number;
@@ -40,11 +41,13 @@ export class TaskFilterComponent implements OnInit {
   nbAfaire: number;
   nbEncours: number;
   nbAttenterepclient: number;
+  nbAttentePieceFour: number;
   nbAttenteretclient: number;
   nbTerminee: number;
   nbAfaireSub: Subscription;
   nbEncoursSub: Subscription;
   nbAttenterepclientSub: Subscription;
+  nbAttentePieceFourSub: Subscription;
   nbAttenteretclientSub: Subscription;
   nbTermineeSub: Subscription;
 
@@ -102,6 +105,10 @@ export class TaskFilterComponent implements OnInit {
     .subscribe((res) => {
       this.nbAttenterepclient = res.length;
     });
+    this.nbAttentePieceFourSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attentepiecefour')
+    .subscribe((res) => {
+      this.nbAttentePieceFour = res.length;
+    });
     this.nbAttenteretclientSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenteretclient')
     .subscribe((res) => {
       this.nbAttenteretclient = res.length;
@@ -125,6 +132,7 @@ export class TaskFilterComponent implements OnInit {
     this.nbAfaireSub.unsubscribe();
     this.nbEncoursSub.unsubscribe();
     this.nbAttenterepclientSub.unsubscribe();
+    this.nbAttentePieceFourSub.unsubscribe();
     this.nbAttenteretclientSub.unsubscribe();
     this.nbTermineeSub.unsubscribe();
     if (myfilter === 'type') {
@@ -191,6 +199,10 @@ export class TaskFilterComponent implements OnInit {
       .subscribe((res) => {
         this.nbAttenterepclient = res.filter(val => val.task.taskType === this.typeSelected).length;
       });
+      this.nbAttentePieceFourSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attentepiecefour')
+      .subscribe((res) => {
+        this.nbAttentePieceFour = res.length;
+      });
       this.nbAttenteretclientSub = this.scrudService.RetrieveCollectionWhere('tasks', 'task.status', '==', 'attenteretclient')
       .subscribe((res) => {
       this.nbAttenteretclient = res.filter(val => val.task.taskType === this.typeSelected).length;
@@ -205,18 +217,28 @@ export class TaskFilterComponent implements OnInit {
         case 'afaire':
         this.isenChecked = false;
         this.isapChecked = false;
+        this.isapiChecked = false;
         this.isarChecked = false;
         this.istChecked = false;
         break;
         case 'encours':
         this.isafChecked = false;
         this.isapChecked = false;
+        this.isapiChecked = false;
         this.isarChecked = false;
         this.istChecked = false;
         break;
         case 'attenterepclient':
         this.isafChecked = false;
         this.isenChecked = false;
+        this.isapiChecked = false;
+        this.isarChecked = false;
+        this.istChecked = false;
+        break;
+        case 'attentepiecefour':
+        this.isafChecked = false;
+        this.isenChecked = false;
+        this.isapChecked = false;
         this.isarChecked = false;
         this.istChecked = false;
         break;
@@ -224,6 +246,7 @@ export class TaskFilterComponent implements OnInit {
         this.isafChecked = false;
         this.isenChecked = false;
         this.isapChecked = false;
+        this.isapiChecked = false;
         this.istChecked = false;
         break;
         case 'terminee':
@@ -231,6 +254,7 @@ export class TaskFilterComponent implements OnInit {
         this.isenChecked = false;
         this.isapChecked = false;
         this.isarChecked = false;
+        this.isapiChecked = false;
         break;
       }
       // si aucun filtre sur le type n'est selectionné

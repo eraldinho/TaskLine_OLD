@@ -91,7 +91,10 @@
                   </mat-panel-title>
                   <mat-panel-description>
                     Liste des actions réalisées
-                    <mat-icon (click)="changeStatusCall()" [ngStyle]="{'background-color':ETForm.get('task').get('status').value == 'attenterepclient' ? 'green' : 'grey'}">call</mat-icon>
+                    <div>
+                        <mat-icon (click)="changeStatusOrder()" [ngStyle]="{'background-color':ETForm.get('task').get('status').value == 'attentepiecefour' ? 'orange' : 'grey'}">hourglass_empty</mat-icon>
+                        <mat-icon (click)="changeStatusCall()" [ngStyle]="{'background-color':ETForm.get('task').get('status').value == 'attenterepclient' ? 'green' : 'grey'}">call</mat-icon>
+                    </div>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <app-progress-form [progressGroup]="ETForm.get('progress')" (progressAdded)="addProgress()"></app-progress-form> 
